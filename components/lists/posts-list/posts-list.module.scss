@@ -1,0 +1,119 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  margin-top: 4rem;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+}
+
+.entryLast {
+  padding-bottom: 4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.entryLink {
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.entryTitle {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text-primary);
+  margin: 0 0 0.5rem;
+
+  .entryLink:hover & {
+    color: var(--accent);
+  }
+}
+
+.entryTeaser {
+  font-family: var(--font-ui);
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0 0 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.entryFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.readMore {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--accent-hover);
+  }
+}
+
+.readMoreIcon {
+  margin-left: 0.25rem;
+  transition: transform 0.15s ease;
+
+  .readMore:hover & {
+    transform: translateX(2px);
+  }
+}
+
+.entryDate {
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--text-secondary);
+  font-variant: all-small-caps;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+  .entryTitle {
+    font-size: 1.5rem;
+  }
+
+  .entryTeaser {
+    font-size: 1.25rem;
+  }
+}
+
+// Gutters come from the parent page wrapper; only the vertical rhythm and the
+// teaser size need tightening here.
+@media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
+  .list {
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+
+  .entryLast {
+    padding-bottom: 3rem;
+  }
+
+  .entryTeaser {
+    font-size: 1.125rem;
+  }
+}
