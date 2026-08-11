@@ -2,7 +2,7 @@ import { Post } from '@/lib/db/schema/posts';
 import { mdToHtml } from '@/lib/content/md-to-html';
 import styles from './post-wrapper.module.scss';
 import Image from 'next/image';
-import Link from 'next/Link';
+import Link from 'next/link';
 
 type PropsType = {
   post: Post;
