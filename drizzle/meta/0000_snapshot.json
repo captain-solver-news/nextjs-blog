@@ -167,12 +167,8 @@
           "name": "category_parents",
           "tableFrom": "categories",
           "tableTo": "categories",
-          "columnsFrom": [
-            "parent_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["parent_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -356,12 +352,8 @@
           "name": "posts_category_id_categories_id_fk",
           "tableFrom": "posts",
           "tableTo": "categories",
-          "columnsFrom": [
-            "category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["category_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -395,12 +387,8 @@
           "name": "posts_authors_post_id_posts_id_fk",
           "tableFrom": "posts_authors",
           "tableTo": "posts",
-          "columnsFrom": [
-            "post_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["post_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -408,12 +396,8 @@
           "name": "posts_authors_author_id_authors_id_fk",
           "tableFrom": "posts_authors",
           "tableTo": "authors",
-          "columnsFrom": [
-            "author_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["author_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -421,10 +405,7 @@
       "compositePrimaryKeys": {
         "posts_authors_post_id_author_id_pk": {
           "name": "posts_authors_post_id_author_id_pk",
-          "columns": [
-            "post_id",
-            "author_id"
-          ]
+          "columns": ["post_id", "author_id"]
         }
       },
       "uniqueConstraints": {},
@@ -468,20 +449,12 @@
     "public.category_type": {
       "name": "category_type",
       "schema": "public",
-      "values": [
-        "hidden",
-        "displayed-all",
-        "displayed-posts",
-        "displayed-subcategories"
-      ]
+      "values": ["hidden", "displayed-all", "displayed-posts", "displayed-subcategories"]
     },
     "public.post_status": {
       "name": "post_status",
       "schema": "public",
-      "values": [
-        "published",
-        "draft"
-      ]
+      "values": ["published", "draft"]
     }
   },
   "schemas": {},
