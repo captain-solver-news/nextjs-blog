@@ -18,8 +18,8 @@ export const FOOTER_LINKS_1 = [
   { href: '/contact', label: 'Contact' },
 ] as const;
 
-export const FOOTER_LINKS_3 = [
-  { href: '/privacy-policy', label: 'Privacy Policy' },
+export const FOOTER_LINKS_2 = [
+  { href: '/privacy-policy', label: 'My Privacy Policy' },
   { href: '/terms-and-conditions', label: 'Terms And Conditions' },
 ] as const;
 
