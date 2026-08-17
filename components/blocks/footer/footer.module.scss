@@ -6,12 +6,17 @@
 }
 
 .inner {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  min-width: 70%;
 }
 
 .brand {
@@ -86,9 +91,17 @@
   width: 1.5rem;
 }
 
-@media (min-width: $breakpoint-sm) {
+// Four columns are too narrow to hold the nav labels at tablet width.
+@media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
   .inner {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+  }
+}
+
+@media screen and (max-width: $breakpoint-lg) {
+  .inner {
+    max-width: 46.25rem;
   }
 }
 
@@ -96,17 +109,16 @@
   .footer {
     padding: 2.5rem 0;
   }
+}
 
+@media (min-width: $breakpoint-sm) {
   .inner {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-// Four columns are too narrow to hold the nav labels at tablet width.
-@media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
+@media (max-width: $breakpoint-sm) {
   .inner {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem 1.5rem;
+    max-width: 728px;
   }
 }
