@@ -20,30 +20,32 @@ export async function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
-        <div className={styles.brand}>
-          <Link href="/" className={styles.logo}>
-            DEV
-          </Link>
-          <p className={styles.copyright}>&copy; 2026</p>
+        <div className={styles.wrapper}>
+          <div className={styles.brand}>
+            <Link href="/" className={styles.logo}>
+              DEV
+            </Link>
+            <p className={styles.copyright}>&copy; 2026</p>
+          </div>
+
+          <nav className={`${styles.nav}`}>
+            <span className={styles['nav-title']}>Navigation</span>
+            {FOOTER_LINKS_1.map((link) => (
+              <Link key={link.href} href={link.href} className={styles.link}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          <nav className={`${styles.nav}`}>
+            <span className={styles['nav-title']}>Legal</span>
+            {FOOTER_LINKS_2.map((link) => (
+              <Link key={link.href} href={link.href} className={styles.link}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
         </div>
-
-        <nav className={`${styles.nav}`}>
-          <span className={styles['nav-title']}>Navigation</span>
-          {FOOTER_LINKS_1.map((link) => (
-            <Link key={link.href} href={link.href} className={styles.link}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <nav className={`${styles.nav}`}>
-          <span className={styles['nav-title']}>Legal</span>
-          {FOOTER_LINKS_2.map((link) => (
-            <Link key={link.href} href={link.href} className={styles.link}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
 
         <div className={styles.social}>
           <span className={styles['nav-title']}>Social</span>
