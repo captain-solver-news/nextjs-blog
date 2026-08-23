@@ -55,11 +55,11 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
 
       <h1 className={styles.title}>{post.title}</h1>
 
-      {post.og_image && (
+      {post.ogImage && (
         <figure className={styles.featuredImage}>
           <div className={styles.imageWrapper}>
             <picture>
-              <img className={styles.image} src={post.og_image} alt={post.title} />
+              <img className={styles.image} src={post.ogImage} alt={post.title} />
             </picture>
           </div>
         </figure>

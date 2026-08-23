@@ -13,10 +13,10 @@ export function generatePostSchema(post: Post, slugs: string[]): WithContext<Thi
 
 export function generatePostMetadata(post: Post, slugs: string[]): Metadata {
   const title = post.title;
-  const description = post.seo_description ?? post.teaser;
+  const description = post.seoDescription ?? post.teaser;
   const canonicalPath = `/${BLOG_PREFIX}/${slugs.join('/')}`;
 
-  const ogImage = post.og_image ?? undefined;
+  const ogImage = post.ogImage ?? undefined;
   return {
     title,
     description,
