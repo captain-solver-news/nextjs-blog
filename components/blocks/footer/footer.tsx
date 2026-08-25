@@ -2,6 +2,7 @@ import Link from 'next/link';
 import styles from './footer.module.scss';
 import getDbConfigs from '@/lib/db/actions/get-db-configs';
 import { FOOTER_LINKS_1, FOOTER_LINKS_2 } from '@/config';
+import { Container } from '@/components/primitives/container/container';
 import GitHub from '@/components/icons/github';
 import LinkedIn from '@/components/icons/linkedin';
 import X from '@/components/icons/x';
@@ -19,7 +20,7 @@ export async function Footer() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.inner}>
+      <Container size="shell" className={styles.inner}>
         <div className={styles.wrapper}>
           <div className={styles.brand}>
             <Link href="/" className={styles.logo}>
@@ -61,7 +62,7 @@ export async function Footer() {
             })}
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }

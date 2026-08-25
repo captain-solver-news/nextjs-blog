@@ -1,7 +1,6 @@
 .list {
-  max-width: 46.25rem;
-  margin: 0 auto;
-  padding: 2rem 1.25rem 4rem;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
 }
 
 .item {
@@ -11,17 +10,15 @@
 }
 
 .link {
+  composes: t-body from global;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 0;
-  font-family: var(--font-ui);
-  font-size: 1.125rem;
   font-weight: 500;
-  line-height: 1.4;
-  color: var(--text-primary);
+  color: var(--fg);
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color var(--transition);
 
   &:hover {
     color: var(--accent);
@@ -31,9 +28,9 @@
 .arrow {
   display: flex;
   align-items: center;
-  color: var(--text-muted);
+  color: var(--fg-subtle);
   opacity: 0.4;
-  transition: opacity 0.15s ease;
+  transition: opacity var(--transition);
 
   .link:hover & {
     opacity: 1;
@@ -41,20 +38,3 @@
   }
 }
 
-@media (min-width: 768px) {
-  .list {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .link {
-    font-size: 1.25rem;
-  }
-}
-
-@media screen and (max-width: $breakpoint-md) {
-  .list {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-}

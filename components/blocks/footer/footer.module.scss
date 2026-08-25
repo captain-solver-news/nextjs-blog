@@ -2,13 +2,10 @@
   margin-top: auto;
   padding: 3.75rem 0;
   border-top: 1px solid var(--border);
-  background: var(--bg-base);
+  background: var(--canvas);
 }
 
 .inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0;
   display: flex;
   justify-content: space-between;
 }
@@ -26,19 +23,18 @@
 }
 
 .logo {
-  font-family: var(--font-display);
+  font-family: var(--ff-display);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--fg);
   letter-spacing: -0.025em;
   text-decoration: none;
 }
 
 .copyright {
+  composes: t-label from global;
   margin: 0;
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  font-family: var(--font-ui);
+  color: var(--fg-subtle);
 }
 
 .nav {
@@ -47,21 +43,18 @@
 }
 
 .nav-title {
-  color: var(--text-primary);
+  composes: t-label from global;
+  color: var(--fg);
   text-transform: uppercase;
   letter-spacing: 0.056rem;
-  font-family: var(--font-ui);
-  font-size: 0.875rem;
   font-weight: 700;
 }
 
 .link {
-  font-family: var(--font-ui);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  composes: t-label from global;
+  color: var(--fg-muted);
   text-decoration: none;
-  transition: color 0.15s ease;
+  transition: color var(--transition);
   width: fit-content;
   text-transform: uppercase;
 
@@ -91,34 +84,14 @@
   width: 1.5rem;
 }
 
-// Four columns are too narrow to hold the nav labels at tablet width.
-@media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
+@include between(md, lg) {
   .inner {
-    grid-template-columns: repeat(2, 1fr);
     gap: 2rem 1.5rem;
   }
 }
 
-@media screen and (max-width: $breakpoint-lg) {
-  .inner {
-    max-width: 46.25rem;
-  }
-}
-
-@media screen and (max-width: $breakpoint-md) {
+@include down(lg) {
   .footer {
     padding: 2.5rem 0;
-  }
-}
-
-@media (min-width: $breakpoint-sm) {
-  .inner {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@media (max-width: $breakpoint-sm) {
-  .inner {
-    max-width: 728px;
   }
 }

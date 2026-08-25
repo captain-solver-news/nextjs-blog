@@ -1,15 +1,98 @@
 @import 'tailwindcss';
 
-@theme {
-  --font-ui-label: var(--font-ui);
-  --font-ui-button: var(--font-ui);
-  --font-body-reading: var(--font-body);
-  --font-body-reading-mobile: var(--font-body);
-  --font-display-lg: var(--font-display);
-  --font-code-block: var(--font-code);
+:root {
+  color-scheme: dark;
 
-  --text-headline-xl: 3rem;
-  --text-headline-xl--line-height: 1.1;
-  --text-headline-xl--letter-spacing: -0.02em;
-  --text-headline-xl--font-weight: 700;
+  --canvas: #0d1117;
+  --surface: #161b22;
+  --elevated: #21262d;
+  --border: #30363d;
+
+  --fg: #dfe2eb;
+  --fg-muted: #bdcab8;
+  --fg-subtle: #8b949e;
+
+  --accent: #3fb950;
+  --accent-hover: #2ea043;
+  --accent-subtle: #1b2f1e;
+  --on-accent: #00390d;
+
+  --danger: #f85149;
+  --warning: #e3b341;
+  --info: #58a6ff;
+
+  --measure: 46.25rem;
+  --shell-narrow: 60rem;
+  --shell: 75rem;
+  --gutter: 1.25rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  --duration-fast: 150ms;
+  --duration-medium: 250ms;
+  --duration-slow: 700ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: var(--duration-fast) var(--ease);
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --canvas: #ffffff;
+  --surface: #f6f8fa;
+  --elevated: #eaeef2;
+  --border: #d0d7de;
+
+  --fg: #1f2328;
+  --fg-muted: #656d76;
+  --fg-subtle: #9198a1;
+
+  --accent: #1a7f37;
+  --accent-hover: #116329;
+  --accent-subtle: #dafbe1;
+  --on-accent: #ffffff;
+
+  --danger: #cf222e;
+  --warning: #9a6700;
+  --info: #0969da;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0.01ms;
+    --duration-medium: 0.01ms;
+    --duration-slow: 0.01ms;
+  }
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-elevated: var(--elevated);
+  --color-border: var(--border);
+
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-on-accent: var(--on-accent);
+
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --font-display: var(--ff-display);
+  --font-ui: var(--ff-ui);
+  --font-body: var(--ff-body);
+  --font-code: var(--ff-code);
+
+  --container-measure: var(--measure);
+  --spacing-gutter: var(--gutter);
 }

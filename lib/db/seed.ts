@@ -211,7 +211,6 @@ async function main() {
     },
   ];
 
-  // Add 100 extra posts to Travel for pager testing
   for (let i = 1; i <= 100; i++) {
     const n = String(i).padStart(3, '0');
     seededPosts.push({

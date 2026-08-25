@@ -3,7 +3,7 @@ import type { RuleSetRule } from 'webpack';
 
 const nextConfig: NextConfig = {
   sassOptions: {
-    additionalData: `@use "@/styles/variables.scss" as *;`,
+    additionalData: `@use "@/styles/breakpoints" as *;`,
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: RuleSetRule) => {

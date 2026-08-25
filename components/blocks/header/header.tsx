@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/blocks/header/theme-toggle/theme-toggle';
 import { HamburgerMenu } from './hamburger/hamburger-menu';
 import { HEADER_LINKS } from '@/config';
+import { Container } from '@/components/primitives/container/container';
 import styles from './header.module.scss';
 
 export function Header() {
@@ -12,7 +13,7 @@ export function Header() {
 
   return (
     <header className={styles.header}>
-      <div className={`${styles.inner} container`}>
+      <Container size="shell" className={styles.inner}>
         <div className={styles.brand}>
           <Link href="/" className={styles.logo}>
             DEV
@@ -35,7 +36,7 @@ export function Header() {
           <ThemeToggle />
           <HamburgerMenu />
         </div>
-      </div>
+      </Container>
     </header>
   );
 }
