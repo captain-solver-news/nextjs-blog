@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import styles from './not-found.module.scss';
+import { Container } from '@/components/primitives/container/container';
 
 export const metadata: Metadata = {
   title: '404 - Page Not Found',
@@ -13,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className={styles.main}>
+    <Container as="main" className={styles.main}>
       <p className={styles.eyebrow}>404 error</p>
       <h1 className={styles.title}>Page not found</h1>
       <p className={styles.description}>The link may be outdated or typed incorrectly. Try one of the pages below.</p>
@@ -29,6 +30,6 @@ export default function NotFound() {
           Contact us
         </Link>
       </div>
-    </main>
+    </Container>
   );
 }

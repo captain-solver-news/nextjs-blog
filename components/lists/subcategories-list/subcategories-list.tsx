@@ -5,6 +5,7 @@ import getSubcategoriesByCategoryId from '@/lib/db/actions/get-subcategories-by-
 import Pager from '@/components/blocks/pager/pager';
 import { SUBCATEGORIES_PER_PAGE, BLOG_PREFIX } from '@/config';
 import styles from './subcategories-list.module.scss';
+import { Container } from '@/components/primitives/container/container';
 
 type PropsType = {
   category: Category;
@@ -23,7 +24,7 @@ export default async function SubcategoriesList(props: PropsType) {
   const parentCategoryPath = `/${BLOG_PREFIX}/${slugs.join('/')}`;
 
   return (
-    <div className={styles.list}>
+    <Container className={styles.list}>
       {subcategories.map((subcat) => (
         <div key={subcat.id} className={styles.item}>
           <Link href={`${parentCategoryPath}/${subcat.slug}`} className={styles.link}>
@@ -46,6 +47,6 @@ export default async function SubcategoriesList(props: PropsType) {
         </div>
       ))}
       <Pager page={page} pageLength={SUBCATEGORIES_PER_PAGE} totalLength={totalCount} />
-    </div>
+    </Container>
   );
 }

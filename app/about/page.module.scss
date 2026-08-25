@@ -1,14 +1,10 @@
 .page {
-  max-width: 46.25rem;
-  margin: 0 auto;
   padding-top: 2rem;
   padding-bottom: 4rem;
 }
 
 .tagline {
-  font-family: var(--font-ui);
-  font-size: 0.875rem;
-  font-weight: 500;
+  composes: t-label from global;
   line-height: 1;
   color: var(--accent);
   text-transform: uppercase;
@@ -18,19 +14,13 @@
 }
 
 .title {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--text-primary);
+  composes: t-display from global;
   margin-bottom: 1rem;
 }
 
 .description {
-  font-family: var(--font-ui);
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: var(--text-secondary);
+  composes: t-body from global;
+  color: var(--fg-muted);
 }
 
 .authorsSection {
@@ -41,14 +31,14 @@
 }
 
 .authorCard {
-  background: var(--bg-surface);
+  background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-lg);
   padding: 2rem;
-  transition: all 0.15s ease;
+  transition: all var(--transition);
 
   &:hover {
-    background: var(--bg-elevated);
+    background: var(--elevated);
   }
 }
 
@@ -64,8 +54,8 @@
   height: 8rem;
   flex-shrink: 0;
   overflow: hidden;
-  border-radius: 0.5rem;
-  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  background: var(--surface);
 }
 
 .avatar {
@@ -73,7 +63,7 @@
   height: 100%;
   object-fit: cover;
   filter: grayscale(100%) contrast(1.1);
-  transition: filter 0.3s ease;
+  transition: filter var(--duration-medium) var(--ease);
 }
 
 .authorCard:hover .avatar {
@@ -85,28 +75,21 @@
 }
 
 .authorName {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 600;
-  line-height: 1.3;
+  composes: t-subhead from global;
   color: var(--accent);
   margin-bottom: 0.25rem;
 }
 
 .authorRole {
-  font-family: var(--font-ui);
-  font-size: 0.875rem;
-  font-weight: 500;
+  composes: t-label from global;
   line-height: 1;
-  color: var(--text-secondary);
+  color: var(--fg-muted);
   margin-bottom: 1rem;
 }
 
 .bio {
-  font-family: var(--font-ui);
-  font-size: 1.125rem;
-  line-height: 1.6;
-  color: var(--text-primary);
+  composes: t-body from global;
+  color: var(--fg);
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -120,53 +103,32 @@
   border-top: 1px solid var(--border);
 }
 
+.socialIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
 .socialLink {
   opacity: 0.7;
-  transition: opacity 0.15s;
-  color: var(--text-primary);
+  transition: opacity var(--transition);
+  color: var(--fg);
 
   &:hover {
     opacity: 1;
   }
 }
 
-@media (min-width: 768px) {
+@include up(md) {
   .hero {
     text-align: left;
-  }
-
-  .title {
-    font-size: 3rem;
-    letter-spacing: -0.02em;
-  }
-
-  .description {
-    font-size: 1.25rem;
   }
 
   .cardContent {
     flex-direction: row;
   }
-
-  .bio {
-    font-size: 1.25rem;
-  }
 }
 
-// .page has no horizontal padding at all, so the 740px column runs to the edge
-// on anything narrower than ~780px. Safe to apply on phones too.
-@media screen and (max-width: $breakpoint-md) {
-  .page {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-  }
-}
-
-@media screen and (min-width: $breakpoint-sm) and (max-width: $breakpoint-md) {
-  .title {
-    font-size: 2.5rem;
-  }
-
+@include between(md, lg) {
   .authorsSection {
     gap: 3rem;
     margin-top: 3rem;

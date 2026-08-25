@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react';
 import Link from 'next/link';
 import styles from './category-wrapper.module.scss';
+import { Container } from '@/components/primitives/container/container';
 
 type PropsType = {
   title: string;
@@ -20,7 +21,7 @@ export default async function CategoryWrapper(props: PropsType) {
   const { title, description, slugs, children } = props;
 
   return (
-    <div className={styles.page}>
+    <Container className={styles.page}>
       <header className={styles.header}>
         <nav className={styles.breadcrumb} aria-label="Breadcrumb">
           <Link href="/blog" className={styles.breadcrumbLink}>
@@ -63,6 +64,6 @@ export default async function CategoryWrapper(props: PropsType) {
       </header>
 
       {children}
-    </div>
+    </Container>
   );
 }

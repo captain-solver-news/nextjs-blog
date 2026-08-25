@@ -5,6 +5,7 @@ import styles from './page.module.scss';
 import Image from 'next/image';
 import getFeaturedPosts from '@/lib/db/actions/get-featured-posts';
 import Link from 'next/link';
+import { Container } from '@/components/primitives/container/container';
 
 export default async function HomePage() {
   const featuredPosts = await getFeaturedPosts();
@@ -13,7 +14,7 @@ export default async function HomePage() {
     <>
       <section className={styles.hero}>
         <div className={styles.gridBg} aria-hidden="true" />
-        <div className={styles.content}>
+        <Container className={styles.content}>
           <span className={styles.badge}>Version 0.0.1</span>
           <h1 className={styles.title}>
             Modern engineering insights for the <span className={styles.accent}>AI paradigm shift.</span>
@@ -30,7 +31,7 @@ export default async function HomePage() {
               Explore Codebases
             </a>
           </div>
-        </div>
+        </Container>
         <div className={styles.codeBlock} aria-hidden="true">
           <div className={styles.codeHeader}>
             <div className={styles.dots}>
@@ -50,7 +51,7 @@ export default async function HomePage() {
       </section>
 
       <section className={styles.metrics}>
-        <div className={styles.metricsInner}>
+        <Container>
           <div className={styles.metricsHeader}>
             <h2 className={styles.sectionTitle}>Evaluation Metrics</h2>
             <p className={styles.sectionSubtitle}>How we measure the technical part of each post</p>
@@ -85,11 +86,11 @@ export default async function HomePage() {
               </p>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className={styles.authors}>
-        <div className={styles.authorsInner}>
+        <Container className={styles.authorsInner}>
           <h2 className={styles.sectionTitle}>The authors are active engineers and programmers</h2>
           <p className={styles.sectionBody}>
             We don&apos;t employ &quot;content creators.&quot; Our contributors are active software architects, DevOps
@@ -133,11 +134,11 @@ export default async function HomePage() {
               </div>
             </div>
           </div>
-        </div>
+        </Container>
       </section>
 
       <section className={styles.featured}>
-        <div className={styles.featuredInner}>
+        <Container>
           <div className={styles.featuredHeader}>
             <h2 className={styles.sectionTitle}>Featured Posts</h2>
             <a href="#" className={styles.viewAll}>
@@ -170,7 +171,7 @@ export default async function HomePage() {
               );
             })}
           </div>
-        </div>
+        </Container>
       </section>
 
       <JsonLd schema={homeSchema} />

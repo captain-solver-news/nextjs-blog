@@ -7,6 +7,7 @@ import LinkedInContact from '@/components/icons/linkedin-contact';
 import XContact from '@/components/icons/x-contact';
 import styles from './page.module.scss';
 import { mdToHtml } from '@/lib/content/md-to-html';
+import { StaticPage } from '@/components/wrappers/static-page/static-page';
 
 export default async function ContactPage() {
   const content = await getStaticContent('contact');
@@ -17,17 +18,7 @@ export default async function ContactPage() {
 
   return (
     <>
-      <article className={styles.page}>
-        <header className="border-b border-[var(--border)] pb-6 mb-12">
-          <h1 className="text-headline-xl text-[var(--text-primary)]" style={{ fontFamily: 'var(--font-display)' }}>
-            {content.title}
-          </h1>
-        </header>
-        <div
-          className={`prose text-xl text-[var(--text-secondary)]`}
-          dangerouslySetInnerHTML={{ __html: await mdToHtml(content.body) }}
-          style={{ fontFamily: 'var(--font-ui)' }}
-        />
+      <StaticPage title={content.title} bodyHtml={await mdToHtml(content.body)}>
         <div className={styles.grid}>
           <a href={`mailto:${email}`} className={styles.socialCard}>
             <div className={styles.cardInner}>
@@ -87,7 +78,7 @@ export default async function ContactPage() {
           </picture>
           <div className={styles.imageOverlay} />
         </div>
-      </article>
+      </StaticPage>
       <JsonLd schema={contactSchema} />
     </>
   );

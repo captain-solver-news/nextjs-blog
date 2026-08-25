@@ -7,13 +7,14 @@ import { mdToHtml } from '@/lib/content/md-to-html';
 import GitHub from '@/components/icons/github';
 import LinkedIn from '@/components/icons/linkedin';
 import styles from './page.module.scss';
+import { Container } from '@/components/primitives/container/container';
 
 export default async function AboutPage() {
   const [content, authors] = await Promise.all([getStaticContent('about'), getAuthors()]);
 
   return (
     <>
-      <article className={styles.page}>
+      <Container as="article" className={styles.page}>
         <header className={styles.hero}>
           <span className={styles.tagline}>Deep-Dive Technical Investigations</span>
           <h1 className={styles.title}>{content.title}</h1>
@@ -38,12 +39,12 @@ export default async function AboutPage() {
                   <div className={styles.socialLinks}>
                     {author.github_url && (
                       <a className={styles.socialLink} href={author.github_url} aria-label="GitHub">
-                        <GitHub className="w-6 h-6" />
+                        <GitHub className={styles.socialIcon} />
                       </a>
                     )}
                     {author.linkedin_url && (
                       <a className={styles.socialLink} href={author.linkedin_url} aria-label="LinkedIn">
-                        <LinkedIn className="w-6 h-6" />
+                        <LinkedIn className={styles.socialIcon} />
                       </a>
                     )}
                   </div>
@@ -52,7 +53,7 @@ export default async function AboutPage() {
             </article>
           ))}
         </section>
-      </article>
+      </Container>
       <JsonLd schema={aboutSchema} />
     </>
   );

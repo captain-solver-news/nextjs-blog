@@ -5,13 +5,14 @@ export { blogMetadata as metadata } from '@/lib/seo/static';
 import { JsonLd } from '@/components/seo/json-ld';
 import { blogSchema } from '@/lib/seo/static';
 import styles from './page.module.scss';
+import { Container } from '@/components/primitives/container/container';
 
 export default async function BlogPage() {
   const categories = await getRootCategories();
 
   return (
     <>
-      <article className={styles.page}>
+      <Container as="article" className={styles.page}>
         <header className={styles.header}>
           <h1 className={styles.title}>Blog</h1>
         </header>
@@ -24,7 +25,7 @@ export default async function BlogPage() {
             </div>
           ))}
         </div>
-      </article>
+      </Container>
       <JsonLd schema={blogSchema} />
     </>
   );

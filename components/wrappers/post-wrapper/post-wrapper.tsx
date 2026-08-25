@@ -3,6 +3,7 @@ import { mdToHtml } from '@/lib/content/md-to-html';
 import styles from './post-wrapper.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Container } from '@/components/primitives/container/container';
 
 type PropsType = {
   post: Post;
@@ -13,7 +14,7 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
   const bodyHtml = await mdToHtml(post.body);
 
   return (
-    <article className={styles.page}>
+    <Container as="article" className={styles.page}>
       <nav className={styles.breadcrumb} aria-label="Breadcrumb">
         <Link href="/blog" className={styles.breadcrumbLink}>
           Blog
@@ -65,7 +66,7 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
         </figure>
       )}
 
-      <div className={styles.body} dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+      <div className="prose" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
 
       <div className={styles.footer}>
         {post.authors.map((author) => (
@@ -80,6 +81,6 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
           </div>
         ))}
       </div>
-    </article>
+    </Container>
   );
 }

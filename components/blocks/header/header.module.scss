@@ -3,7 +3,7 @@
   top: 0;
   width: 100%;
   z-index: 50;
-  background: color-mix(in srgb, var(--bg-base) 80%, transparent);
+  background: color-mix(in srgb, var(--canvas) 80%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
@@ -13,10 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
   height: 4rem;
-  padding: 0;
-  margin: 0 auto;
 }
 
 .brand {
@@ -24,10 +21,10 @@
 }
 
 .logo {
-  font-family: var(--font-display);
+  font-family: var(--ff-display);
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: var(--fg);
   letter-spacing: -0.025em;
   text-decoration: none;
 }
@@ -39,21 +36,19 @@
 }
 
 .link {
-  font-family: var(--font-ui);
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-secondary);
+  composes: t-label from global;
+  color: var(--fg-muted);
   text-decoration: none;
   text-transform: uppercase;
   padding-bottom: 0.25rem;
   border-bottom: 2px solid transparent;
   transition:
-    color 0.15s ease,
-    border-color 0.15s ease;
+    color var(--transition),
+    border-color var(--transition);
 }
 
 .link:hover {
-  color: var(--text-primary);
+  color: var(--fg);
 }
 
 .linkActive {
@@ -69,27 +64,14 @@
   gap: 1rem;
 }
 
-@media (min-width: 769px) {
+@include up(md) {
   .nav {
     display: flex;
   }
 }
 
-@media screen and (max-width: $breakpoint-lg) {
-  .inner {
-    max-width: 46.25rem;
-  }
-}
-
-// Align the header gutter with the content column's 1.25rem.
-@media screen and (max-width: $breakpoint-md) {
+@include down(lg) {
   .nav {
     gap: 1.5rem;
-  }
-}
-
-@media (min-width: $breakpoint-sm) {
-  .inner {
-    max-width: 728px;
   }
 }
