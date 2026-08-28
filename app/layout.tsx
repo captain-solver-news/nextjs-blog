@@ -6,6 +6,7 @@ import '@/styles/typography.scss';
 import { Header } from '@/components/blocks/header/header';
 import { Footer } from '@/components/blocks/footer/footer';
 import { THEME_STORAGE_KEY } from '@/config';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const dmSans = DM_Sans({
   variable: '--ff-ui',
@@ -56,6 +57,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
+        <SpeedInsights />
       </body>
     </html>
   );
