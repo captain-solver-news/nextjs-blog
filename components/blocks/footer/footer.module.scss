@@ -95,3 +95,28 @@
     padding: 2.5rem 0;
   }
 }
+
+@include down(md) {
+  .inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2rem;
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: unset;
+    min-width: 0;
+    width: 100%;
+    gap: 2rem 1.5rem;
+  }
+
+  .brand {
+    grid-column: 1 / -1;
+  }
+
+  .nav {
+    gap: 0.5rem;
+  }
+}
