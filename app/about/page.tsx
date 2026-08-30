@@ -27,7 +27,17 @@ export default async function AboutPage() {
               <div className={styles.cardContent}>
                 <div className={styles.avatarWrapper}>
                   <picture>
-                    <img className={styles.avatar} src={author.avatar_url!} alt={author.name} />
+                    <img
+                      className={styles.avatar}
+                      src={author.avatar_url || ""}
+                      alt={author.name}
+                    />
+                    <img
+                      className={`${styles.avatar} ${styles.avatarHover}`}
+                      src={author.avatar_hovered_url || ""}
+                      alt=""
+                      aria-hidden
+                    />
                   </picture>
                 </div>
                 <div className={styles.authorInfo}>
