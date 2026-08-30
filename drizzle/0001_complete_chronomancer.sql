@@ -1,0 +1,1 @@
+ALTER TABLE "authors" ADD COLUMN "avatar_hovered_url" varchar(1024);
