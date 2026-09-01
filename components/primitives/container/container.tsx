@@ -11,9 +11,7 @@ interface ContainerProps {
 }
 
 export function Container({ as: Tag = 'div', size = 'measure', className, children }: ContainerProps) {
-  const classNames = [styles.container, size === 'shell' ? styles.shell : null, className]
-    .filter(Boolean)
-    .join(' ');
+  const classNames = [styles.container, size === 'shell' ? styles.shell : null, className].filter(Boolean).join(' ');
 
   return <Tag className={classNames}>{children}</Tag>;
 }

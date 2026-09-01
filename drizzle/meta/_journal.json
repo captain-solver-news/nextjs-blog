@@ -15,6 +15,13 @@
       "when": 1788123854691,
       "tag": "0001_complete_chronomancer",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788292471191,
+      "tag": "0002_flashy_quicksilver",
+      "breakpoints": true
     }
   ]
 }

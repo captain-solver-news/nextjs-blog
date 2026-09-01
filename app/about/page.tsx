@@ -28,13 +28,25 @@ export default async function AboutPage() {
                 <div className={styles.avatarWrapper}>
                   <picture>
                     <img
-                      className={styles.avatar}
-                      src={author.avatar_url || ""}
+                      className={`${styles.avatar} ${styles.avatarDark}`}
+                      src={author.avatar_dark_url || '/authors/fallback.jpg'}
                       alt={author.name}
                     />
                     <img
-                      className={`${styles.avatar} ${styles.avatarHover}`}
-                      src={author.avatar_hovered_url || ""}
+                      className={`${styles.avatar} ${styles.avatarDarkHover}`}
+                      src={author.avatar_dark_hovered_url || '/authors/fallback.jpg'}
+                      alt=""
+                      aria-hidden
+                    />
+                    <img
+                      className={`${styles.avatar} ${styles.avatarLight}`}
+                      src={author.avatar_light_url || '/authors/fallback.jpg'}
+                      alt=""
+                      aria-hidden
+                    />
+                    <img
+                      className={`${styles.avatar} ${styles.avatarLightHover}`}
+                      src={author.avatar_light_hovered_url || '/authors/fallback.jpg'}
                       alt=""
                       aria-hidden
                     />

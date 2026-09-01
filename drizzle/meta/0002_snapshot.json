@@ -1,6 +1,6 @@
 {
-  "id": "44bcef97-966c-4a48-a8b6-80bf394274ad",
-  "prevId": "e4282d08-70b2-498f-b67c-1ad7d097273e",
+  "id": "1c2aac3d-58e9-4bbc-ab74-4b8896103fea",
+  "prevId": "44bcef97-966c-4a48-a8b6-80bf394274ad",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -33,14 +33,26 @@
           "primaryKey": false,
           "notNull": true
         },
-        "avatar_url": {
-          "name": "avatar_url",
+        "avatar_dark_url": {
+          "name": "avatar_dark_url",
           "type": "varchar(1024)",
           "primaryKey": false,
           "notNull": false
         },
-        "avatar_hovered_url": {
-          "name": "avatar_hovered_url",
+        "avatar_dark_hovered_url": {
+          "name": "avatar_dark_hovered_url",
+          "type": "varchar(1024)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "avatar_light_url": {
+          "name": "avatar_light_url",
+          "type": "varchar(1024)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "avatar_light_hovered_url": {
+          "name": "avatar_light_hovered_url",
           "type": "varchar(1024)",
           "primaryKey": false,
           "notNull": false

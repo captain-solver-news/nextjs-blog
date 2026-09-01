@@ -72,14 +72,28 @@
   transition: opacity var(--duration-medium) var(--ease);
 }
 
-.avatarHover {
+.avatarDarkHover,
+.avatarLight,
+.avatarLightHover {
   position: absolute;
   inset: 0;
   opacity: 0;
 }
 
-.authorCard:hover .avatarHover {
+.authorCard:hover .avatarDarkHover {
   opacity: 1;
+}
+
+:global([data-theme='light']) {
+  .avatarLight {
+    opacity: 1;
+  }
+  .authorCard:hover .avatarDarkHover {
+    opacity: 0; // не показувати темний hover
+  }
+  .authorCard:hover .avatarLightHover {
+    opacity: 1;
+  }
 }
 
 .authorInfo {

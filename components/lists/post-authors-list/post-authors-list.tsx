@@ -16,15 +16,13 @@ export function PostAuthorsList({ authors }: PostAuthorsListProps) {
       <div className={styles.list}>
         {authors.map((author) => (
           <div key={author.id} className={styles.authorBadge}>
-            {(author.mini_avatar_url || author.avatar_url) && (
-              <Image
-                src={author.mini_avatar_url || author.avatar_url!}
-                alt={author.name}
-                width={32}
-                height={32}
-                className={styles.avatar}
-              />
-            )}
+            <Image
+              src={author.mini_avatar_url || '/authors/fallback.jpg'}
+              alt={author.name}
+              width={32}
+              height={32}
+              className={styles.avatar}
+            />
 
             <div className={styles.meta}>
               <span className={styles.name}>{author.name}</span>
