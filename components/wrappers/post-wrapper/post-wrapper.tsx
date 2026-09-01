@@ -71,8 +71,14 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
       <div className={styles.footer}>
         {post.authors.map((author) => (
           <div key={author.id} className={styles.footerAuthor}>
-            {author.avatar_url && (
-              <Image src={author.avatar_url} alt={author.name} width={48} height={48} className={styles.footerAvatar} />
+            {author.mini_avatar_url && (
+              <Image
+                src={author.mini_avatar_url}
+                alt={author.name}
+                width={48}
+                height={48}
+                className={styles.footerAvatar}
+              />
             )}
             <div>
               <p className={styles.footerAuthorName}>{author.name}</p>
