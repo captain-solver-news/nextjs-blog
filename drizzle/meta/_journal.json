@@ -22,6 +22,13 @@
       "when": 1788292471191,
       "tag": "0002_flashy_quicksilver",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788464685044,
+      "tag": "0003_wakeful_warpath",
+      "breakpoints": true
     }
   ]
 }

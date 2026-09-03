@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import { AUTHOR_PREFIX } from '@/config';
 import { type Author } from '@/lib/db/schema/authors';
 import styles from './post-authors-list.module.scss';
 
@@ -25,7 +27,9 @@ export function PostAuthorsList({ authors }: PostAuthorsListProps) {
             />
 
             <div className={styles.meta}>
-              <span className={styles.name}>{author.name}</span>
+              <Link href={`/${AUTHOR_PREFIX}/${author.slug}`} className={styles.name}>
+                {author.name}
+              </Link>
               {author.job_title && <span className={styles.jobTitle}>{author.job_title}</span>}
             </div>
           </div>

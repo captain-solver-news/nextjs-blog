@@ -4,6 +4,7 @@ import styles from './post-wrapper.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/primitives/container/container';
+import { AUTHOR_PREFIX } from '@/config';
 
 type PropsType = {
   post: Post;
@@ -81,7 +82,11 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
               />
             )}
             <div>
-              <p className={styles.footerAuthorName}>{author.name}</p>
+              <p className={styles.footerAuthorName}>
+                <Link href={`/${AUTHOR_PREFIX}/${author.slug}`} className={styles.footerAuthorLink}>
+                  {author.name}
+                </Link>
+              </p>
               <p className={styles.footerAuthorRole}>{author.job_title}</p>
             </div>
           </div>

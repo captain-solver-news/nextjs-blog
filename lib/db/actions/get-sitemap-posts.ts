@@ -2,14 +2,20 @@ import { sql } from 'drizzle-orm';
 import { db } from '../client';
 import { categories } from '../schema/categories';
 import { posts, Status } from '../schema/posts';
+import toDate from '../to-date';
 
 export type SitemapPostRow = {
   fullPath: string;
   updatedAt: Date | null;
 };
 
+type SitemapPostQueryRow = {
+  fullPath: string;
+  updatedAt: string | null;
+};
+
 export default async function getSitemapPosts(): Promise<SitemapPostRow[]> {
-  return db.execute<SitemapPostRow>(sql`
+  const rows = await db.execute<SitemapPostQueryRow>(sql`
     WITH RECURSIVE category_tree AS (
       SELECT
         c.id,
@@ -33,4 +39,9 @@ export default async function getSitemapPosts(): Promise<SitemapPostRow[]> {
     WHERE p.status = ${Status.Published}
       AND p.is_sitemap IS TRUE;
   `);
+
+  return rows.map((row) => ({
+    fullPath: row.fullPath,
+    updatedAt: row.updatedAt ? toDate(row.updatedAt) : null,
+  }));
 }
