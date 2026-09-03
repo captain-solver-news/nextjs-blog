@@ -1,19 +1,24 @@
-import { pgTable, text, uuid, varchar } from 'drizzle-orm/pg-core';
+import { pgTable, text, uniqueIndex, uuid, varchar } from 'drizzle-orm/pg-core';
 import { type InferSelectModel, type InferInsertModel } from 'drizzle-orm';
 
-export const authors = pgTable('authors', {
-  id: uuid('id').primaryKey().defaultRandom(),
-  name: varchar('name', { length: 255 }).notNull(),
-  bio: text('bio'),
-  job_title: varchar('job_title', { length: 255 }).notNull(),
-  avatar_dark_url: varchar('avatar_dark_url', { length: 1024 }),
-  avatar_dark_hovered_url: varchar('avatar_dark_hovered_url', { length: 1024 }),
-  avatar_light_url: varchar('avatar_light_url', { length: 1024 }),
-  avatar_light_hovered_url: varchar('avatar_light_hovered_url', { length: 1024 }),
-  mini_avatar_url: varchar('mini_avatar_url', { length: 1024 }),
-  github_url: varchar('github_url', { length: 255 }),
-  linkedin_url: varchar('linkedin_url', { length: 255 }),
-});
+export const authors = pgTable(
+  'authors',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    name: varchar('name', { length: 255 }).notNull(),
+    slug: varchar('slug', { length: 255 }).notNull(),
+    bio: text('bio'),
+    job_title: varchar('job_title', { length: 255 }).notNull(),
+    avatar_dark_url: varchar('avatar_dark_url', { length: 1024 }),
+    avatar_dark_hovered_url: varchar('avatar_dark_hovered_url', { length: 1024 }),
+    avatar_light_url: varchar('avatar_light_url', { length: 1024 }),
+    avatar_light_hovered_url: varchar('avatar_light_hovered_url', { length: 1024 }),
+    mini_avatar_url: varchar('mini_avatar_url', { length: 1024 }),
+    github_url: varchar('github_url', { length: 255 }),
+    linkedin_url: varchar('linkedin_url', { length: 255 }),
+  },
+  (table) => [uniqueIndex('authors_slug_idx').on(table.slug)]
+);
 
 export type Author = InferSelectModel<typeof authors>;
 export type NewAuthor = InferInsertModel<typeof authors>;

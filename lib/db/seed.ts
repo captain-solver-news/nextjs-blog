@@ -90,6 +90,7 @@ async function main() {
     .insert(authors)
     .values({
       name: 'Alex Chen',
+      slug: 'alex-chen',
       bio: 'Specializes in kernel-level networking and high-performance packet processing. With over fifteen years of experience contributing to the Linux networking stack, he has pioneered several eBPF-based observability tools now standard in hyperscale environments. His research focuses on reducing tail latency in distributed state machines and optimizing hardware-assisted isolation for multi-tenant cloud architectures.',
       job_title: 'Lead Systems Architect',
       avatar_dark_url: '/authors/image-1.jpg',
@@ -102,6 +103,7 @@ async function main() {
     .insert(authors)
     .values({
       name: 'Dr. Elena Rodriguez',
+      slug: 'dr-elena-rodriguez',
       bio: 'An expert in consensus algorithms and formal verification of distributed systems. Her work on Paxos-variant optimizations and TLA+ modeling has been instrumental in the development of next-generation globally distributed databases. She holds a PhD in Distributed Computing and spent a decade leading core infrastructure teams at several FAANG organizations.',
       job_title: 'Head of Cloud-Native Research',
       avatar_dark_url: '/authors/image-2.jpg',
@@ -114,6 +116,7 @@ async function main() {
     .insert(authors)
     .values({
       name: 'Jordan Vane',
+      slug: 'jordan-vane',
       bio: 'Bridges the gap between silicon and software, focusing on hardware-assisted isolation and TEE (Trusted Execution Environments). His expertise in Enclave technologies and side-channel attack mitigation makes him a leading voice in secure systems design. Before joining the Signal, Jordan worked on firmware-level security for high-frequency trading platforms.',
       job_title: 'Hardware-Software Interop Lead',
       avatar_dark_url: '/authors/image-3.jpg',

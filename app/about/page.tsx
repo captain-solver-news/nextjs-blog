@@ -1,6 +1,8 @@
 export { aboutMetadata as metadata } from '@/lib/seo/static';
 import { JsonLd } from '@/components/seo/json-ld';
 import { aboutSchema } from '@/lib/seo/static';
+import Link from 'next/link';
+import { AUTHOR_PREFIX } from '@/config';
 import getStaticContent from '@/lib/db/actions/get-static-content';
 import getAuthors from '@/lib/db/actions/get-authors';
 import { mdToHtml } from '@/lib/content/md-to-html';
@@ -8,6 +10,7 @@ import GitHub from '@/components/icons/github';
 import LinkedIn from '@/components/icons/linkedin';
 import styles from './page.module.scss';
 import { Container } from '@/components/primitives/container/container';
+import { CollapsibleText } from '@/components/primitives/collapsible-text/collapsible-text';
 
 export default async function AboutPage() {
   const [content, authors] = await Promise.all([getStaticContent('about'), getAuthors()]);
@@ -53,11 +56,13 @@ export default async function AboutPage() {
                   </picture>
                 </div>
                 <div className={styles.authorInfo}>
-                  <h2 className={styles.authorName}>{author.name}</h2>
+                  <h2 className={styles.authorName}>
+                    <Link href={`/${AUTHOR_PREFIX}/${author.slug}`} className={styles.authorNameLink}>
+                      {author.name}
+                    </Link>
+                  </h2>
                   <p className={styles.authorRole}>{author.job_title}</p>
-                  <div className={styles.bio}>
-                    <p>{author.bio}</p>
-                  </div>
+                  {author.bio && <CollapsibleText text={author.bio} className={styles.bio} />}
                   <div className={styles.socialLinks}>
                     {author.github_url && (
                       <a className={styles.socialLink} href={author.github_url} aria-label="GitHub">

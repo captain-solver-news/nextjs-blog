@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
-import { BLOG_PREFIX } from '@/config';
+import { AUTHOR_PREFIX, BLOG_PREFIX } from '@/config';
+import getSitemapAuthors from '@/lib/db/actions/get-sitemap-authors';
 import getSitemapCategories from '@/lib/db/actions/get-sitemap-categories';
 import getSitemapPosts from '@/lib/db/actions/get-sitemap-posts';
 
@@ -45,7 +46,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const [categoryRows, postRows] = await Promise.all([getSitemapCategories(), getSitemapPosts()]);
+  const [categoryRows, postRows, authorRows] = await Promise.all([
+    getSitemapCategories(),
+    getSitemapPosts(),
+    getSitemapAuthors(),
+  ]);
 
   const categoryPages: MetadataRoute.Sitemap = categoryRows.map((row) => ({
     url: `${siteUrl}/${BLOG_PREFIX}/${row.fullPath}`,
@@ -61,5 +66,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...categoryPages, ...postPages];
+  const authorPages: MetadataRoute.Sitemap = authorRows.map((row) => ({
+    url: `${siteUrl}/${AUTHOR_PREFIX}/${row.slug}`,
+    lastModified: row.updatedAt ?? lastModified,
+    changeFrequency: 'monthly',
+    priority: 0.5,
+  }));
+
+  return [...staticPages, ...categoryPages, ...postPages, ...authorPages];
 }

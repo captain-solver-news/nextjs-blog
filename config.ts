@@ -1,6 +1,7 @@
 import { StaticContent } from '@/lib/db/schema/static-contents';
 
 export const BLOG_PREFIX = 'blog';
+export const AUTHOR_PREFIX = 'author';
 export const SUBCATEGORIES_PER_PAGE = 12;
 export const POSTS_PER_PAGE = 10;
 export const THEME_STORAGE_KEY = 'theme';
