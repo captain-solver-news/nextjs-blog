@@ -7,6 +7,7 @@
   --surface: #161b22;
   --elevated: #21262d;
   --border: #30363d;
+  --bg-header: #0d1117;
 
   --fg: #dfe2eb;
   --fg-muted: #bdcab8;
@@ -46,9 +47,10 @@
   --surface: #f6f8fa;
   --elevated: #eaeef2;
   --border: #d0d7de;
+  --bg-header: #f6f8fa;
 
-  --fg: #1f2328;
-  --fg-muted: #656d76;
+  --fg: #191c20;
+  --fg-muted: #1f2328;
   --fg-subtle: #9198a1;
 
   --accent: #1a7f37;
