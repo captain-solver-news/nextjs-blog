@@ -3,7 +3,7 @@
   top: 0;
   width: 100%;
   z-index: 50;
-  background: color-mix(in srgb, var(--canvas) 80%, transparent);
+  background: color-mix(in srgb, var(--bg-header) 80%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
