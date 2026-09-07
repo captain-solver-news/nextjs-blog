@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AUTHOR_PREFIX } from '@/config';
-import { type Author } from '@/lib/db/schema/authors';
+import type { authors as authorsTable } from '@/lib/payload/generated-schema';
 import styles from './post-authors-list.module.scss';
 
 interface PostAuthorsListProps {
-  authors: Author[];
+  authors: (typeof authorsTable.$inferSelect)[];
 }
 
 export function PostAuthorsList({ authors }: PostAuthorsListProps) {
@@ -19,7 +19,7 @@ export function PostAuthorsList({ authors }: PostAuthorsListProps) {
         {authors.map((author) => (
           <div key={author.id} className={styles.authorBadge}>
             <Image
-              src={author.mini_avatar_url || '/authors/fallback.jpg'}
+              src={author.miniAvatarUrl || '/authors/fallback.jpg'}
               alt={author.name}
               width={32}
               height={32}
@@ -30,7 +30,7 @@ export function PostAuthorsList({ authors }: PostAuthorsListProps) {
               <Link href={`/${AUTHOR_PREFIX}/${author.slug}`} className={styles.name}>
                 {author.name}
               </Link>
-              {author.job_title && <span className={styles.jobTitle}>{author.job_title}</span>}
+              {author.jobTitle && <span className={styles.jobTitle}>{author.jobTitle}</span>}
             </div>
           </div>
         ))}

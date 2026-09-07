@@ -2,28 +2,36 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "drizzle-kit migrate && next build --webpack",
+    "build": "payload migrate && next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "db:gen": "drizzle-kit generate",
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
-    "db:seed": "tsx lib/db/seed.ts",
-    "format": "prettier --write ."
+    "db:seed": "tsx lib/payload/seed.ts",
+    "format": "prettier --write .",
+    "payload": "NODE_OPTIONS=--no-deprecation payload",
+    "payload:migrate": "NODE_OPTIONS=--no-deprecation payload migrate",
+    "payload:migrate:create": "NODE_OPTIONS=--no-deprecation payload migrate:create",
+    "payload:types": "NODE_OPTIONS=--no-deprecation payload generate:types",
+    "payload:importmap": "NODE_OPTIONS=--no-deprecation payload generate:importmap",
+    "payload:db-schema": "NODE_OPTIONS=--no-deprecation payload generate:db-schema"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@payloadcms/db-postgres": "3.88.0",
+    "@payloadcms/next": "3.88.0",
+    "@payloadcms/richtext-lexical": "3.88.0",
     "@phosphor-icons/react": "^2.1.10",
     "@tailwindcss/postcss": "^4.3.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "dotenv": "^17.3.1",
-    "drizzle-orm": "^0.45.1",
+    "drizzle-orm": "0.45.2",
+    "graphql": "^16.14.2",
     "lucide-react": "^1.16.0",
-    "next": "16.1.6",
-    "postgres": "^3.4.8",
+    "next": "16.3.4",
+    "payload": "3.88.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "remark": "^15.0.1",
@@ -38,12 +46,16 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "drizzle-kit": "^0.31.9",
     "eslint": "^9",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "16.3.4",
     "prettier": "^3.8.1",
     "sass": "^1.99.0",
     "tsx": "^4.21.0",
     "typescript": "^5"
+  },
+  "pnpm": {
+    "overrides": {
+      "drizzle-orm": "0.45.2"
+    }
   }
 }

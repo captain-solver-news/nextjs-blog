@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { type Post } from '@/lib/db/schema/posts';
+import { type Post } from '@/lib/actions/types/post';
 import Pager from '@/components/blocks/pager/pager';
 import { POSTS_PER_PAGE, BLOG_PREFIX } from '@/config';
 import styles from './author-posts-list.module.scss';
@@ -10,8 +10,8 @@ type PropsType = {
   totalCount: number;
 };
 
-function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
+function formatDate(timestamp: string): string {
+  return new Date(timestamp).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -69,7 +69,7 @@ export default function AuthorPostsList(props: PropsType) {
                   <polyline points="12 5 19 12 12 19" />
                 </svg>
               </Link>
-              <time className={styles.entryDate} dateTime={post.createdAt.toISOString()}>
+              <time className={styles.entryDate} dateTime={new Date(post.createdAt).toISOString()}>
                 {formatDate(post.createdAt)}
               </time>
             </div>

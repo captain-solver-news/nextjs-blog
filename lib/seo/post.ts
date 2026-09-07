@@ -1,6 +1,6 @@
 import { type Metadata } from 'next';
 import { BLOG_PREFIX } from '@/config';
-import { type Post } from '@/lib/db/schema/posts';
+import { type Post } from '@/lib/actions/types/post';
 import { WithContext, Thing } from 'schema-dts';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
