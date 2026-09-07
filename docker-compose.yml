@@ -10,6 +10,15 @@ services:
       - '5432:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  postgres_adminer:
+    container_name: postgres_adminer
+    image: adminer:latest
+    ports:
+      - 5431:8080
+    networks:
+      - default
+    depends_on:
+      - postgres
 
 volumes:
   postgres_data:
