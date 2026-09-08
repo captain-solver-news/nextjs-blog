@@ -56,6 +56,16 @@
   "pnpm": {
     "overrides": {
       "drizzle-orm": "0.45.2"
-    }
+    },
+    "patchedDependencies": {
+      "@payloadcms/ui@3.88.0": "patches/@payloadcms__ui@3.88.0.patch"
+    },
+    "ignoredBuiltDependencies": [
+      "esbuild",
+      "unrs-resolver"
+    ],
+    "onlyBuiltDependencies": [
+      "@parcel/watcher"
+    ]
   }
 }

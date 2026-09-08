@@ -229,8 +229,6 @@ async function main() {
 
   const authorPool = [alice, bob, carol];
 
-  // Payload keys `hasMany` relationships by `path` and orders them by `order`, so the seed has
-  // to write both rather than a bare post/author pair.
   const postsRelsValues = insertedPosts.flatMap((post, i) => {
     const selected =
       i < 12

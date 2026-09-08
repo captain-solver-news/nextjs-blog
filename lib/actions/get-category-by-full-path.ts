@@ -12,8 +12,6 @@ export default async function getCategoryByFullPath(slugs: string[]): Promise<ty
   const fullPath = slugs.join('/');
 
   try {
-    // The row is built with `rowJson` rather than `SELECT *`: raw columns are snake_case, and
-    // `weight` is `numeric`, which the driver hands back as a string outside Drizzle's mapping.
     const { rows } = await db.execute<{ category: typeof categories.$inferSelect }>(sql`
         WITH RECURSIVE category_tree AS (
           SELECT
