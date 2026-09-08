@@ -9,7 +9,7 @@ export const Configs: CollectionConfig = {
   admin: {
     useAsTitle: 'label',
     defaultColumns: ['id', 'label', 'value'],
-    group: 'Site',
+    group: 'Content',
     description: 'Key/value settings the site reads by id.',
   },
   access: {

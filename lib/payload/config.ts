@@ -21,7 +21,7 @@ export default buildConfig({
       baseDir: projectRoot,
     },
   },
-  collections: [Posts, Categories, Authors, StaticContents, Configs, Users],
+  collections: [Categories, Posts, StaticContents, Configs, Authors, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
