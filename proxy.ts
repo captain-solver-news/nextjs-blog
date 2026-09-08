@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (pathname === '/api' || pathname.startsWith('/api/')) {
+  if (pathname.startsWith('/api/')) {
     return NextResponse.next();
   }
 
@@ -31,5 +31,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api/|api$|admin|_next/static|_next/image|favicon.ico|.*\\.[a-zA-Z0-9]+$).*)'],
+  matcher: ['/((?!api/|_next/static|_next/image|favicon.ico|.*\\.[a-zA-Z0-9]+$).*)'],
 };
