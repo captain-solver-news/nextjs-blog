@@ -1,6 +1,12 @@
+import * as migration_20260907_184239_payload_migrations from './20260907_184239_payload_migrations';
 import * as migration_20260907_184240_initial from './20260907_184240_initial';
 
 export const migrations = [
+  {
+    up: migration_20260907_184239_payload_migrations.up,
+    down: migration_20260907_184239_payload_migrations.down,
+    name: '20260907_184239_payload_migrations',
+  },
   {
     up: migration_20260907_184240_initial.up,
     down: migration_20260907_184240_initial.down,
