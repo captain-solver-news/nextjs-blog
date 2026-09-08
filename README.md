@@ -94,22 +94,22 @@ prompts for the first user on a fresh install.
 ```
 .
 ├── app/
-│   ├── (frontend)/            # Public site routes
-│   └── (payload)/             # Payload admin + REST/GraphQL routes
+│   ├── (frontend)/             # Public site routes
+│   └── (payload)/              # Payload admin + REST/GraphQL routes
 ├── lib/
 │   ├── payload/
-│   │   ├── config.ts          # Payload config (aliased as @payload-config)
-│   │   ├── collections/       # Collection definitions — the content model
-│   │   ├── migrations/        # The only source of DDL for this database
-│   │   ├── taxonomy.ts        # Status/Type values shared with the read layer
-│   │   ├── seed.ts            # Sample content
+│   │   ├── config.ts           # Payload config (aliased as @payload-config)
+│   │   ├── collections/        # Collection definitions — the content model
+│   │   ├── migrations/         # The only source of DDL for this database
+│   │   ├── taxonomy.ts         # Status/Type values shared with the read layer
+│   │   ├── seed.ts             # Sample content script
 │   │   ├── generated-schema.ts # `payload generate:db-schema` — do not edit
 │   │   └── generated-types.ts  # `payload generate:types` — do not edit
-│   └── db/                    # Read layer: actions, column aliases, domain types
-├── docker-compose.yml         # PostgreSQL container
-├── tsconfig.json              # TypeScript configuration
-├── .env.example               # Environment variables template
-└── .env                       # Copy from .env.example (see step 4)
+│   └── actions/                # Server actions for app/(payload) needs
+├── docker-compose.yml          # PostgreSQL container
+├── tsconfig.json               # TypeScript configuration
+├── .env.example                # Environment variables template
+└── .env                        # Copy from .env.example (see step 4)
 ```
 
 ## Stopping the Database

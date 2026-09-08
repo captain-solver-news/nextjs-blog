@@ -9,7 +9,7 @@ export const StaticContents: CollectionConfig = {
   admin: {
     useAsTitle: 'id',
     defaultColumns: ['id', 'title'],
-    group: 'Site',
+    group: 'Content',
     description: 'Markdown blocks addressed by a stable string id (about, contact, ...).',
   },
   access: {

@@ -11,9 +11,9 @@ export async function Footer() {
   type IconComponent = typeof GitHub | typeof LinkedIn | typeof X;
 
   const socialLinksMap = new Map<string, IconComponent>([
-    ['social_link_github', GitHub],
-    ['social_link_linkedin', LinkedIn],
-    ['social_link_x', X],
+    ['social-link-github', GitHub],
+    ['social-link-linkedin', LinkedIn],
+    ['social-link-x', X],
   ]);
 
   const linkConfigs = await getDbConfigs(Array.from(socialLinksMap.keys()));

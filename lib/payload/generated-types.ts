@@ -67,11 +67,11 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    posts: Post;
     categories: Category;
-    authors: Author;
+    posts: Post;
     'static-contents': StaticContent;
     configs: Config1;
+    authors: Author;
     users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -80,11 +80,11 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    posts: PostsSelect<false> | PostsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
-    authors: AuthorsSelect<false> | AuthorsSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     'static-contents': StaticContentsSelect<false> | StaticContentsSelect<true>;
     configs: ConfigsSelect<false> | ConfigsSelect<true>;
+    authors: AuthorsSelect<false> | AuthorsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -127,29 +127,6 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts".
- */
-export interface Post {
-  id: string;
-  title: string;
-  slug: string;
-  category: string | Category;
-  authors?: (string | Author)[] | null;
-  teaser: string;
-  /**
-   * Markdown. Rendered through remark + remark-gfm at request time.
-   */
-  body: string;
-  status: 'published' | 'draft';
-  isFeatured?: boolean | null;
-  seoDescription?: string | null;
-  ogImage?: string | null;
-  isSitemap?: boolean | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories".
  */
 export interface Category {
@@ -176,6 +153,29 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  category: string | Category;
+  authors?: (string | Author)[] | null;
+  teaser: string;
+  /**
+   * Markdown. Rendered through remark + remark-gfm at request time.
+   */
+  body: string;
+  status: 'published' | 'draft';
+  isFeatured?: boolean | null;
+  seoDescription?: string | null;
+  ogImage?: string | null;
+  isSitemap?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "authors".
  */
 export interface Author {
@@ -186,7 +186,7 @@ export interface Author {
    */
   slug: string;
   jobTitle: string;
-  bio?: string | null;
+  bio: string;
   avatarDarkUrl?: string | null;
   avatarDarkHoveredUrl?: string | null;
   avatarLightUrl?: string | null;
@@ -280,16 +280,12 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
-        relationTo: 'posts';
-        value: string | Post;
-      } | null)
-    | ({
         relationTo: 'categories';
         value: string | Category;
       } | null)
     | ({
-        relationTo: 'authors';
-        value: string | Author;
+        relationTo: 'posts';
+        value: string | Post;
       } | null)
     | ({
         relationTo: 'static-contents';
@@ -298,6 +294,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'configs';
         value: string | Config1;
+      } | null)
+    | ({
+        relationTo: 'authors';
+        value: string | Author;
       } | null)
     | ({
         relationTo: 'users';
@@ -347,25 +347,6 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "posts_select".
- */
-export interface PostsSelect<T extends boolean = true> {
-  title?: T;
-  slug?: T;
-  category?: T;
-  authors?: T;
-  teaser?: T;
-  body?: T;
-  status?: T;
-  isFeatured?: T;
-  seoDescription?: T;
-  ogImage?: T;
-  isSitemap?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "categories_select".
  */
 export interface CategoriesSelect<T extends boolean = true> {
@@ -382,20 +363,20 @@ export interface CategoriesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "authors_select".
+ * via the `definition` "posts_select".
  */
-export interface AuthorsSelect<T extends boolean = true> {
-  name?: T;
+export interface PostsSelect<T extends boolean = true> {
+  title?: T;
   slug?: T;
-  jobTitle?: T;
-  bio?: T;
-  avatarDarkUrl?: T;
-  avatarDarkHoveredUrl?: T;
-  avatarLightUrl?: T;
-  avatarLightHoveredUrl?: T;
-  miniAvatarUrl?: T;
-  githubUrl?: T;
-  linkedinUrl?: T;
+  category?: T;
+  authors?: T;
+  teaser?: T;
+  body?: T;
+  status?: T;
+  isFeatured?: T;
+  seoDescription?: T;
+  ogImage?: T;
+  isSitemap?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -418,6 +399,25 @@ export interface ConfigsSelect<T extends boolean = true> {
   id?: T;
   label?: T;
   value?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "authors_select".
+ */
+export interface AuthorsSelect<T extends boolean = true> {
+  name?: T;
+  slug?: T;
+  jobTitle?: T;
+  bio?: T;
+  avatarDarkUrl?: T;
+  avatarDarkHoveredUrl?: T;
+  avatarLightUrl?: T;
+  avatarLightHoveredUrl?: T;
+  miniAvatarUrl?: T;
+  githubUrl?: T;
+  linkedinUrl?: T;
   updatedAt?: T;
   createdAt?: T;
 }

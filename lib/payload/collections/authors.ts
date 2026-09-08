@@ -37,6 +37,7 @@ export const Authors: CollectionConfig = {
     {
       name: 'bio',
       type: 'textarea',
+      required: true,
     },
     {
       type: 'collapsible',
