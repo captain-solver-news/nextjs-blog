@@ -1,4 +1,5 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionConfig, RelationshipFieldSingleValidation } from 'payload';
+import type { Category } from '@/lib/payload/generated-types';
 import { Type } from '@/lib/payload/taxonomy';
 
 export const Categories: CollectionConfig = {
@@ -33,6 +34,42 @@ export const Categories: CollectionConfig = {
       type: 'relationship',
       relationTo: 'categories',
       index: true,
+      filterOptions: ({ id }) => (id ? { id: { not_equals: id } } : true),
+      validate: (async (value, { id, req }) => {
+        if (!value || !id) return true;
+
+        const parentId = typeof value === 'object' ? value.value : value;
+
+        if (String(parentId) === String(id)) {
+          return 'A category cannot be its own parent.';
+        }
+
+        const seen = new Set<string>([String(id)]);
+        let currentId: string | null = String(parentId);
+
+        while (currentId && !seen.has(currentId)) {
+          seen.add(currentId);
+
+          const ancestor: Category | null = await req.payload.findByID({
+            collection: 'categories',
+            id: currentId,
+            depth: 0,
+            req,
+            disableErrors: true,
+          });
+
+          const nextParent: Category['parent'] = ancestor?.parent;
+          if (!nextParent) return true;
+
+          currentId = String(typeof nextParent === 'object' ? nextParent.id : nextParent);
+
+          if (currentId === String(id)) {
+            return 'A category cannot be a descendant of itself.';
+          }
+        }
+
+        return true;
+      }) as RelationshipFieldSingleValidation,
       admin: {
         description: 'Leave empty for a root category.',
       },
