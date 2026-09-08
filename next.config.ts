@@ -1,9 +1,13 @@
 import type { NextConfig } from 'next';
 import type { RuleSetRule } from 'webpack';
+import { withPayload } from '@payloadcms/next/withPayload';
 
 const nextConfig: NextConfig = {
   sassOptions: {
-    additionalData: `@use "@/styles/breakpoints" as *;`,
+    // Scoped to first-party styles: Payload ships its own .scss inside node_modules, and
+    // blanket-prepending this import made those files fail to resolve `@/styles/breakpoints`.
+    additionalData: (content: string, loaderContext: { resourcePath: string }) =>
+      loaderContext.resourcePath.includes('node_modules') ? content : `@use "@/styles/breakpoints" as *;\n${content}`,
   },
   webpack(config) {
     const fileLoaderRule = config.module.rules.find((rule: RuleSetRule) => {
@@ -30,4 +34,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig);

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import styles from './footer.module.scss';
-import getDbConfigs from '@/lib/db/actions/get-db-configs';
+import getDbConfigs from '@/lib/actions/get-db-configs';
 import { FOOTER_LINKS_1, FOOTER_LINKS_2 } from '@/config';
 import { Container } from '@/components/primitives/container/container';
 import GitHub from '@/components/icons/github';

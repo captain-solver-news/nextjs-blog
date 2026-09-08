@@ -1,19 +1,19 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Category } from '@/lib/db/schema/categories';
-import getPostsByCategoryId from '@/lib/db/actions/get-posts-by-category-id';
+import type { categories } from '@/lib/payload/generated-schema';
+import getPostsByCategoryId from '@/lib/actions/get-posts-by-category-id';
 import Pager from '@/components/blocks/pager/pager';
 import { POSTS_PER_PAGE, BLOG_PREFIX } from '@/config';
 import styles from './posts-list.module.scss';
 
 type PropsType = {
-  category: Category;
+  category: typeof categories.$inferSelect;
   page: number;
   slugs: string[];
 };
 
-function formatDate(date: Date): string {
-  return date.toLocaleDateString('en-US', {
+function formatDate(timestamp: string): string {
+  return new Date(timestamp).toLocaleDateString('en-US', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',
@@ -58,7 +58,7 @@ export default async function PostsList(props: PropsType) {
                   <polyline points="12 5 19 12 12 19" />
                 </svg>
               </Link>
-              <time className={styles.entryDate} dateTime={post.createdAt.toISOString()}>
+              <time className={styles.entryDate} dateTime={new Date(post.createdAt).toISOString()}>
                 {formatDate(post.createdAt)}
               </time>
             </div>

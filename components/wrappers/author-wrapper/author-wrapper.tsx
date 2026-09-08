@@ -1,13 +1,13 @@
 import { type ReactNode } from 'react';
 import Link from 'next/link';
-import { type Author } from '@/lib/db/schema/authors';
+import type { authors } from '@/lib/payload/generated-schema';
 import GitHub from '@/components/icons/github';
 import LinkedIn from '@/components/icons/linkedin';
 import { Container } from '@/components/primitives/container/container';
 import styles from './author-wrapper.module.scss';
 
 type PropsType = {
-  author: Author;
+  author: typeof authors.$inferSelect;
   totalCount: number;
   children?: ReactNode;
 };
@@ -48,24 +48,24 @@ export default async function AuthorWrapper(props: PropsType) {
             <picture>
               <img
                 className={`${styles.avatar} ${styles.avatarDark}`}
-                src={author.avatar_dark_url || FALLBACK_AVATAR}
+                src={author.avatarDarkUrl || FALLBACK_AVATAR}
                 alt={author.name}
               />
               <img
                 className={`${styles.avatar} ${styles.avatarDarkHover}`}
-                src={author.avatar_dark_hovered_url || FALLBACK_AVATAR}
+                src={author.avatarDarkHoveredUrl || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
               <img
                 className={`${styles.avatar} ${styles.avatarLight}`}
-                src={author.avatar_light_url || FALLBACK_AVATAR}
+                src={author.avatarLightUrl || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
               <img
                 className={`${styles.avatar} ${styles.avatarLightHover}`}
-                src={author.avatar_light_hovered_url || FALLBACK_AVATAR}
+                src={author.avatarLightHoveredUrl || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
@@ -74,7 +74,7 @@ export default async function AuthorWrapper(props: PropsType) {
 
           <div className={styles.identityInfo}>
             <h1 className={styles.title}>{author.name}</h1>
-            <p className={styles.role}>{author.job_title}</p>
+            <p className={styles.role}>{author.jobTitle}</p>
             <p className={styles.count}>
               {totalCount} {totalCount === 1 ? 'article' : 'articles'}
             </p>
@@ -83,12 +83,12 @@ export default async function AuthorWrapper(props: PropsType) {
 
         {author.bio && <p className={styles.bio}>{author.bio}</p>}
 
-        {(author.github_url || author.linkedin_url) && (
+        {(author.githubUrl || author.linkedinUrl) && (
           <div className={styles.socialLinks}>
-            {author.github_url && (
+            {author.githubUrl && (
               <a
                 className={styles.socialLink}
-                href={author.github_url}
+                href={author.githubUrl}
                 aria-label={`${author.name} on GitHub`}
                 rel="noopener noreferrer"
                 target="_blank"
@@ -96,10 +96,10 @@ export default async function AuthorWrapper(props: PropsType) {
                 <GitHub className={styles.socialIcon} />
               </a>
             )}
-            {author.linkedin_url && (
+            {author.linkedinUrl && (
               <a
                 className={styles.socialLink}
-                href={author.linkedin_url}
+                href={author.linkedinUrl}
                 aria-label={`${author.name} on LinkedIn`}
                 rel="noopener noreferrer"
                 target="_blank"

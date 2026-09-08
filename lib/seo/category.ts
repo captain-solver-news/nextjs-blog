@@ -1,7 +1,9 @@
 import { type Metadata } from 'next';
 import { BLOG_PREFIX } from '@/config';
-import { type Category } from '@/lib/db/schema/categories';
+import type { categories } from '@/lib/payload/generated-schema';
 import { WithContext, Thing } from 'schema-dts';
+
+type Category = typeof categories.$inferSelect;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function generateCategorySchema(category: Category, slugs: string[]): WithContext<Thing> {
@@ -13,10 +15,10 @@ export function generateCategorySchema(category: Category, slugs: string[]): Wit
 
 export function generateCategoryMetadata(category: Category, slugs: string[]): Metadata {
   const title = category.title;
-  const description = category.seo_description ?? category.title;
+  const description = category.seoDescription ?? category.title;
   const canonicalPath = `/${BLOG_PREFIX}/${slugs.join('/')}`;
 
-  const ogImage = category.og_image ?? undefined;
+  const ogImage = category.ogImage ?? undefined;
   return {
     title,
     description,

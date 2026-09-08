@@ -1,7 +1,9 @@
 import { type Metadata } from 'next';
 import { AUTHOR_PREFIX } from '@/config';
-import { type Author } from '@/lib/db/schema/authors';
+import type { authors } from '@/lib/payload/generated-schema';
 import { WithContext, Person } from 'schema-dts';
+
+type Author = typeof authors.$inferSelect;
 
 const DESCRIPTION_LIMIT = 160;
 
@@ -12,19 +14,19 @@ function truncate(value: string, limit = DESCRIPTION_LIMIT): string {
 }
 
 function authorDescription(author: Author): string {
-  return truncate(author.bio ?? `${author.name} — ${author.job_title}.`);
+  return truncate(author.bio ?? `${author.name} — ${author.jobTitle}.`);
 }
 
 export function generateAuthorSchema(author: Author): WithContext<Person> {
   const siteUrl = process.env.PUBLIC_SITE_URL ?? 'http://localhost:3000';
-  const sameAs = [author.github_url, author.linkedin_url].filter((url): url is string => Boolean(url));
-  const image = author.avatar_dark_url ?? author.mini_avatar_url;
+  const sameAs = [author.githubUrl, author.linkedinUrl].filter((url): url is string => Boolean(url));
+  const image = author.avatarDarkUrl ?? author.miniAvatarUrl;
 
   return {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: author.name,
-    jobTitle: author.job_title,
+    jobTitle: author.jobTitle,
     url: `${siteUrl}/${AUTHOR_PREFIX}/${author.slug}`,
     ...(author.bio ? { description: author.bio } : {}),
     ...(image ? { image: `${siteUrl}${image}` } : {}),
@@ -37,7 +39,7 @@ export function generateAuthorMetadata(author: Author): Metadata {
   const description = authorDescription(author);
   const canonicalPath = `/${AUTHOR_PREFIX}/${author.slug}`;
 
-  const ogImage = author.avatar_dark_url ?? undefined;
+  const ogImage = author.avatarDarkUrl ?? undefined;
   return {
     title,
     description,

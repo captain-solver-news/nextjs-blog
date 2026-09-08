@@ -1,5 +1,5 @@
-import { Post } from '@/lib/db/schema/posts';
-import { mdToHtml } from '@/lib/content/md-to-html';
+import { type Post } from '@/lib/actions/types/post';
+import { mdToHtml } from '@/lib/utils/md-to-html';
 import styles from './post-wrapper.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -72,9 +72,9 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
       <div className={styles.footer}>
         {post.authors.map((author) => (
           <div key={author.id} className={styles.footerAuthor}>
-            {author.mini_avatar_url && (
+            {author.miniAvatarUrl && (
               <Image
-                src={author.mini_avatar_url}
+                src={author.miniAvatarUrl}
                 alt={author.name}
                 width={48}
                 height={48}
@@ -87,7 +87,7 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
                   {author.name}
                 </Link>
               </p>
-              <p className={styles.footerAuthorRole}>{author.job_title}</p>
+              <p className={styles.footerAuthorRole}>{author.jobTitle}</p>
             </div>
           </div>
         ))}

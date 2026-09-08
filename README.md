@@ -1,6 +1,10 @@
 # Web Site
 
-A Node.js project with PostgreSQL database, Drizzle ORM, and TypeScript.
+A Next.js blog with PostgreSQL, Payload CMS, and TypeScript.
+
+Payload owns the content model: it generates the database schema and is the only source of
+DDL. The public site reads through a thin Drizzle layer in `lib/db` for queries Payload's
+Local API cannot express (recursive category paths).
 
 ## Prerequisites
 
@@ -49,38 +53,63 @@ cp .env.example .env
 
 ### 5. Run database migrations
 
-Generate and apply the schema to the database:
+Apply Payload's migrations to the database:
 
 ```bash
-pnpm db:gen
-pnpm db:push
+pnpm payload:migrate
 ```
 
-Alternatively, use `pnpm db:pull` to introspect an existing database and generate the schema.
+### 6. Seed sample content (optional)
+
+```bash
+pnpm db:seed
+```
+
+> **Warning:** the seed truncates `posts`, `categories`, `authors`, `static_contents` and
+> `configs` before inserting. Only run it against an empty or throwaway database.
+
+### 7. Create an admin user
+
+Start the app and open [http://localhost:3000/admin](http://localhost:3000/admin) — Payload
+prompts for the first user on a fresh install.
 
 ## Available Scripts
 
-| Command          | Description                             |
-| ---------------- | --------------------------------------- |
-| `pnpm db:gen`    | Generate Drizzle migrations from schema |
-| `pnpm db:push`   | Push schema changes to the database     |
-| `pnpm db:pull`   | Introspect database and generate schema |
-| `pnpm db:studio` | Open Drizzle Studio (database GUI)      |
-| `pnpm format`    | Format code with Prettier               |
+| Command                       | Description                                          |
+| ----------------------------- | ---------------------------------------------------- |
+| `pnpm dev`                    | Start the dev server                                 |
+| `pnpm build`                  | Run Payload migrations, then build                   |
+| `pnpm start`                  | Serve the production build                           |
+| `pnpm lint`                   | Lint with ESLint                                     |
+| `pnpm format`                 | Format code with Prettier                            |
+| `pnpm db:seed`                | Seed sample content (truncates content tables first) |
+| `pnpm payload:migrate`        | Apply pending Payload migrations                     |
+| `pnpm payload:migrate:create` | Create a new migration from config changes           |
+| `pnpm payload:types`          | Regenerate `lib/payload/generated-types.ts`          |
+| `pnpm payload:db-schema`      | Regenerate `lib/payload/generated-schema.ts`         |
+| `pnpm payload:importmap`      | Regenerate the admin import map                      |
 
 ## Project Structure
 
 ```
-web_site/
-├── src/
-│   └── db/
-│       └── schema.ts    # Database schema (Drizzle)
-├── drizzle/             # Generated migrations
-├── docker-compose.yml   # PostgreSQL container
-├── drizzle.config.ts    # Drizzle Kit configuration
-├── tsconfig.json        # TypeScript configuration
-├── .env.example         # Environment variables template
-└── .env                 # Copy from .env.example (see step 4)
+.
+├── app/
+│   ├── (frontend)/            # Public site routes
+│   └── (payload)/             # Payload admin + REST/GraphQL routes
+├── lib/
+│   ├── payload/
+│   │   ├── config.ts          # Payload config (aliased as @payload-config)
+│   │   ├── collections/       # Collection definitions — the content model
+│   │   ├── migrations/        # The only source of DDL for this database
+│   │   ├── taxonomy.ts        # Status/Type values shared with the read layer
+│   │   ├── seed.ts            # Sample content
+│   │   ├── generated-schema.ts # `payload generate:db-schema` — do not edit
+│   │   └── generated-types.ts  # `payload generate:types` — do not edit
+│   └── db/                    # Read layer: actions, column aliases, domain types
+├── docker-compose.yml         # PostgreSQL container
+├── tsconfig.json              # TypeScript configuration
+├── .env.example               # Environment variables template
+└── .env                       # Copy from .env.example (see step 4)
 ```
 
 ## Stopping the Database

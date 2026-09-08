@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { MoonIcon, SunIcon } from '@heroicons/react/24/outline';
-import { applyTheme, getThemeFromDocument, type Theme } from '@/lib/theme';
+import { applyTheme, getThemeFromDocument, type Theme } from '@/lib/utils/theme';
 import styles from './theme-toggle.module.scss';
 
 export function ThemeToggle() {

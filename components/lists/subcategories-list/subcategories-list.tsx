@@ -1,14 +1,14 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { Category } from '@/lib/db/schema/categories';
-import getSubcategoriesByCategoryId from '@/lib/db/actions/get-subcategories-by-category-id';
+import type { categories } from '@/lib/payload/generated-schema';
+import getSubcategoriesByCategoryId from '@/lib/actions/get-subcategories-by-category-id';
 import Pager from '@/components/blocks/pager/pager';
 import { SUBCATEGORIES_PER_PAGE, BLOG_PREFIX } from '@/config';
 import styles from './subcategories-list.module.scss';
 import { Container } from '@/components/primitives/container/container';
 
 type PropsType = {
-  category: Category;
+  category: typeof categories.$inferSelect;
   page: number;
   slugs: string[];
 };
