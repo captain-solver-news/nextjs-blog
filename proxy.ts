@@ -2,6 +2,12 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function proxy(req: NextRequest) {
+  const { pathname } = req.nextUrl;
+
+  if (pathname === '/api' || pathname.startsWith('/api/')) {
+    return NextResponse.next();
+  }
+
   const authHeader = req.headers.get('authorization');
 
   if (authHeader) {
@@ -25,7 +31,5 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  // `admin` is excluded because Payload authenticates its own dashboard; a second Basic Auth
-  // prompt in front of it would just be a duplicate login.
-  matcher: ['/((?!api|admin|_next/static|_next/image|favicon.ico|.*\\.[a-zA-Z0-9]+$).*)'],
+  matcher: ['/((?!api/|api$|admin|_next/static|_next/image|favicon.ico|.*\\.[a-zA-Z0-9]+$).*)'],
 };

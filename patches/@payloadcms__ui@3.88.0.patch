@@ -1,0 +1,17 @@
+diff --git a/dist/utilities/getClientSchemaMap.js b/dist/utilities/getClientSchemaMap.js
+index e42de04dd6d85d8876b1b30ac471fb71b2f3f973..feca2e889fd5673cf3026ce7abf533b5d92bfb45 100644
+--- a/dist/utilities/getClientSchemaMap.js
++++ b/dist/utilities/getClientSchemaMap.js
+@@ -34,8 +34,10 @@ export const getClientSchemaMap = cache(args => {
+     schemaMap,
+     widgetSlug
+   });
+-  cachedClientSchemaMap.set(cacheKey, entityClientFieldMap);
+-  global._payload_clientSchemaMap = cachedClientSchemaMap;
++  if (!config?.unauthenticated) {
++    cachedClientSchemaMap.set(cacheKey, entityClientFieldMap);
++    global._payload_clientSchemaMap = cachedClientSchemaMap;
++  }
+   global._payload_doNotCacheClientSchemaMap = false;
+   return entityClientFieldMap;
+ });
