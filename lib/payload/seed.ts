@@ -369,24 +369,24 @@ For corrections to published articles, please include the article URL and a clea
 
   await db.insert(configs).values([
     {
-      id: 'social_link_github',
-      label: 'Github',
+      id: 'social-link-github',
+      label: 'Github Social Link',
       value: 'https://github.com/',
     },
     {
-      id: 'social_link_linkedin',
-      label: 'Linkedin',
+      id: 'social-link-linkedin',
+      label: 'Linkedin Social Link',
       value: 'https://linkedin.com/',
     },
     {
-      id: 'social_link_x',
-      label: 'X',
+      id: 'social-link-x',
+      label: 'X Social Link',
       value: 'https://x.com/',
     },
     {
-      id: 'contact_email',
+      id: 'contact-email',
       label: 'Contact Email',
-      value: 'hello@nextjs-glog',
+      value: 'hello@nextjs-blog',
     },
   ]);
 }

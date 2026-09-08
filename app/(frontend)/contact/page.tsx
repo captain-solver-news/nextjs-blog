@@ -11,10 +11,10 @@ import { StaticPage } from '@/components/wrappers/static-page/static-page';
 
 export default async function ContactPage() {
   const content = await getStaticContent('contact');
-  const configs = await getDbConfigs(['contact_email', 'social_link_linkedin', 'social_link_x']);
-  const email = configs.find((c) => c.id === 'contact_email')?.value ?? 'hello@dev-signal.com';
-  const linkedinUrl = configs.find((c) => c.id === 'social_link_linkedin')?.value ?? '#';
-  const xUrl = configs.find((c) => c.id === 'social_link_x')?.value ?? '#';
+  const configs = await getDbConfigs(['contact-email', 'social-link-linkedin', 'social-link-x']);
+  const email = configs.find((c) => c.id === 'contact-email')?.value ?? 'hello@dev-signal.com';
+  const linkedinUrl = configs.find((c) => c.id === 'social-link-linkedin')?.value ?? '#';
+  const xUrl = configs.find((c) => c.id === 'social-link-x')?.value ?? '#';
 
   return (
     <>
