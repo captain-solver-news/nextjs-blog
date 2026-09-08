@@ -4,7 +4,8 @@ export const BLOG_PREFIX = 'blog';
 export const AUTHOR_PREFIX = 'author';
 export const SUBCATEGORIES_PER_PAGE = 12;
 export const POSTS_PER_PAGE = 10;
-export const THEME_STORAGE_KEY = 'theme';
+export const THEME_COOKIE_NAME = 'theme';
+export const THEME_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 export const HEADER_LINKS = [
   { href: '/', label: 'Home' },

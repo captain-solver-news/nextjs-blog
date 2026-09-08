@@ -1,4 +1,4 @@
-import { THEME_STORAGE_KEY } from '@/config';
+import { THEME_COOKIE_NAME, THEME_COOKIE_MAX_AGE } from '@/config';
 
 export type Theme = 'dark' | 'light';
 
@@ -8,17 +8,10 @@ export function applyTheme(theme: Theme): void {
   } else {
     document.documentElement.removeAttribute('data-theme');
   }
-  localStorage.setItem(THEME_STORAGE_KEY, theme);
+
+  document.cookie = `${THEME_COOKIE_NAME}=${theme};path=/;max-age=${THEME_COOKIE_MAX_AGE};samesite=lax`;
 }
 
 export function getThemeFromDocument(): Theme {
   return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
-}
-
-export function readStoredTheme(): Theme | null {
-  const stored = localStorage.getItem(THEME_STORAGE_KEY);
-  if (stored === 'light' || stored === 'dark') {
-    return stored;
-  }
-  return null;
 }

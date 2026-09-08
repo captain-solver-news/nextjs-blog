@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
 import { DM_Sans, JetBrains_Mono, Source_Serif_4, Syne } from 'next/font/google';
 import './globals.css';
 import '@/styles/base.scss';
 import '@/styles/typography.scss';
 import { Header } from '@/components/blocks/header/header';
 import { Footer } from '@/components/blocks/footer/footer';
-import { THEME_STORAGE_KEY } from '@/config';
+import { THEME_COOKIE_NAME } from '@/config';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/react';
 
@@ -38,20 +39,15 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.PUBLIC_SITE_URL ?? 'http://localhost:3000'),
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = (await cookies()).get(THEME_COOKIE_NAME)?.value;
+
   return (
-    <html lang="en">
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('${THEME_STORAGE_KEY}');if(t==='light'){document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();`,
-          }}
-        />
-      </head>
+    <html lang="en" data-theme={theme === 'light' ? 'light' : undefined}>
       <body
         className={`${dmSans.variable} ${jetbrainsMono.variable} ${sourceSerif4.variable} ${syne.variable} antialiased`}
       >
