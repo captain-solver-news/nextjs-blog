@@ -72,6 +72,7 @@ export interface Config {
     'static-contents': StaticContent;
     configs: Config1;
     authors: Author;
+    media: Media;
     users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -85,6 +86,7 @@ export interface Config {
     'static-contents': StaticContentsSelect<false> | StaticContentsSelect<true>;
     configs: ConfigsSelect<false> | ConfigsSelect<true>;
     authors: AuthorsSelect<false> | AuthorsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -146,10 +148,34 @@ export interface Category {
    */
   weight: number;
   seoDescription?: string | null;
+  ogImageMedia?: (string | null) | Media;
   ogImage?: string | null;
   isSitemap?: boolean | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: string;
+  /**
+   * Alternative text used by screen readers and shown when the image cannot load.
+   */
+  alt: string;
+  prefix?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -169,6 +195,7 @@ export interface Post {
   status: 'published' | 'draft';
   isFeatured?: boolean | null;
   seoDescription?: string | null;
+  ogImageMedia?: (string | null) | Media;
   ogImage?: string | null;
   isSitemap?: boolean | null;
   updatedAt: string;
@@ -187,6 +214,11 @@ export interface Author {
   slug: string;
   jobTitle: string;
   bio: string;
+  avatarDark?: (string | null) | Media;
+  avatarDarkHovered?: (string | null) | Media;
+  avatarLight?: (string | null) | Media;
+  avatarLightHovered?: (string | null) | Media;
+  miniAvatar?: (string | null) | Media;
   avatarDarkUrl?: string | null;
   avatarDarkHoveredUrl?: string | null;
   avatarLightUrl?: string | null;
@@ -300,6 +332,10 @@ export interface PayloadLockedDocument {
         value: string | Author;
       } | null)
     | ({
+        relationTo: 'media';
+        value: string | Media;
+      } | null)
+    | ({
         relationTo: 'users';
         value: string | User;
       } | null);
@@ -356,6 +392,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   type?: T;
   weight?: T;
   seoDescription?: T;
+  ogImageMedia?: T;
   ogImage?: T;
   isSitemap?: T;
   updatedAt?: T;
@@ -375,6 +412,7 @@ export interface PostsSelect<T extends boolean = true> {
   status?: T;
   isFeatured?: T;
   seoDescription?: T;
+  ogImageMedia?: T;
   ogImage?: T;
   isSitemap?: T;
   updatedAt?: T;
@@ -411,6 +449,11 @@ export interface AuthorsSelect<T extends boolean = true> {
   slug?: T;
   jobTitle?: T;
   bio?: T;
+  avatarDark?: T;
+  avatarDarkHovered?: T;
+  avatarLight?: T;
+  avatarLightHovered?: T;
+  miniAvatar?: T;
   avatarDarkUrl?: T;
   avatarDarkHoveredUrl?: T;
   avatarLightUrl?: T;
@@ -420,6 +463,25 @@ export interface AuthorsSelect<T extends boolean = true> {
   linkedinUrl?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media_select".
+ */
+export interface MediaSelect<T extends boolean = true> {
+  alt?: T;
+  prefix?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

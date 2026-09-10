@@ -21,6 +21,7 @@ export function generateAuthorSchema(author: Author): WithContext<Person> {
   const siteUrl = process.env.PUBLIC_SITE_URL ?? 'http://localhost:3000';
   const sameAs = [author.githubUrl, author.linkedinUrl].filter((url): url is string => Boolean(url));
   const image = author.avatarDarkUrl ?? author.miniAvatarUrl;
+  const imageUrl = image ? new URL(image, siteUrl).toString() : undefined;
 
   return {
     '@context': 'https://schema.org',
@@ -29,7 +30,7 @@ export function generateAuthorSchema(author: Author): WithContext<Person> {
     jobTitle: author.jobTitle,
     url: `${siteUrl}/${AUTHOR_PREFIX}/${author.slug}`,
     ...(author.bio ? { description: author.bio } : {}),
-    ...(image ? { image: `${siteUrl}${image}` } : {}),
+    ...(imageUrl ? { image: imageUrl } : {}),
     ...(sameAs.length ? { sameAs } : {}),
   };
 }

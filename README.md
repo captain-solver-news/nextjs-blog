@@ -51,6 +51,10 @@ cp .env.example .env
 
 > **Note:** If you changed the database credentials in `docker-compose.yml`, update `DATABASE_URL` in `.env` accordingly.
 
+To store Payload uploads in Vercel Blob, connect a public Blob store to the Vercel project. Vercel
+adds `BLOB_READ_WRITE_TOKEN` automatically. For local development, copy that token into `.env`.
+Without the token, Payload keeps uploads on the local filesystem.
+
 ### 5. Run database migrations
 
 Apply Payload's migrations to the database:

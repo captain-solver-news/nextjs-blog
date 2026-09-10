@@ -3,6 +3,14 @@ import type { RuleSetRule } from 'webpack';
 import { withPayload } from '@payloadcms/next/withPayload';
 
 const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+      },
+    ],
+  },
   sassOptions: {
     // Scoped to first-party styles: Payload ships its own .scss inside node_modules, and
     // blanket-prepending this import made those files fail to resolve `@/styles/breakpoints`.

@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import { buildConfig } from 'payload';
 import { postgresAdapter } from '@payloadcms/db-postgres';
 import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob';
 
 import { Users } from '@/lib/payload/collections/users';
 import { Authors } from '@/lib/payload/collections/authors';
@@ -10,6 +11,7 @@ import { Categories } from '@/lib/payload/collections/categories';
 import { Posts } from '@/lib/payload/collections/posts';
 import { StaticContents } from '@/lib/payload/collections/static-contents';
 import { Configs } from '@/lib/payload/collections/configs';
+import { Media } from '@/lib/payload/collections/media';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(dirname, '../..');
@@ -21,7 +23,7 @@ export default buildConfig({
       baseDir: projectRoot,
     },
   },
-  collections: [Categories, Posts, StaticContents, Configs, Authors, Users],
+  collections: [Categories, Posts, StaticContents, Configs, Authors, Media, Users],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -36,4 +38,18 @@ export default buildConfig({
     migrationDir: path.resolve(dirname, 'migrations'),
     generateSchemaOutputFile: path.resolve(dirname, 'generated-schema.ts'),
   }),
+  plugins: [
+    vercelBlobStorage({
+      enabled: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+      collections: {
+        media: {
+          prefix: 'media',
+        },
+      },
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      clientUploads: true,
+      addRandomSuffix: true,
+      alwaysInsertFields: true,
+    }),
+  ],
 });
