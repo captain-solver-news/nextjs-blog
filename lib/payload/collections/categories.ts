@@ -1,6 +1,7 @@
 import type { CollectionConfig, RelationshipFieldSingleValidation } from 'payload';
 import type { Category } from '@/lib/payload/generated-types';
 import { Type } from '@/lib/payload/taxonomy';
+import { syncMediaURLs } from '@/lib/payload/hooks/sync-media-urls';
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -11,6 +12,9 @@ export const Categories: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    beforeChange: [syncMediaURLs({ ogImageMedia: 'ogImage' })],
   },
   fields: [
     {
@@ -100,7 +104,13 @@ export const Categories: CollectionConfig = {
       label: 'SEO',
       fields: [
         { name: 'seoDescription', type: 'textarea' },
-        { name: 'ogImage', type: 'text', maxLength: 1024 },
+        {
+          name: 'ogImageMedia',
+          label: 'Social image',
+          type: 'upload',
+          relationTo: 'media',
+        },
+        { name: 'ogImage', type: 'text', maxLength: 1024, admin: { hidden: true } },
         { name: 'isSitemap', type: 'checkbox', defaultValue: true, label: 'Include in sitemap' },
       ],
     },

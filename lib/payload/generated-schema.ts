@@ -14,23 +14,52 @@ import {
   foreignKey,
   uuid,
   varchar,
+  type AnyPgColumn,
+  numeric,
   boolean,
   timestamp,
   serial,
   integer,
-  type AnyPgColumn,
-  numeric,
   jsonb,
   pgEnum,
 } from '@payloadcms/db-postgres/drizzle/pg-core';
 import { sql, relations } from '@payloadcms/db-postgres/drizzle';
-export const enum_posts_status = pgEnum('enum_posts_status', ['published', 'draft']);
 export const enum_categories_type = pgEnum('enum_categories_type', [
   'hidden',
   'displayed-all',
   'displayed-posts',
   'displayed-subcategories',
 ]);
+export const enum_posts_status = pgEnum('enum_posts_status', ['published', 'draft']);
+
+export const categories = pgTable(
+  'categories',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    title: varchar('title').notNull(),
+    slug: varchar('slug').notNull(),
+    parent: uuid('parent_id').references((): AnyPgColumn => categories.id, {
+      onDelete: 'set null',
+    }),
+    type: enum_categories_type('type').notNull().default('hidden'),
+    weight: numeric('weight', { mode: 'number' }).notNull().default(0),
+    seoDescription: varchar('seo_description'),
+    ogImageMedia: uuid('og_image_media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    ogImage: varchar('og_image'),
+    isSitemap: boolean('is_sitemap').default(true),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
+  },
+  (columns) => [
+    index('categories_slug_idx').on(columns.slug),
+    index('categories_parent_idx').on(columns.parent),
+    index('categories_og_image_media_idx').on(columns.ogImageMedia),
+    index('categories_updated_at_idx').on(columns.updatedAt),
+    index('categories_created_at_idx').on(columns.createdAt),
+  ]
+);
 
 export const posts = pgTable(
   'posts',
@@ -48,6 +77,9 @@ export const posts = pgTable(
     status: enum_posts_status('status').notNull().default('published'),
     isFeatured: boolean('is_featured').default(false),
     seoDescription: varchar('seo_description'),
+    ogImageMedia: uuid('og_image_media_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
     ogImage: varchar('og_image'),
     isSitemap: boolean('is_sitemap').default(true),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
@@ -56,6 +88,7 @@ export const posts = pgTable(
   (columns) => [
     index('posts_slug_idx').on(columns.slug),
     index('posts_category_idx').on(columns.category),
+    index('posts_og_image_media_idx').on(columns.ogImageMedia),
     index('posts_updated_at_idx').on(columns.updatedAt),
     index('posts_created_at_idx').on(columns.createdAt),
   ]
@@ -88,56 +121,6 @@ export const posts_rels = pgTable(
   ]
 );
 
-export const categories = pgTable(
-  'categories',
-  {
-    id: uuid('id').defaultRandom().primaryKey(),
-    title: varchar('title').notNull(),
-    slug: varchar('slug').notNull(),
-    parent: uuid('parent_id').references((): AnyPgColumn => categories.id, {
-      onDelete: 'set null',
-    }),
-    type: enum_categories_type('type').notNull().default('hidden'),
-    weight: numeric('weight', { mode: 'number' }).notNull().default(0),
-    seoDescription: varchar('seo_description'),
-    ogImage: varchar('og_image'),
-    isSitemap: boolean('is_sitemap').default(true),
-    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
-    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
-  },
-  (columns) => [
-    index('categories_slug_idx').on(columns.slug),
-    index('categories_parent_idx').on(columns.parent),
-    index('categories_updated_at_idx').on(columns.updatedAt),
-    index('categories_created_at_idx').on(columns.createdAt),
-  ]
-);
-
-export const authors = pgTable(
-  'authors',
-  {
-    id: uuid('id').defaultRandom().primaryKey(),
-    name: varchar('name').notNull(),
-    slug: varchar('slug').notNull(),
-    jobTitle: varchar('job_title').notNull(),
-    bio: varchar('bio'),
-    avatarDarkUrl: varchar('avatar_dark_url'),
-    avatarDarkHoveredUrl: varchar('avatar_dark_hovered_url'),
-    avatarLightUrl: varchar('avatar_light_url'),
-    avatarLightHoveredUrl: varchar('avatar_light_hovered_url'),
-    miniAvatarUrl: varchar('mini_avatar_url'),
-    githubUrl: varchar('github_url'),
-    linkedinUrl: varchar('linkedin_url'),
-    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
-    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
-  },
-  (columns) => [
-    uniqueIndex('authors_slug_idx').on(columns.slug),
-    index('authors_updated_at_idx').on(columns.updatedAt),
-    index('authors_created_at_idx').on(columns.createdAt),
-  ]
-);
-
 export const static_contents = pgTable(
   'static_contents',
   {
@@ -165,6 +148,76 @@ export const configs = pgTable(
   (columns) => [
     index('configs_updated_at_idx').on(columns.updatedAt),
     index('configs_created_at_idx').on(columns.createdAt),
+  ]
+);
+
+export const authors = pgTable(
+  'authors',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: varchar('name').notNull(),
+    slug: varchar('slug').notNull(),
+    jobTitle: varchar('job_title').notNull(),
+    bio: varchar('bio').notNull(),
+    avatarDark: uuid('avatar_dark_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    avatarDarkHovered: uuid('avatar_dark_hovered_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    avatarLight: uuid('avatar_light_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    avatarLightHovered: uuid('avatar_light_hovered_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    miniAvatar: uuid('mini_avatar_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    avatarDarkUrl: varchar('avatar_dark_url'),
+    avatarDarkHoveredUrl: varchar('avatar_dark_hovered_url'),
+    avatarLightUrl: varchar('avatar_light_url'),
+    avatarLightHoveredUrl: varchar('avatar_light_hovered_url'),
+    miniAvatarUrl: varchar('mini_avatar_url'),
+    githubUrl: varchar('github_url'),
+    linkedinUrl: varchar('linkedin_url'),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
+  },
+  (columns) => [
+    uniqueIndex('authors_slug_idx').on(columns.slug),
+    index('authors_avatar_dark_idx').on(columns.avatarDark),
+    index('authors_avatar_dark_hovered_idx').on(columns.avatarDarkHovered),
+    index('authors_avatar_light_idx').on(columns.avatarLight),
+    index('authors_avatar_light_hovered_idx').on(columns.avatarLightHovered),
+    index('authors_mini_avatar_idx').on(columns.miniAvatar),
+    index('authors_updated_at_idx').on(columns.updatedAt),
+    index('authors_created_at_idx').on(columns.createdAt),
+  ]
+);
+
+export const media = pgTable(
+  'media',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    alt: varchar('alt').notNull(),
+    prefix: varchar('prefix').default('media'),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
+    url: varchar('url'),
+    thumbnailURL: varchar('thumbnail_u_r_l'),
+    filename: varchar('filename'),
+    mimeType: varchar('mime_type'),
+    filesize: numeric('filesize', { mode: 'number' }),
+    width: numeric('width', { mode: 'number' }),
+    height: numeric('height', { mode: 'number' }),
+    focalX: numeric('focal_x', { mode: 'number' }),
+    focalY: numeric('focal_y', { mode: 'number' }),
+  },
+  (columns) => [
+    index('media_updated_at_idx').on(columns.updatedAt),
+    index('media_created_at_idx').on(columns.createdAt),
+    uniqueIndex('media_filename_idx').on(columns.filename),
   ]
 );
 
@@ -246,22 +299,24 @@ export const payload_locked_documents_rels = pgTable(
     order: integer('order'),
     parent: uuid('parent_id').notNull(),
     path: varchar('path').notNull(),
-    postsID: uuid('posts_id'),
     categoriesID: uuid('categories_id'),
-    authorsID: uuid('authors_id'),
+    postsID: uuid('posts_id'),
     'static-contentsID': varchar('static_contents_id'),
     configsID: varchar('configs_id'),
+    authorsID: uuid('authors_id'),
+    mediaID: uuid('media_id'),
     usersID: uuid('users_id'),
   },
   (columns) => [
     index('payload_locked_documents_rels_order_idx').on(columns.order),
     index('payload_locked_documents_rels_parent_idx').on(columns.parent),
     index('payload_locked_documents_rels_path_idx').on(columns.path),
-    index('payload_locked_documents_rels_posts_id_idx').on(columns.postsID),
     index('payload_locked_documents_rels_categories_id_idx').on(columns.categoriesID),
-    index('payload_locked_documents_rels_authors_id_idx').on(columns.authorsID),
+    index('payload_locked_documents_rels_posts_id_idx').on(columns.postsID),
     index('payload_locked_documents_rels_static_contents_id_idx').on(columns['static-contentsID']),
     index('payload_locked_documents_rels_configs_id_idx').on(columns.configsID),
+    index('payload_locked_documents_rels_authors_id_idx').on(columns.authorsID),
+    index('payload_locked_documents_rels_media_id_idx').on(columns.mediaID),
     index('payload_locked_documents_rels_users_id_idx').on(columns.usersID),
     foreignKey({
       columns: [columns['parent']],
@@ -269,19 +324,14 @@ export const payload_locked_documents_rels = pgTable(
       name: 'payload_locked_documents_rels_parent_fk',
     }).onDelete('cascade'),
     foreignKey({
-      columns: [columns['postsID']],
-      foreignColumns: [posts.id],
-      name: 'payload_locked_documents_rels_posts_fk',
-    }).onDelete('cascade'),
-    foreignKey({
       columns: [columns['categoriesID']],
       foreignColumns: [categories.id],
       name: 'payload_locked_documents_rels_categories_fk',
     }).onDelete('cascade'),
     foreignKey({
-      columns: [columns['authorsID']],
-      foreignColumns: [authors.id],
-      name: 'payload_locked_documents_rels_authors_fk',
+      columns: [columns['postsID']],
+      foreignColumns: [posts.id],
+      name: 'payload_locked_documents_rels_posts_fk',
     }).onDelete('cascade'),
     foreignKey({
       columns: [columns['static-contentsID']],
@@ -292,6 +342,16 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['configsID']],
       foreignColumns: [configs.id],
       name: 'payload_locked_documents_rels_configs_fk',
+    }).onDelete('cascade'),
+    foreignKey({
+      columns: [columns['authorsID']],
+      foreignColumns: [authors.id],
+      name: 'payload_locked_documents_rels_authors_fk',
+    }).onDelete('cascade'),
+    foreignKey({
+      columns: [columns['mediaID']],
+      foreignColumns: [media.id],
+      name: 'payload_locked_documents_rels_media_fk',
     }).onDelete('cascade'),
     foreignKey({
       columns: [columns['usersID']],
@@ -359,6 +419,18 @@ export const payload_migrations = pgTable(
   ]
 );
 
+export const relations_categories = relations(categories, ({ one }) => ({
+  parent: one(categories, {
+    fields: [categories.parent],
+    references: [categories.id],
+    relationName: 'parent',
+  }),
+  ogImageMedia: one(media, {
+    fields: [categories.ogImageMedia],
+    references: [media.id],
+    relationName: 'ogImageMedia',
+  }),
+}));
 export const relations_posts_rels = relations(posts_rels, ({ one }) => ({
   parent: one(posts, {
     fields: [posts_rels.parent],
@@ -377,20 +449,45 @@ export const relations_posts = relations(posts, ({ one, many }) => ({
     references: [categories.id],
     relationName: 'category',
   }),
+  ogImageMedia: one(media, {
+    fields: [posts.ogImageMedia],
+    references: [media.id],
+    relationName: 'ogImageMedia',
+  }),
   _rels: many(posts_rels, {
     relationName: '_rels',
   }),
 }));
-export const relations_categories = relations(categories, ({ one }) => ({
-  parent: one(categories, {
-    fields: [categories.parent],
-    references: [categories.id],
-    relationName: 'parent',
-  }),
-}));
-export const relations_authors = relations(authors, () => ({}));
 export const relations_static_contents = relations(static_contents, () => ({}));
 export const relations_configs = relations(configs, () => ({}));
+export const relations_authors = relations(authors, ({ one }) => ({
+  avatarDark: one(media, {
+    fields: [authors.avatarDark],
+    references: [media.id],
+    relationName: 'avatarDark',
+  }),
+  avatarDarkHovered: one(media, {
+    fields: [authors.avatarDarkHovered],
+    references: [media.id],
+    relationName: 'avatarDarkHovered',
+  }),
+  avatarLight: one(media, {
+    fields: [authors.avatarLight],
+    references: [media.id],
+    relationName: 'avatarLight',
+  }),
+  avatarLightHovered: one(media, {
+    fields: [authors.avatarLightHovered],
+    references: [media.id],
+    relationName: 'avatarLightHovered',
+  }),
+  miniAvatar: one(media, {
+    fields: [authors.miniAvatar],
+    references: [media.id],
+    relationName: 'miniAvatar',
+  }),
+}));
+export const relations_media = relations(media, () => ({}));
 export const relations_users_sessions = relations(users_sessions, ({ one }) => ({
   _parentID: one(users, {
     fields: [users_sessions._parentID],
@@ -410,20 +507,15 @@ export const relations_payload_locked_documents_rels = relations(payload_locked_
     references: [payload_locked_documents.id],
     relationName: '_rels',
   }),
-  postsID: one(posts, {
-    fields: [payload_locked_documents_rels.postsID],
-    references: [posts.id],
-    relationName: 'posts',
-  }),
   categoriesID: one(categories, {
     fields: [payload_locked_documents_rels.categoriesID],
     references: [categories.id],
     relationName: 'categories',
   }),
-  authorsID: one(authors, {
-    fields: [payload_locked_documents_rels.authorsID],
-    references: [authors.id],
-    relationName: 'authors',
+  postsID: one(posts, {
+    fields: [payload_locked_documents_rels.postsID],
+    references: [posts.id],
+    relationName: 'posts',
   }),
   'static-contentsID': one(static_contents, {
     fields: [payload_locked_documents_rels['static-contentsID']],
@@ -434,6 +526,16 @@ export const relations_payload_locked_documents_rels = relations(payload_locked_
     fields: [payload_locked_documents_rels.configsID],
     references: [configs.id],
     relationName: 'configs',
+  }),
+  authorsID: one(authors, {
+    fields: [payload_locked_documents_rels.authorsID],
+    references: [authors.id],
+    relationName: 'authors',
+  }),
+  mediaID: one(media, {
+    fields: [payload_locked_documents_rels.mediaID],
+    references: [media.id],
+    relationName: 'media',
   }),
   usersID: one(users, {
     fields: [payload_locked_documents_rels.usersID],
@@ -466,14 +568,15 @@ export const relations_payload_preferences = relations(payload_preferences, ({ m
 export const relations_payload_migrations = relations(payload_migrations, () => ({}));
 
 type DatabaseSchema = {
-  enum_posts_status: typeof enum_posts_status;
   enum_categories_type: typeof enum_categories_type;
+  enum_posts_status: typeof enum_posts_status;
+  categories: typeof categories;
   posts: typeof posts;
   posts_rels: typeof posts_rels;
-  categories: typeof categories;
-  authors: typeof authors;
   static_contents: typeof static_contents;
   configs: typeof configs;
+  authors: typeof authors;
+  media: typeof media;
   users_sessions: typeof users_sessions;
   users: typeof users;
   payload_kv: typeof payload_kv;
@@ -482,12 +585,13 @@ type DatabaseSchema = {
   payload_preferences: typeof payload_preferences;
   payload_preferences_rels: typeof payload_preferences_rels;
   payload_migrations: typeof payload_migrations;
+  relations_categories: typeof relations_categories;
   relations_posts_rels: typeof relations_posts_rels;
   relations_posts: typeof relations_posts;
-  relations_categories: typeof relations_categories;
-  relations_authors: typeof relations_authors;
   relations_static_contents: typeof relations_static_contents;
   relations_configs: typeof relations_configs;
+  relations_authors: typeof relations_authors;
+  relations_media: typeof relations_media;
   relations_users_sessions: typeof relations_users_sessions;
   relations_users: typeof relations_users;
   relations_payload_kv: typeof relations_payload_kv;
