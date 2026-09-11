@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { preventDeleteIfReferenced } from '@/lib/payload/hooks/prevent-delete-if-referenced';
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -12,6 +13,9 @@ export const Media: CollectionConfig = {
     create: ({ req }) => Boolean(req.user),
     update: ({ req }) => Boolean(req.user),
     delete: ({ req }) => Boolean(req.user),
+  },
+  hooks: {
+    beforeDelete: [preventDeleteIfReferenced],
   },
   upload: {
     mimeTypes: ['image/*'],
