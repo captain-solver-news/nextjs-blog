@@ -1,5 +1,5 @@
 .page {
-  padding-top: 2rem;
+  padding-top: clamp(2rem, 5vw, 4rem);
   padding-bottom: 4rem;
 }
 

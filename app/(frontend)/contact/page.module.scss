@@ -1,14 +1,17 @@
 .card {
-  padding: 1rem;
+  padding: 1.25rem;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   background-color: var(--surface);
-  transition: all var(--transition);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
 
   &:hover {
     background-color: var(--elevated);
     border-color: color-mix(in srgb, var(--accent) 50%, transparent);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-card);
   }
 }
 
@@ -53,12 +56,12 @@
   font-weight: 500;
   line-height: 1;
   color: var(--fg-muted);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .cardTitle {
   font-family: var(--ff-ui);
-  font-size: 0.75rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   line-height: 1.3;
   color: var(--fg);
@@ -97,6 +100,12 @@
   background-color: var(--surface);
   position: relative;
   aspect-ratio: 16 / 9;
+
+  picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .image {

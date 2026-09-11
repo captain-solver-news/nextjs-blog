@@ -14,45 +14,62 @@ export default async function HomePage() {
     <>
       <section className={styles.hero}>
         <div className={styles.gridBg} aria-hidden="true" />
-        <Container className={styles.content}>
-          <span className={styles.badge}>Version 0.0.1</span>
-          <h1 className={styles.title}>
-            Modern engineering insights for the <span className={styles.accent}>AI paradigm shift.</span>
-          </h1>
-          <p className={styles.description}>
-            We parse the noise of rapid technical evolution to deliver deep-dive architecture reviews and engineering
-            patterns that actually scale.
-          </p>
-          <div className={styles.actions}>
-            <a href="#" className={styles.btnPrimary}>
-              Read Latest Articles
-            </a>
-            <a href="#" className={styles.btnSecondary}>
-              Explore Codebases
-            </a>
+        <Container size="shell" className={styles.heroInner}>
+          <div className={styles.content}>
+            <span className={styles.badge}>
+              Independent engineering journal <span>v0.0.1</span>
+            </span>
+            <h1 className={styles.title}>
+              Modern engineering insights for the <span className={styles.accent}>AI paradigm shift.</span>
+            </h1>
+            <p className={styles.description}>
+              We parse the noise of rapid technical evolution to deliver deep-dive architecture reviews and engineering
+              patterns that actually scale.
+            </p>
+            <div className={styles.actions}>
+              <a href="#featured" className={styles.btnPrimary}>
+                Read Latest Articles <span aria-hidden="true">↗</span>
+              </a>
+              <Link href="/blog" className={styles.btnSecondary}>
+                Explore the Blog
+              </Link>
+            </div>
+            <p className={styles.heroNote}>Written by engineers. Grounded in production.</p>
+          </div>
+          <div className={styles.codeBlock} aria-hidden="true">
+            <div className={styles.codeHeader}>
+              <div className={styles.dots}>
+                <span className={styles.dot} />
+                <span className={styles.dot} />
+                <span className={styles.dot} />
+              </div>
+              <span className={styles.codeFilename}>transformer.ts</span>
+            </div>
+            <pre className={styles.code}>
+              <code>
+                <span className={styles.codeComment}>{'// Less noise. More signal.\n\n'}</span>
+                <span className={styles.codeKeyword}>async function</span>
+                {' optimizeSignal() {\n  '}
+                <span className={styles.codeKeyword}>const</span>
+                {' kernel = '}
+                <span className={styles.codeKeyword}>await</span>
+                {' loadModel();\n\n  '}
+                <span className={styles.codeKeyword}>return</span>
+                {' kernel.process(input);\n}'}
+              </code>
+            </pre>
+            <div className={styles.codeFooter}>
+              <span>TypeScript</span>
+              <span className={styles.codeStatus}>Signal over noise</span>
+            </div>
           </div>
         </Container>
-        <div className={styles.codeBlock} aria-hidden="true">
-          <div className={styles.codeHeader}>
-            <div className={styles.dots}>
-              <span className={styles.dot} />
-              <span className={styles.dot} />
-              <span className={styles.dot} />
-            </div>
-            <span className={styles.codeFilename}>transformer.ts</span>
-          </div>
-          <pre className={styles.code}>
-            <code>{`async function optimizeSignal() {
-  const kernel = await loadModel();
-  return kernel.process(input);
-}`}</code>
-          </pre>
-        </div>
       </section>
 
       <section className={styles.metrics}>
-        <Container>
+        <Container size="shell">
           <div className={styles.metricsHeader}>
+            <span className={styles.eyebrow}>01 / The editorial standard</span>
             <h2 className={styles.sectionTitle}>Evaluation Metrics</h2>
             <p className={styles.sectionSubtitle}>How we measure the technical part of each post</p>
           </div>
@@ -90,28 +107,31 @@ export default async function HomePage() {
       </section>
 
       <section className={styles.authors}>
-        <Container className={styles.authorsInner}>
-          <h2 className={styles.sectionTitle}>The authors are active engineers and programmers</h2>
-          <p className={styles.sectionBody}>
-            We don&apos;t employ &quot;content creators.&quot; Our contributors are active software architects, DevOps
-            practitioners, and systems researchers who build the very tech they write about.
-          </p>
-          <a href="#" className={styles.learnMore}>
-            Learn more about our team
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </a>
+        <Container size="shell" className={styles.authorsInner}>
+          <div className={styles.authorsCopy}>
+            <span className={styles.eyebrow}>02 / The people behind the posts</span>
+            <h2 className={styles.sectionTitle}>The authors are active engineers and programmers</h2>
+            <p className={styles.sectionBody}>
+              We don&apos;t employ &quot;content creators.&quot; Our contributors are active software architects, DevOps
+              practitioners, and systems researchers who build the very tech they write about.
+            </p>
+            <Link href="/about" className={styles.learnMore}>
+              Learn more about our team
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </Link>
+          </div>
           <div className={styles.checkList}>
             <div className={styles.checkItem}>
               <svg className={styles.checkIcon} width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -137,13 +157,16 @@ export default async function HomePage() {
         </Container>
       </section>
 
-      <section className={styles.featured}>
-        <Container>
+      <section id="featured" className={styles.featured}>
+        <Container size="shell">
           <div className={styles.featuredHeader}>
-            <h2 className={styles.sectionTitle}>Featured Posts</h2>
-            <a href="#" className={styles.viewAll}>
-              View All Posts
-            </a>
+            <div>
+              <span className={styles.eyebrow}>03 / Selected reading</span>
+              <h2 className={styles.sectionTitle}>Featured Posts</h2>
+            </div>
+            <Link href="/blog" className={styles.viewAll}>
+              View All Posts <span aria-hidden="true">↗</span>
+            </Link>
           </div>
           <div className={styles.featuredList}>
             {featuredPosts.map((post) => {
@@ -157,7 +180,7 @@ export default async function HomePage() {
 
               return (
                 <Link key={post.id} href={`/blog/${post.path}`} className={styles.postCardLink}>
-                  <article key={post.id} className={styles.postCard}>
+                  <article className={styles.postCard}>
                     <h3 className={styles.postTitle}>{post.title}</h3>
                     <p className={styles.postExcerpt}>{post.teaser}</p>
 

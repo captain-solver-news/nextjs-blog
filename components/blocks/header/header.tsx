@@ -22,10 +22,15 @@ export function Header() {
 
         <nav className={styles.nav} aria-label="Main">
           {HEADER_LINKS.map(({ href, label }) => {
-            const isActive = pathname === href;
+            const isActive = pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
 
             return (
-              <Link key={href} href={href} className={`${styles.link} ${isActive ? styles.linkActive : ''}`}>
+              <Link
+                key={href}
+                href={href}
+                aria-current={isActive ? 'page' : undefined}
+                className={`${styles.link} ${isActive ? styles.linkActive : ''}`}
+              >
                 {label}
               </Link>
             );
