@@ -41,8 +41,6 @@ export const syncMediaURLs = (fields: Record<string, string>): CollectionBeforeC
 
         const mediaReference = data[uploadField] as MediaReference;
 
-        // An existing document can have only a legacy URL. Saving another field
-        // must not erase that URL merely because the new upload field is empty.
         if (mediaReference == null && !originalDoc?.[uploadField]) return;
 
         data[urlField] = await resolveMediaURL(mediaReference, req);
