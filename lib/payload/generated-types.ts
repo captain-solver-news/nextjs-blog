@@ -149,7 +149,6 @@ export interface Category {
   weight: number;
   seoDescription?: string | null;
   ogImageMedia?: (string | null) | Media;
-  ogImage?: string | null;
   isSitemap?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -196,7 +195,6 @@ export interface Post {
   isFeatured?: boolean | null;
   seoDescription?: string | null;
   ogImageMedia?: (string | null) | Media;
-  ogImage?: string | null;
   isSitemap?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -219,11 +217,6 @@ export interface Author {
   avatarLight?: (string | null) | Media;
   avatarLightHovered?: (string | null) | Media;
   miniAvatar?: (string | null) | Media;
-  avatarDarkUrl?: string | null;
-  avatarDarkHoveredUrl?: string | null;
-  avatarLightUrl?: string | null;
-  avatarLightHoveredUrl?: string | null;
-  miniAvatarUrl?: string | null;
   githubUrl?: string | null;
   linkedinUrl?: string | null;
   updatedAt: string;
@@ -393,7 +386,6 @@ export interface CategoriesSelect<T extends boolean = true> {
   weight?: T;
   seoDescription?: T;
   ogImageMedia?: T;
-  ogImage?: T;
   isSitemap?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -413,7 +405,6 @@ export interface PostsSelect<T extends boolean = true> {
   isFeatured?: T;
   seoDescription?: T;
   ogImageMedia?: T;
-  ogImage?: T;
   isSitemap?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -454,11 +445,6 @@ export interface AuthorsSelect<T extends boolean = true> {
   avatarLight?: T;
   avatarLightHovered?: T;
   miniAvatar?: T;
-  avatarDarkUrl?: T;
-  avatarDarkHoveredUrl?: T;
-  avatarLightUrl?: T;
-  avatarLightHoveredUrl?: T;
-  miniAvatarUrl?: T;
   githubUrl?: T;
   linkedinUrl?: T;
   updatedAt?: T;

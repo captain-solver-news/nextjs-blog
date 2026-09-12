@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { AUTHOR_PREFIX } from '@/config';
-import type { authors as authorsTable } from '@/lib/payload/generated-schema';
+import type { Author } from '@/lib/actions/types/author';
 import styles from './post-authors-list.module.scss';
 
 interface PostAuthorsListProps {
-  authors: (typeof authorsTable.$inferSelect)[];
+  authors: Author[];
 }
 
 export function PostAuthorsList({ authors }: PostAuthorsListProps) {

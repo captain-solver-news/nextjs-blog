@@ -1,9 +1,7 @@
 import { type Metadata } from 'next';
 import { BLOG_PREFIX } from '@/config';
-import type { categories } from '@/lib/payload/generated-schema';
+import type { Category } from '@/lib/actions/types/category';
 import { WithContext, Thing } from 'schema-dts';
-
-type Category = typeof categories.$inferSelect;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function generateCategorySchema(category: Category, slugs: string[]): WithContext<Thing> {

@@ -1,9 +1,7 @@
 import { type Metadata } from 'next';
 import { AUTHOR_PREFIX } from '@/config';
-import type { authors } from '@/lib/payload/generated-schema';
+import type { Author } from '@/lib/actions/types/author';
 import { WithContext, Person } from 'schema-dts';
-
-type Author = typeof authors.$inferSelect;
 
 const DESCRIPTION_LIMIT = 160;
 

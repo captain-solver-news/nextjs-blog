@@ -1,6 +1,5 @@
 import type { CollectionConfig } from 'payload';
 import { Status } from '@/lib/payload/taxonomy';
-import { syncMediaURLs } from '@/lib/payload/hooks/sync-media-urls';
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -11,9 +10,6 @@ export const Posts: CollectionConfig = {
   },
   access: {
     read: () => true,
-  },
-  hooks: {
-    beforeChange: [syncMediaURLs({ ogImageMedia: 'ogImage' })],
   },
   fields: [
     {
@@ -83,7 +79,6 @@ export const Posts: CollectionConfig = {
           type: 'upload',
           relationTo: 'media',
         },
-        { name: 'ogImage', type: 'text', maxLength: 1024, admin: { hidden: true } },
         { name: 'isSitemap', type: 'checkbox', defaultValue: true, label: 'Include in sitemap' },
       ],
     },

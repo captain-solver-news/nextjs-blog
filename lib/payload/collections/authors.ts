@@ -1,5 +1,4 @@
 import type { CollectionConfig } from 'payload';
-import { syncMediaURLs } from '@/lib/payload/hooks/sync-media-urls';
 
 export const Authors: CollectionConfig = {
   slug: 'authors',
@@ -10,17 +9,6 @@ export const Authors: CollectionConfig = {
   },
   access: {
     read: () => true,
-  },
-  hooks: {
-    beforeChange: [
-      syncMediaURLs({
-        avatarDark: 'avatarDarkUrl',
-        avatarDarkHovered: 'avatarDarkHoveredUrl',
-        avatarLight: 'avatarLightUrl',
-        avatarLightHovered: 'avatarLightHoveredUrl',
-        miniAvatar: 'miniAvatarUrl',
-      }),
-    ],
   },
   fields: [
     {
@@ -60,11 +48,6 @@ export const Authors: CollectionConfig = {
         { name: 'avatarLight', label: 'Light theme', type: 'upload', relationTo: 'media' },
         { name: 'avatarLightHovered', label: 'Light theme (hover)', type: 'upload', relationTo: 'media' },
         { name: 'miniAvatar', label: 'Small avatar', type: 'upload', relationTo: 'media' },
-        { name: 'avatarDarkUrl', type: 'text', maxLength: 1024, admin: { hidden: true } },
-        { name: 'avatarDarkHoveredUrl', type: 'text', maxLength: 1024, admin: { hidden: true } },
-        { name: 'avatarLightUrl', type: 'text', maxLength: 1024, admin: { hidden: true } },
-        { name: 'avatarLightHoveredUrl', type: 'text', maxLength: 1024, admin: { hidden: true } },
-        { name: 'miniAvatarUrl', type: 'text', maxLength: 1024, admin: { hidden: true } },
       ],
     },
     {

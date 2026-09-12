@@ -47,7 +47,6 @@ export const categories = pgTable(
     ogImageMedia: uuid('og_image_media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    ogImage: varchar('og_image'),
     isSitemap: boolean('is_sitemap').default(true),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
     createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
@@ -80,7 +79,6 @@ export const posts = pgTable(
     ogImageMedia: uuid('og_image_media_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    ogImage: varchar('og_image'),
     isSitemap: boolean('is_sitemap').default(true),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
     createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
@@ -174,11 +172,6 @@ export const authors = pgTable(
     miniAvatar: uuid('mini_avatar_id').references(() => media.id, {
       onDelete: 'set null',
     }),
-    avatarDarkUrl: varchar('avatar_dark_url'),
-    avatarDarkHoveredUrl: varchar('avatar_dark_hovered_url'),
-    avatarLightUrl: varchar('avatar_light_url'),
-    avatarLightHoveredUrl: varchar('avatar_light_hovered_url'),
-    miniAvatarUrl: varchar('mini_avatar_url'),
     githubUrl: varchar('github_url'),
     linkedinUrl: varchar('linkedin_url'),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),

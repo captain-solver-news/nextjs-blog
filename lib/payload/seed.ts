@@ -1,6 +1,14 @@
 import 'dotenv/config';
 import { sql } from 'drizzle-orm';
-import { authors, categories, configs, posts, posts_rels, static_contents } from '@/lib/payload/generated-schema';
+import {
+  authors,
+  categories,
+  configs,
+  media,
+  posts,
+  posts_rels,
+  static_contents,
+} from '@/lib/payload/generated-schema';
 import { Status, Type } from '@/lib/payload/taxonomy';
 import { getPayload } from 'payload';
 import config from '@payload-config';
@@ -15,6 +23,16 @@ async function main() {
   await db.execute(sql`TRUNCATE TABLE "authors" RESTART IDENTITY CASCADE`);
   await db.execute(sql`TRUNCATE TABLE "static_contents" RESTART IDENTITY CASCADE`);
   await db.execute(sql`TRUNCATE TABLE "configs" RESTART IDENTITY CASCADE`);
+  await db.execute(sql`TRUNCATE TABLE "media" RESTART IDENTITY CASCADE`);
+
+  const [avatar1, avatar2, avatar3] = await db
+    .insert(media)
+    .values([
+      { alt: 'Alex Chen', url: '/authors/image-1.jpg', filename: 'image-1.jpg', mimeType: 'image/jpeg' },
+      { alt: 'Dr. Elena Rodriguez', url: '/authors/image-2.jpg', filename: 'image-2.jpg', mimeType: 'image/jpeg' },
+      { alt: 'Jordan Vane', url: '/authors/image-3.jpg', filename: 'image-3.jpg', mimeType: 'image/jpeg' },
+    ])
+    .returning();
 
   const [tech] = await db.insert(categories).values({ title: 'Technology', slug: 'technology', weight: 1 }).returning();
   const [lifestyle] = await db
@@ -89,8 +107,8 @@ async function main() {
       slug: 'alex-chen',
       bio: 'Specializes in kernel-level networking and high-performance packet processing. With over fifteen years of experience contributing to the Linux networking stack, he has pioneered several eBPF-based observability tools now standard in hyperscale environments. His research focuses on reducing tail latency in distributed state machines and optimizing hardware-assisted isolation for multi-tenant cloud architectures.',
       jobTitle: 'Lead Systems Architect',
-      avatarDarkUrl: '/authors/image-1.jpg',
-      avatarDarkHoveredUrl: '/authors/image-2.jpg',
+      avatarDark: avatar1.id,
+      avatarDarkHovered: avatar2.id,
       githubUrl: 'https://github.com/alexchen',
       linkedinUrl: 'https://linkedin.com/in/alexchen',
     })
@@ -102,8 +120,8 @@ async function main() {
       slug: 'dr-elena-rodriguez',
       bio: 'An expert in consensus algorithms and formal verification of distributed systems. Her work on Paxos-variant optimizations and TLA+ modeling has been instrumental in the development of next-generation globally distributed databases. She holds a PhD in Distributed Computing and spent a decade leading core infrastructure teams at several FAANG organizations.',
       jobTitle: 'Head of Cloud-Native Research',
-      avatarDarkUrl: '/authors/image-2.jpg',
-      avatarDarkHoveredUrl: '/authors/image-3.jpg',
+      avatarDark: avatar2.id,
+      avatarDarkHovered: avatar3.id,
       githubUrl: 'https://github.com/elenarodriguez',
       linkedinUrl: 'https://linkedin.com/in/elenarodriguez',
     })
@@ -115,8 +133,8 @@ async function main() {
       slug: 'jordan-vane',
       bio: 'Bridges the gap between silicon and software, focusing on hardware-assisted isolation and TEE (Trusted Execution Environments). His expertise in Enclave technologies and side-channel attack mitigation makes him a leading voice in secure systems design. Before joining the Signal, Jordan worked on firmware-level security for high-frequency trading platforms.',
       jobTitle: 'Hardware-Software Interop Lead',
-      avatarDarkUrl: '/authors/image-3.jpg',
-      avatarDarkHoveredUrl: '/authors/image-1.jpg',
+      avatarDark: avatar3.id,
+      avatarDarkHovered: avatar1.id,
       githubUrl: 'https://github.com/jordanvane',
       linkedinUrl: 'https://linkedin.com/in/jordanvane',
     })
