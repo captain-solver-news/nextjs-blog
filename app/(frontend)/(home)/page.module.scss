@@ -57,7 +57,7 @@
 
 .title {
   composes: t-display from global;
-  font-size: clamp(2.5rem, 4.7vw, 4.25rem);
+  font-size: clamp(2.5rem, 4.7vw, 3.25rem);
   line-height: 1.08;
   letter-spacing: -0.045em;
   margin-bottom: 1.5rem;
@@ -125,67 +125,12 @@
   font-size: 0.75rem;
 }
 
+// Visual chrome for this block lives in code-typer.module.scss; the hero only
+// controls how it sits in the grid.
 .codeBlock {
   min-width: 0;
   width: 100%;
   max-width: 32rem;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-card);
-  overflow: hidden;
-}
-
-.codeHeader,
-.codeFooter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1rem 1.25rem;
-  font-family: var(--ff-code);
-  font-size: 0.6875rem;
-  color: var(--fg-subtle);
-}
-.codeHeader {
-  border-bottom: 1px solid var(--border);
-}
-.codeFooter {
-  border-top: 1px solid var(--border);
-  background: var(--canvas);
-}
-.codeFilename {
-  color: var(--fg-muted);
-}
-.codeStatus {
-  color: var(--accent);
-}
-.dots {
-  display: flex;
-  gap: 0.375rem;
-}
-.dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-radius: 50%;
-  background: var(--border);
-  &:last-child {
-    background: var(--accent);
-  }
-}
-.code {
-  padding: 1.75rem 1.25rem;
-  overflow-x: auto;
-  font-family: var(--ff-code);
-  font-size: clamp(0.6875rem, 1.1vw, 0.8125rem);
-  line-height: 1.9;
-  color: var(--fg);
-}
-.codeKeyword {
-  color: var(--accent);
-}
-.codeComment {
-  color: var(--fg-subtle);
 }
 
 .eyebrow {
@@ -294,10 +239,42 @@
   font-weight: 600;
   color: var(--accent);
   text-decoration: none;
+  transition: color 0.25s ease;
   &:hover {
     color: var(--accent-hover);
-    text-decoration: underline;
-    text-underline-offset: 4px;
+  }
+  &:hover .viewAllLabel::after,
+  &:focus-visible .viewAllLabel::after {
+    transform: scaleX(1);
+  }
+}
+.viewAll {
+  gap: 0;
+}
+.viewAllLabel {
+  position: relative;
+  display: inline;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s cubic-bezier(0.33, 1, 0.68, 1);
+  }
+}
+.viewAllArrow {
+  display: inline-block;
+  padding-left: 0.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewAllLabel::after {
+    transition: none;
   }
 }
 

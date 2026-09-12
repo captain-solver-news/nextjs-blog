@@ -6,6 +6,7 @@ import Image from 'next/image';
 import getFeaturedPosts from '@/lib/actions/get-featured-posts';
 import Link from 'next/link';
 import { Container } from '@/components/primitives/container/container';
+import { CodeTyper } from '@/components/blocks/code-typer/code-typer';
 
 export default async function HomePage() {
   const featuredPosts = await getFeaturedPosts();
@@ -36,33 +37,7 @@ export default async function HomePage() {
             </div>
             <p className={styles.heroNote}>Written by engineers. Grounded in production.</p>
           </div>
-          <div className={styles.codeBlock} aria-hidden="true">
-            <div className={styles.codeHeader}>
-              <div className={styles.dots}>
-                <span className={styles.dot} />
-                <span className={styles.dot} />
-                <span className={styles.dot} />
-              </div>
-              <span className={styles.codeFilename}>transformer.ts</span>
-            </div>
-            <pre className={styles.code}>
-              <code>
-                <span className={styles.codeComment}>{'// Less noise. More signal.\n\n'}</span>
-                <span className={styles.codeKeyword}>async function</span>
-                {' optimizeSignal() {\n  '}
-                <span className={styles.codeKeyword}>const</span>
-                {' kernel = '}
-                <span className={styles.codeKeyword}>await</span>
-                {' loadModel();\n\n  '}
-                <span className={styles.codeKeyword}>return</span>
-                {' kernel.process(input);\n}'}
-              </code>
-            </pre>
-            <div className={styles.codeFooter}>
-              <span>TypeScript</span>
-              <span className={styles.codeStatus}>Signal over noise</span>
-            </div>
-          </div>
+          <CodeTyper className={styles.codeBlock} />
         </Container>
       </section>
 
@@ -165,7 +140,12 @@ export default async function HomePage() {
               <h2 className={styles.sectionTitle}>Featured Posts</h2>
             </div>
             <Link href="/blog" className={styles.viewAll}>
-              View All Posts <span aria-hidden="true">↗</span>
+              <span className={styles.viewAllLabel}>
+                View All Posts
+                <span className={styles.viewAllArrow} aria-hidden="true">
+                  ↗
+                </span>
+              </span>
             </Link>
           </div>
           <div className={styles.featuredList}>
