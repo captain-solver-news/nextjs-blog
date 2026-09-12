@@ -1,10 +1,12 @@
 import { categories } from '@/lib/payload/generated-schema';
 import rowJson from '../utils/row-json';
+import { CATEGORY_OG_IMAGE_URL } from '../utils/media-url';
+import type { Category } from './types/category';
 import { sql } from 'drizzle-orm';
 import { getPayload } from 'payload';
 import config from '@payload-config';
 
-export default async function getCategoryByFullPath(slugs: string[]): Promise<typeof categories.$inferSelect | null> {
+export default async function getCategoryByFullPath(slugs: string[]): Promise<Category | null> {
   const db = (await getPayload({ config })).db.drizzle;
 
   if (slugs.length === 0) return null;
@@ -12,7 +14,7 @@ export default async function getCategoryByFullPath(slugs: string[]): Promise<ty
   const fullPath = slugs.join('/');
 
   try {
-    const { rows } = await db.execute<{ category: typeof categories.$inferSelect }>(sql`
+    const { rows } = await db.execute<{ category: Category }>(sql`
         WITH RECURSIVE category_tree AS (
           SELECT
               ${categories.id} AS id,
@@ -28,7 +30,7 @@ export default async function getCategoryByFullPath(slugs: string[]): Promise<ty
           FROM ${categories}
           JOIN category_tree ct ON ${categories.parent} = ct.id
         )
-        SELECT ${rowJson(categories)} AS category
+        SELECT ${rowJson(categories, CATEGORY_OG_IMAGE_URL)} AS category
         FROM ${categories}
         JOIN category_tree ct ON ct.id = ${categories.id}
         WHERE ct.full_path = ${fullPath}

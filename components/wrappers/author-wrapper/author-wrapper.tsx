@@ -1,13 +1,13 @@
 import { type ReactNode } from 'react';
 import Link from 'next/link';
-import type { authors } from '@/lib/payload/generated-schema';
+import type { Author } from '@/lib/actions/types/author';
 import GitHub from '@/components/icons/github';
 import LinkedIn from '@/components/icons/linkedin';
 import { Container } from '@/components/primitives/container/container';
 import styles from './author-wrapper.module.scss';
 
 type PropsType = {
-  author: typeof authors.$inferSelect;
+  author: Author;
   totalCount: number;
   children?: ReactNode;
 };

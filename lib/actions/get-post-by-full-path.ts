@@ -1,13 +1,15 @@
 import { categories, posts, posts_rels, authors } from '@/lib/payload/generated-schema';
 import { sql } from 'drizzle-orm';
 import rowJson from '../utils/row-json';
+import { AUTHOR_AVATAR_URLS, POST_OG_IMAGE_URL } from '../utils/media-url';
+import type { Author } from './types/author';
 import type { Post } from './types/post';
 import { getPayload } from 'payload';
 import config from '@payload-config';
 
 type PostQueryRow = {
-  post: typeof posts.$inferSelect;
-  authors: (typeof authors.$inferSelect)[] | string;
+  post: Omit<Post, 'authors' | 'path'>;
+  authors: Author[] | string;
 };
 
 export default async function getPostByFullPath(slugs: string[]): Promise<Post | null> {
@@ -37,9 +39,9 @@ export default async function getPostByFullPath(slugs: string[]): Promise<Post |
         JOIN category_tree ct ON ${categories.parent} = ct.id
       )
       SELECT
-          ${rowJson(posts)} AS post,
+          ${rowJson(posts, POST_OG_IMAGE_URL)} AS post,
           COALESCE(
-            json_agg(${rowJson(authors)} ORDER BY pr."order") FILTER (WHERE ${authors.id} IS NOT NULL),
+            json_agg(${rowJson(authors, AUTHOR_AVATAR_URLS)} ORDER BY pr."order") FILTER (WHERE ${authors.id} IS NOT NULL),
             '[]'
           ) AS authors
       FROM ${posts}

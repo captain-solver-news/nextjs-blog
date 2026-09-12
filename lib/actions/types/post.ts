@@ -1,6 +1,8 @@
-import type { authors, posts } from '@/lib/payload/generated-schema';
+import type { posts } from '@/lib/payload/generated-schema';
+import type { Author } from './author';
 
 export type Post = typeof posts.$inferSelect & {
-  authors: (typeof authors.$inferSelect)[];
+  ogImage: string | null;
+  authors: Author[];
   path?: string;
 };
