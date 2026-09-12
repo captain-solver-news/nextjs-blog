@@ -1,5 +1,5 @@
 .page {
-  padding-top: 2rem;
+  padding-top: clamp(2rem, 5vw, 4rem);
   padding-bottom: 4rem;
 }
 
@@ -26,8 +26,8 @@
 .authorsSection {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
-  margin-top: 4rem;
+  gap: 1.5rem;
+  margin-top: 3rem;
 }
 
 .authorCard {
@@ -35,11 +35,14 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: 2rem;
-  transition: all var(--transition);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  transition:
+    background var(--transition),
+    border-color var(--transition);
 
   &:hover {
     background: var(--elevated);
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
   }
 }
 
@@ -98,6 +101,7 @@
 }
 
 .authorInfo {
+  min-width: 0;
   flex-grow: 1;
 }
 
@@ -160,6 +164,7 @@
   position: relative;
   z-index: 1;
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 2rem;
   padding-top: 1rem;
@@ -193,7 +198,7 @@
 
 @include between(md, lg) {
   .authorsSection {
-    gap: 3rem;
+    gap: 1.5rem;
     margin-top: 3rem;
   }
 

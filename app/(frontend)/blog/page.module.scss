@@ -1,10 +1,12 @@
 .page {
-  padding-top: 2rem;
+  padding-top: clamp(2rem, 5vw, 4rem);
   padding-bottom: 4rem;
 }
 
 .header {
   margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .title {
@@ -14,12 +16,11 @@
 .list {
   display: flex;
   flex-direction: column;
+  gap: 0.75rem;
 }
 
 .item {
-  &:not(:last-child) {
-    border-bottom: 1px solid var(--border);
-  }
+  min-width: 0;
 }
 
 .link {
@@ -27,13 +28,28 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.25rem 0;
+  padding: 1.25rem 1.5rem;
+  gap: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
   font-weight: 500;
   color: var(--fg);
   text-decoration: none;
-  transition: color var(--transition);
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    background var(--transition);
+
+  &::after {
+    content: '↗';
+    flex-shrink: 0;
+    color: var(--accent);
+  }
 
   &:hover {
     color: var(--accent);
+    border-color: var(--accent);
+    background: var(--elevated);
   }
 }

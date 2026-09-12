@@ -18,9 +18,16 @@ body {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
+  overflow-wrap: break-word;
+}
+
+html {
+  scroll-padding-top: 5rem;
+  scrollbar-gutter: stable;
 }
 
 main {
+  min-width: 0;
   flex: 1 0 auto;
   padding-top: 4rem;
 }
@@ -34,7 +41,7 @@ input[type='submit'] {
 
 :focus-visible {
   outline: 2px solid var(--info);
-  outline-offset: 2px;
+  outline-offset: 4px;
 }
 
 ::selection {

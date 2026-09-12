@@ -1,5 +1,6 @@
 .pager {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
@@ -9,6 +10,7 @@
 .link {
   composes: t-label from global;
   width: 2.5rem;
+  flex-shrink: 0;
   height: 2.5rem;
   display: flex;
   align-items: center;

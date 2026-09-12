@@ -1,18 +1,28 @@
 .list {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
-  margin-top: 4rem;
+  gap: 1rem;
+  margin-top: 2rem;
 }
 
 .entry {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  transition: border-color var(--transition);
+
+  &:focus-within,
+  &:hover {
+    border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  }
 }
 
 .entryLast {
-  padding-bottom: 4rem;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
 }
 
 .entryLink {
@@ -45,6 +55,7 @@
 
 .entryFooter {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
@@ -85,11 +96,6 @@
 
 @include between(md, lg) {
   .list {
-    gap: 3rem;
-    margin-top: 3rem;
-  }
-
-  .entryLast {
-    padding-bottom: 3rem;
+    margin-top: 2rem;
   }
 }

@@ -1,20 +1,22 @@
 .page {
-  padding-top: 2rem;
+  padding-top: clamp(2rem, 5vw, 4rem);
   padding-bottom: 4rem;
 }
 
 .breadcrumb {
   composes: t-label from global;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 0.25rem;
-  line-height: 1;
+  line-height: 1.5;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 1rem;
 }
 
 .breadcrumbItem {
+  min-width: 0;
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -49,6 +51,7 @@
 
 .authorBar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;

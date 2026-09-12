@@ -89,12 +89,13 @@ export function HamburgerMenu() {
                 </button>
               </div>
               {HAMBURGER_LINKS.map(({ href, label }) => {
-                const isActive = pathname === href;
+                const isActive = pathname === href || (href !== '/' && pathname.startsWith(`${href}/`));
 
                 return (
                   <Link
                     key={href}
                     href={href}
+                    aria-current={isActive ? 'page' : undefined}
                     className={`${styles.mobileLink} ${isActive ? styles.mobileLinkActive : ''}`}
                     onClick={close}
                   >

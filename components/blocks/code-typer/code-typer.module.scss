@@ -1,0 +1,143 @@
+.codeBlock {
+  // Lets the code pane size its font against the block itself rather than the
+  // viewport, so it fits in any column it is dropped into.
+  container-type: inline-size;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.codeHeader,
+.codeFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  font-family: var(--ff-code);
+  font-size: 0.6875rem;
+  color: var(--fg-subtle);
+}
+.codeHeader {
+  border-bottom: 1px solid var(--border);
+}
+.codeFooter {
+  border-top: 1px solid var(--border);
+  background: var(--canvas);
+}
+.codeFilename {
+  color: var(--fg-muted);
+  animation: filename-in var(--duration-slow) var(--ease);
+}
+.codeStatus {
+  color: var(--accent);
+}
+.dots {
+  display: flex;
+  gap: 0.375rem;
+}
+.dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--border);
+  &:last-child {
+    background: var(--accent);
+  }
+}
+
+// The pane is sized for the longest snippet and never re-measures, so typing and
+// erasing can't shift the hero. `--code-lines` and `--code-columns` come from the
+// component; the padding is added explicitly because box-sizing is border-box.
+$code-line-height: 1.9;
+$code-padding-block: 1.75rem;
+// JetBrains Mono advances exactly 0.6em per glyph, so the widest line needs
+// `columns * 0.6` em of room. Solving that for the font size keeps every snippet
+// inside the block instead of overflowing into a horizontal scroll.
+$code-advance: 0.6;
+
+.code {
+  --code-padding-inline: 1rem;
+
+  height: calc(var(--code-lines) * #{$code-line-height}em + #{$code-padding-block} * 2);
+  padding: $code-padding-block var(--code-padding-inline);
+  overflow: hidden;
+  font-family: var(--ff-code);
+  font-size: clamp(
+    0.5rem,
+    calc((100cqi - var(--code-padding-inline) * 2) / (var(--code-columns) * #{$code-advance})),
+    0.8125rem
+  );
+  line-height: $code-line-height;
+  color: var(--fg);
+}
+
+@include up(sm) {
+  .code {
+    --code-padding-inline: 1.25rem;
+  }
+}
+
+.keyword {
+  color: var(--accent);
+}
+.comment {
+  color: var(--fg-subtle);
+}
+.fn {
+  color: var(--info);
+}
+.string,
+.number {
+  color: var(--warning);
+}
+.plain {
+  color: inherit;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.5em;
+  height: 1.05em;
+  margin-left: 0.05em;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: caret-blink 1s steps(1, end) infinite;
+}
+// While characters are landing the caret stays lit, so it reads as a moving pen.
+.caretSolid {
+  animation: none;
+}
+
+@keyframes caret-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes filename-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret {
+    display: none;
+  }
+  .codeFilename {
+    animation: none;
+  }
+}
