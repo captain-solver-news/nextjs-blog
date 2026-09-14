@@ -32,24 +32,24 @@ export default async function AboutPage() {
                   <picture>
                     <img
                       className={styles.avatar}
-                      src={author.avatarDarkUrl || '/authors/fallback.jpg'}
+                      src={author.avatarDarkMedia?.url || '/authors/fallback.jpg'}
                       alt={author.name}
                     />
                     <img
                       className={`${styles.avatar} ${styles.avatarDarkHover}`}
-                      src={author.avatarDarkHoveredUrl || '/authors/fallback.jpg'}
+                      src={author.avatarDarkHoveredMedia?.url || '/authors/fallback.jpg'}
                       alt=""
                       aria-hidden
                     />
                     <img
                       className={`${styles.avatar} ${styles.avatarLight}`}
-                      src={author.avatarLightUrl || '/authors/fallback.jpg'}
+                      src={author.avatarLightMedia?.url || '/authors/fallback.jpg'}
                       alt=""
                       aria-hidden
                     />
                     <img
                       className={`${styles.avatar} ${styles.avatarLightHover}`}
-                      src={author.avatarLightHoveredUrl || '/authors/fallback.jpg'}
+                      src={author.avatarLightHoveredMedia?.url || '/authors/fallback.jpg'}
                       alt=""
                       aria-hidden
                     />

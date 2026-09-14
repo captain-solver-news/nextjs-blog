@@ -48,24 +48,24 @@ export default async function AuthorWrapper(props: PropsType) {
             <picture>
               <img
                 className={`${styles.avatar} ${styles.avatarDark}`}
-                src={author.avatarDarkUrl || FALLBACK_AVATAR}
+                src={author.avatarDarkMedia?.url || FALLBACK_AVATAR}
                 alt={author.name}
               />
               <img
                 className={`${styles.avatar} ${styles.avatarDarkHover}`}
-                src={author.avatarDarkHoveredUrl || FALLBACK_AVATAR}
+                src={author.avatarDarkHoveredMedia?.url || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
               <img
                 className={`${styles.avatar} ${styles.avatarLight}`}
-                src={author.avatarLightUrl || FALLBACK_AVATAR}
+                src={author.avatarLightMedia?.url || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
               <img
                 className={`${styles.avatar} ${styles.avatarLightHover}`}
-                src={author.avatarLightHoveredUrl || FALLBACK_AVATAR}
+                src={author.avatarLightHoveredMedia?.url || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
