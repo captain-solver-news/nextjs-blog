@@ -1,18 +1,18 @@
 'use client';
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import styles from './collapsible-text.module.scss';
 
 type PropsType = {
-  text: string;
+  children: ReactNode;
   lines?: number;
   className?: string;
 };
 
-export function CollapsibleText({ text, lines = 3, className }: PropsType) {
+export function CollapsibleText({ children, lines = 3, className }: PropsType) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(true);
-  const textRef = useRef<HTMLParagraphElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
   const textId = useId();
 
   useEffect(() => {
@@ -31,14 +31,14 @@ export function CollapsibleText({ text, lines = 3, className }: PropsType) {
 
   return (
     <div className={className}>
-      <p
+      <div
         ref={textRef}
         id={textId}
         className={`${styles.text} ${isExpanded ? '' : styles.clamped}`.trim()}
         style={isExpanded ? undefined : { WebkitLineClamp: lines }}
       >
-        {text}
-      </p>
+        {children}
+      </div>
 
       {isOverflowing && (
         <button

@@ -35,7 +35,7 @@ export default async function getPostsByCategoryId(
     .offset((page - 1) * POSTS_PER_PAGE);
 
   return {
-    posts: rows.map((row) => ({ ...row.post, authors: row.authors })),
+    posts: rows.map((row) => ({ ...row.post, authors: row.authors })) as Post[],
     totalCount: rows.length ? rows[0].totalCount : 0,
   };
 }

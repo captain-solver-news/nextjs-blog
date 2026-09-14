@@ -1,5 +1,13 @@
 .text {
   margin: 0;
+
+  p {
+    margin: 0 0 1rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .clamped {

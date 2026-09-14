@@ -10,7 +10,7 @@ export const StaticContents: CollectionConfig = {
     useAsTitle: 'id',
     defaultColumns: ['id', 'title'],
     group: 'Content',
-    description: 'Markdown blocks addressed by a stable string id (about, contact, ...).',
+    description: 'Rich text blocks addressed by a stable string id (about, contact, ...).',
   },
   access: {
     read: () => true,
@@ -32,9 +32,8 @@ export const StaticContents: CollectionConfig = {
     },
     {
       name: 'body',
-      type: 'textarea',
+      type: 'richText',
       required: true,
-      admin: { rows: 20 },
     },
   ],
 };

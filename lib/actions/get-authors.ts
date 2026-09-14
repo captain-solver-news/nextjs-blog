@@ -8,5 +8,5 @@ import config from '@payload-config';
 export default async function getAuthors(): Promise<Author[]> {
   const db = (await getPayload({ config })).db.drizzle;
 
-  return db.select({ ...getTableColumns(authors), ...AUTHOR_AVATAR_MEDIA }).from(authors);
+  return (await db.select({ ...getTableColumns(authors), ...AUTHOR_AVATAR_MEDIA }).from(authors)) as Author[];
 }

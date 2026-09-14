@@ -2,6 +2,7 @@ import { categories, posts, posts_rels, authors } from '@/lib/payload/generated-
 import { sql } from 'drizzle-orm';
 import rowJson from '../utils/row-json';
 import { AUTHOR_AVATAR_MEDIA, POST_OG_IMAGE_URL } from '../utils/media-url';
+import populateLexicalUploads from '../utils/populate-lexical-uploads';
 import type { Author } from './types/author';
 import type { Post } from './types/post';
 import { getPayload } from 'payload';
@@ -59,7 +60,11 @@ export default async function getPostByFullPath(slugs: string[]): Promise<Post |
 
     const { post, authors: postAuthors } = rows[0];
 
-    return { ...post, authors: typeof postAuthors === 'string' ? JSON.parse(postAuthors) : postAuthors };
+    return {
+      ...post,
+      body: await populateLexicalUploads(post.body),
+      authors: typeof postAuthors === 'string' ? JSON.parse(postAuthors) : postAuthors,
+    };
   } catch (error) {
     console.error('Error while searching for post by path:', error);
     return null;

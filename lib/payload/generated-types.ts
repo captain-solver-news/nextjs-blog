@@ -187,10 +187,21 @@ export interface Post {
   category: string | Category;
   authors?: (string | Author)[] | null;
   teaser: string;
-  /**
-   * Markdown. Rendered through remark + remark-gfm at request time.
-   */
-  body: string;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   status: 'published' | 'draft';
   isFeatured?: boolean | null;
   seoDescription?: string | null;
@@ -211,7 +222,21 @@ export interface Author {
    */
   slug: string;
   jobTitle: string;
-  bio: string;
+  bio: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   avatarDark?: (string | null) | Media;
   avatarDarkHovered?: (string | null) | Media;
   avatarLight?: (string | null) | Media;
@@ -223,7 +248,7 @@ export interface Author {
   createdAt: string;
 }
 /**
- * Markdown blocks addressed by a stable string id (about, contact, ...).
+ * Rich text blocks addressed by a stable string id (about, contact, ...).
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "static-contents".
@@ -234,7 +259,21 @@ export interface StaticContent {
    */
   id: string;
   title?: string | null;
-  body: string;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
   updatedAt: string;
   createdAt: string;
 }
