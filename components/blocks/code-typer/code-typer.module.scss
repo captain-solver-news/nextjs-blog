@@ -1,3 +1,5 @@
+@use '../../../styles/breakpoints' as *;
+
 .codeBlock {
   // Lets the code pane size its font against the block itself rather than the
   // viewport, so it fits in any column it is dropped into.

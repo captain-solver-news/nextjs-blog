@@ -36,5 +36,5 @@ export default async function getFeaturedPosts(): Promise<Post[]> {
     }))
   );
 
-  return featuredPosts.filter((post) => post.path);
+  return featuredPosts.filter((post) => post.path) as Post[];
 }

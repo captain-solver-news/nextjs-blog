@@ -1,20 +1,22 @@
 import type { ReactNode } from 'react';
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 import { Container } from '@/components/primitives/container/container';
 import styles from './static-page.module.scss';
 
 interface StaticPageProps {
   title: string | null;
-  bodyHtml: string;
+  body: DefaultTypedEditorState;
   children?: ReactNode;
 }
 
-export function StaticPage({ title, bodyHtml, children }: StaticPageProps) {
+export function StaticPage({ title, body, children }: StaticPageProps) {
   return (
     <Container as="article" className={styles.page}>
       <header className={styles.header}>
         <h1 className={styles.heading}>{title}</h1>
       </header>
-      <div className="prose" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+      <RichText className="prose" data={body} />
       {children}
     </Container>
   );

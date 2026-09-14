@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload';
+import { HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical';
 import { Status } from '@/lib/payload/taxonomy';
 
 export const Posts: CollectionConfig = {
@@ -45,12 +46,14 @@ export const Posts: CollectionConfig = {
     },
     {
       name: 'body',
-      type: 'textarea',
+      type: 'richText',
       required: true,
-      admin: {
-        description: 'Markdown. Rendered through remark + remark-gfm at request time.',
-        rows: 24,
-      },
+      editor: lexicalEditor({
+        features: ({ defaultFeatures }) => [
+          ...defaultFeatures.filter((feature) => feature.key !== 'heading'),
+          HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
+        ],
+      }),
     },
     {
       name: 'status',

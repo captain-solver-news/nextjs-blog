@@ -2,7 +2,6 @@ export { privacyPolicyMetadata as metadata } from '@/lib/seo/static';
 import { JsonLd } from '@/components/seo/json-ld';
 import { privacyPolicySchema } from '@/lib/seo/static';
 import getStaticContent from '@/lib/actions/get-static-content';
-import { mdToHtml } from '@/lib/utils/md-to-html';
 import { StaticPage } from '@/components/wrappers/static-page/static-page';
 
 export default async function PrivacyPage() {
@@ -10,7 +9,7 @@ export default async function PrivacyPage() {
 
   return (
     <>
-      <StaticPage title={content.title} bodyHtml={await mdToHtml(content.body)} />
+      <StaticPage title={content.title} body={content.body} />
       <JsonLd schema={privacyPolicySchema} />
     </>
   );

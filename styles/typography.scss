@@ -1,3 +1,5 @@
+@use './breakpoints' as *;
+
 .t-display,
 .prose h1 {
   font-family: var(--ff-display);

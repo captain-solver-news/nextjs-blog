@@ -6,7 +6,6 @@ import getDbConfigs from '@/lib/actions/get-db-configs';
 import LinkedInContact from '@/components/icons/linkedin-contact';
 import XContact from '@/components/icons/x-contact';
 import styles from './page.module.scss';
-import { mdToHtml } from '@/lib/utils/md-to-html';
 import { StaticPage } from '@/components/wrappers/static-page/static-page';
 
 export default async function ContactPage() {
@@ -18,7 +17,7 @@ export default async function ContactPage() {
 
   return (
     <>
-      <StaticPage title={content.title} bodyHtml={await mdToHtml(content.body)}>
+      <StaticPage title={content.title} body={content.body}>
         <div className={styles.grid}>
           <a href={`mailto:${email}`} className={styles.socialCard}>
             <div className={styles.cardInner}>

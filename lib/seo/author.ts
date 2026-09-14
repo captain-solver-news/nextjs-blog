@@ -1,6 +1,7 @@
 import { type Metadata } from 'next';
 import { AUTHOR_PREFIX } from '@/config';
 import type { Author } from '@/lib/actions/types/author';
+import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext';
 import { WithContext, Person } from 'schema-dts';
 
 const DESCRIPTION_LIMIT = 160;
@@ -11,8 +12,12 @@ function truncate(value: string, limit = DESCRIPTION_LIMIT): string {
   return `${value.slice(0, value.lastIndexOf(' ', limit) || limit).trimEnd()}…`;
 }
 
+function authorBioText(author: Author): string {
+  return author.bio ? convertLexicalToPlaintext({ data: author.bio }).trim() : '';
+}
+
 function authorDescription(author: Author): string {
-  return truncate(author.bio ?? `${author.name} — ${author.jobTitle}.`);
+  return truncate(authorBioText(author) || `${author.name} — ${author.jobTitle}.`);
 }
 
 export function generateAuthorSchema(author: Author): WithContext<Person> {
@@ -20,6 +25,7 @@ export function generateAuthorSchema(author: Author): WithContext<Person> {
   const sameAs = [author.githubUrl, author.linkedinUrl].filter((url): url is string => Boolean(url));
   const image = author.avatarDarkMedia?.url ?? author.miniAvatarMedia?.url;
   const imageUrl = image ? new URL(image, siteUrl).toString() : undefined;
+  const bioText = authorBioText(author);
 
   return {
     '@context': 'https://schema.org',
@@ -27,7 +33,7 @@ export function generateAuthorSchema(author: Author): WithContext<Person> {
     name: author.name,
     jobTitle: author.jobTitle,
     url: `${siteUrl}/${AUTHOR_PREFIX}/${author.slug}`,
-    ...(author.bio ? { description: author.bio } : {}),
+    ...(bioText ? { description: bioText } : {}),
     ...(imageUrl ? { image: imageUrl } : {}),
     ...(sameAs.length ? { sameAs } : {}),
   };
