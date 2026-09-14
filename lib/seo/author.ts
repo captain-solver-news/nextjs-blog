@@ -18,7 +18,7 @@ function authorDescription(author: Author): string {
 export function generateAuthorSchema(author: Author): WithContext<Person> {
   const siteUrl = process.env.PUBLIC_SITE_URL ?? 'http://localhost:3000';
   const sameAs = [author.githubUrl, author.linkedinUrl].filter((url): url is string => Boolean(url));
-  const image = author.avatarDarkUrl ?? author.miniAvatarUrl;
+  const image = author.avatarDarkMedia?.url ?? author.miniAvatarMedia?.url;
   const imageUrl = image ? new URL(image, siteUrl).toString() : undefined;
 
   return {
@@ -38,7 +38,7 @@ export function generateAuthorMetadata(author: Author): Metadata {
   const description = authorDescription(author);
   const canonicalPath = `/${AUTHOR_PREFIX}/${author.slug}`;
 
-  const ogImage = author.avatarDarkUrl ?? undefined;
+  const ogImage = author.avatarDarkMedia?.url ?? undefined;
   return {
     title,
     description,

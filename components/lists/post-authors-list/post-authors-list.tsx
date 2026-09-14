@@ -19,7 +19,7 @@ export function PostAuthorsList({ authors }: PostAuthorsListProps) {
         {authors.map((author) => (
           <div key={author.id} className={styles.authorBadge}>
             <Image
-              src={author.miniAvatarUrl || '/authors/fallback.jpg'}
+              src={author.miniAvatarMedia?.url || '/authors/fallback.jpg'}
               alt={author.name}
               width={32}
               height={32}
