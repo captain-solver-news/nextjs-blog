@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type { Author } from '@/lib/actions/types/author';
 import GitHub from '@/components/icons/github';
 import LinkedIn from '@/components/icons/linkedin';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 import { Container } from '@/components/primitives/container/container';
 import styles from './author-wrapper.module.scss';
 
@@ -48,24 +49,24 @@ export default async function AuthorWrapper(props: PropsType) {
             <picture>
               <img
                 className={`${styles.avatar} ${styles.avatarDark}`}
-                src={author.avatarDarkUrl || FALLBACK_AVATAR}
+                src={author.avatarDarkMedia?.url || FALLBACK_AVATAR}
                 alt={author.name}
               />
               <img
                 className={`${styles.avatar} ${styles.avatarDarkHover}`}
-                src={author.avatarDarkHoveredUrl || FALLBACK_AVATAR}
+                src={author.avatarDarkHoveredMedia?.url || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
               <img
                 className={`${styles.avatar} ${styles.avatarLight}`}
-                src={author.avatarLightUrl || FALLBACK_AVATAR}
+                src={author.avatarLightMedia?.url || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
               <img
                 className={`${styles.avatar} ${styles.avatarLightHover}`}
-                src={author.avatarLightHoveredUrl || FALLBACK_AVATAR}
+                src={author.avatarLightHoveredMedia?.url || FALLBACK_AVATAR}
                 alt=""
                 aria-hidden
               />
@@ -81,7 +82,7 @@ export default async function AuthorWrapper(props: PropsType) {
           </div>
         </div>
 
-        {author.bio && <p className={styles.bio}>{author.bio}</p>}
+        {author.bio && <RichText className={styles.bio} data={author.bio} />}
 
         {(author.githubUrl || author.linkedinUrl) && (
           <div className={styles.socialLinks}>

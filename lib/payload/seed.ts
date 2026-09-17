@@ -12,11 +12,15 @@ import {
 import { Status, Type } from '@/lib/payload/taxonomy';
 import { getPayload } from 'payload';
 import config from '@payload-config';
+import { convertMarkdownToLexical, editorConfigFactory } from '@payloadcms/richtext-lexical';
 
-type NewPost = typeof posts.$inferInsert;
+type NewPost = Omit<typeof posts.$inferInsert, 'body'> & { body: string };
 
 async function main() {
-  const db = (await getPayload({ config })).db.drizzle;
+  const payload = await getPayload({ config });
+  const db = payload.db.drizzle;
+  const editorConfig = await editorConfigFactory.default({ config: payload.config });
+  const md = (markdown: string) => convertMarkdownToLexical({ editorConfig, markdown });
 
   await db.execute(sql`TRUNCATE TABLE "posts" RESTART IDENTITY CASCADE`);
   await db.execute(sql`TRUNCATE TABLE "categories" RESTART IDENTITY CASCADE`);
@@ -105,7 +109,9 @@ async function main() {
     .values({
       name: 'Alex Chen',
       slug: 'alex-chen',
-      bio: 'Specializes in kernel-level networking and high-performance packet processing. With over fifteen years of experience contributing to the Linux networking stack, he has pioneered several eBPF-based observability tools now standard in hyperscale environments. His research focuses on reducing tail latency in distributed state machines and optimizing hardware-assisted isolation for multi-tenant cloud architectures.',
+      bio: md(
+        'Specializes in kernel-level networking and high-performance packet processing. With over fifteen years of experience contributing to the Linux networking stack, he has pioneered several eBPF-based observability tools now standard in hyperscale environments. His research focuses on reducing tail latency in distributed state machines and optimizing hardware-assisted isolation for multi-tenant cloud architectures.'
+      ),
       jobTitle: 'Lead Systems Architect',
       avatarDark: avatar1.id,
       avatarDarkHovered: avatar2.id,
@@ -118,7 +124,9 @@ async function main() {
     .values({
       name: 'Dr. Elena Rodriguez',
       slug: 'dr-elena-rodriguez',
-      bio: 'An expert in consensus algorithms and formal verification of distributed systems. Her work on Paxos-variant optimizations and TLA+ modeling has been instrumental in the development of next-generation globally distributed databases. She holds a PhD in Distributed Computing and spent a decade leading core infrastructure teams at several FAANG organizations.',
+      bio: md(
+        'An expert in consensus algorithms and formal verification of distributed systems. Her work on Paxos-variant optimizations and TLA+ modeling has been instrumental in the development of next-generation globally distributed databases. She holds a PhD in Distributed Computing and spent a decade leading core infrastructure teams at several FAANG organizations.'
+      ),
       jobTitle: 'Head of Cloud-Native Research',
       avatarDark: avatar2.id,
       avatarDarkHovered: avatar3.id,
@@ -131,7 +139,9 @@ async function main() {
     .values({
       name: 'Jordan Vane',
       slug: 'jordan-vane',
-      bio: 'Bridges the gap between silicon and software, focusing on hardware-assisted isolation and TEE (Trusted Execution Environments). His expertise in Enclave technologies and side-channel attack mitigation makes him a leading voice in secure systems design. Before joining the Signal, Jordan worked on firmware-level security for high-frequency trading platforms.',
+      bio: md(
+        'Bridges the gap between silicon and software, focusing on hardware-assisted isolation and TEE (Trusted Execution Environments). His expertise in Enclave technologies and side-channel attack mitigation makes him a leading voice in secure systems design. Before joining the Signal, Jordan worked on firmware-level security for high-frequency trading platforms.'
+      ),
       jobTitle: 'Hardware-Software Interop Lead',
       avatarDark: avatar3.id,
       avatarDarkHovered: avatar1.id,
@@ -243,7 +253,10 @@ async function main() {
     });
   }
 
-  const insertedPosts = await db.insert(posts).values(seededPosts).returning();
+  const insertedPosts = await db
+    .insert(posts)
+    .values(seededPosts.map((post) => ({ ...post, body: md(post.body) })))
+    .returning();
 
   const authorPool = [alice, bob, carol];
 
@@ -263,7 +276,7 @@ async function main() {
 
   await db.insert(posts_rels).values(postsRelsValues);
 
-  await db.insert(static_contents).values([
+  const seededStaticContents = [
     {
       id: 'about',
       title: "About The Developer's Signal",
@@ -383,7 +396,11 @@ Use the email address below for direct inquiries, editorial feedback, or partner
 
 For corrections to published articles, please include the article URL and a clear description of the issue. We appreciate precise, good-faith feedback from the community.`,
     },
-  ]);
+  ];
+
+  await db
+    .insert(static_contents)
+    .values(seededStaticContents.map((content) => ({ ...content, body: md(content.body) })));
 
   await db.insert(configs).values([
     {

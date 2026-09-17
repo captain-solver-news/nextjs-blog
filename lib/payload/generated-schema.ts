@@ -18,9 +18,9 @@ import {
   numeric,
   boolean,
   timestamp,
+  jsonb,
   serial,
   integer,
-  jsonb,
   pgEnum,
 } from '@payloadcms/db-postgres/drizzle/pg-core';
 import { sql, relations } from '@payloadcms/db-postgres/drizzle';
@@ -72,7 +72,7 @@ export const posts = pgTable(
         onDelete: 'set null',
       }),
     teaser: varchar('teaser').notNull(),
-    body: varchar('body').notNull(),
+    body: jsonb('body').notNull(),
     status: enum_posts_status('status').notNull().default('published'),
     isFeatured: boolean('is_featured').default(false),
     seoDescription: varchar('seo_description'),
@@ -124,7 +124,7 @@ export const static_contents = pgTable(
   {
     id: varchar('id').primaryKey(),
     title: varchar('title'),
-    body: varchar('body').notNull(),
+    body: jsonb('body').notNull(),
     updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
     createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 }).defaultNow().notNull(),
   },
@@ -156,7 +156,7 @@ export const authors = pgTable(
     name: varchar('name').notNull(),
     slug: varchar('slug').notNull(),
     jobTitle: varchar('job_title').notNull(),
-    bio: varchar('bio').notNull(),
+    bio: jsonb('bio').notNull(),
     avatarDark: uuid('avatar_dark_id').references(() => media.id, {
       onDelete: 'set null',
     }),

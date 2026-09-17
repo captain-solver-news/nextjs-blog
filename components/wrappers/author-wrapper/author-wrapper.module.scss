@@ -1,3 +1,5 @@
+@use '../../../styles/breakpoints' as *;
+
 .page {
   padding-top: clamp(2rem, 5vw, 4rem);
   padding-bottom: 4rem;
@@ -137,6 +139,14 @@
   composes: t-body from global;
   color: var(--fg-muted);
   margin: 2rem 0 0;
+
+  p {
+    margin: 0 0 1rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
 .socialLinks {

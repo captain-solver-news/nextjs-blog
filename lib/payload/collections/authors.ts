@@ -1,4 +1,12 @@
 import type { CollectionConfig } from 'payload';
+import {
+  BoldFeature,
+  ItalicFeature,
+  LinkFeature,
+  ParagraphFeature,
+  InlineToolbarFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical';
 
 export const Authors: CollectionConfig = {
   slug: 'authors',
@@ -36,8 +44,11 @@ export const Authors: CollectionConfig = {
     },
     {
       name: 'bio',
-      type: 'textarea',
+      type: 'richText',
       required: true,
+      editor: lexicalEditor({
+        features: [ParagraphFeature(), BoldFeature(), ItalicFeature(), LinkFeature(), InlineToolbarFeature()],
+      }),
     },
     {
       type: 'collapsible',

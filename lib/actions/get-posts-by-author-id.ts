@@ -2,7 +2,7 @@ import { sql } from 'drizzle-orm';
 import { POSTS_PER_PAGE } from '@/config';
 import { categories, posts, posts_rels, authors } from '@/lib/payload/generated-schema';
 import rowJson from '../utils/row-json';
-import { AUTHOR_AVATAR_URLS, POST_OG_IMAGE_URL } from '../utils/media-url';
+import { AUTHOR_AVATAR_MEDIA, POST_OG_IMAGE_URL } from '../utils/media-url';
 import { Status } from '@/lib/payload/taxonomy';
 import type { Author } from './types/author';
 import type { Post } from './types/post';
@@ -43,7 +43,7 @@ export default async function getPostsByAuthorId(
       (ct.full_path || '/' || ${posts.slug})::text AS "path",
       COALESCE(
         (
-          SELECT json_agg(${rowJson(authors, AUTHOR_AVATAR_URLS)} ORDER BY pr_all."order")
+          SELECT json_agg(${rowJson(authors, AUTHOR_AVATAR_MEDIA)} ORDER BY pr_all."order")
           FROM ${posts_rels} pr_all
           JOIN ${authors} ON ${authors.id} = pr_all.authors_id
           WHERE pr_all.parent_id = ${posts.id}

@@ -1,9 +1,12 @@
 import type { authors } from '@/lib/payload/generated-schema';
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical';
+import type { Media } from './media';
 
-export type Author = typeof authors.$inferSelect & {
-  avatarDarkUrl: string | null;
-  avatarDarkHoveredUrl: string | null;
-  avatarLightUrl: string | null;
-  avatarLightHoveredUrl: string | null;
-  miniAvatarUrl: string | null;
+export type Author = Omit<typeof authors.$inferSelect, 'bio'> & {
+  bio: DefaultTypedEditorState | null;
+  avatarDarkMedia: Media | null;
+  avatarDarkHoveredMedia: Media | null;
+  avatarLightMedia: Media | null;
+  avatarLightHoveredMedia: Media | null;
+  miniAvatarMedia: Media | null;
 };

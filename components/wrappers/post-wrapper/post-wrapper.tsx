@@ -1,5 +1,5 @@
 import { type Post } from '@/lib/actions/types/post';
-import { mdToHtml } from '@/lib/utils/md-to-html';
+import { RichText } from '@payloadcms/richtext-lexical/react';
 import styles from './post-wrapper.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -12,8 +12,6 @@ type PropsType = {
 };
 
 export default async function PostWrapper({ post, categorySlugs }: PropsType) {
-  const bodyHtml = await mdToHtml(post.body);
-
   return (
     <Container as="article" className={styles.page}>
       <nav className={styles.breadcrumb} aria-label="Breadcrumb">
@@ -67,14 +65,14 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
         </figure>
       )}
 
-      <div className="prose" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+      <RichText className="prose" data={post.body} />
 
       <div className={styles.footer}>
         {post.authors.map((author) => (
           <div key={author.id} className={styles.footerAuthor}>
-            {author.miniAvatarUrl && (
+            {author.miniAvatarMedia?.url && (
               <Image
-                src={author.miniAvatarUrl}
+                src={author.miniAvatarMedia.url}
                 alt={author.name}
                 width={48}
                 height={48}

@@ -1,7 +1,7 @@
 import { posts, posts_rels, authors } from '@/lib/payload/generated-schema';
 import { eq, desc, sql, and, getTableColumns } from 'drizzle-orm';
 import rowJson from '../utils/row-json';
-import { AUTHOR_AVATAR_URLS, POST_OG_IMAGE_URL } from '../utils/media-url';
+import { AUTHOR_AVATAR_MEDIA, POST_OG_IMAGE_URL } from '../utils/media-url';
 import { Status } from '@/lib/payload/taxonomy';
 import type { Author } from './types/author';
 import type { Post } from './types/post';
@@ -17,7 +17,7 @@ export default async function getFeaturedPosts(): Promise<Post[]> {
       post: { ...getTableColumns(posts), ...POST_OG_IMAGE_URL },
       authors: sql<
         Author[]
-      >`COALESCE(json_agg(${rowJson(authors, AUTHOR_AVATAR_URLS)} ORDER BY ${posts_rels.order}) FILTER (WHERE ${authors.id} IS NOT NULL), '[]')`.mapWith(
+      >`COALESCE(json_agg(${rowJson(authors, AUTHOR_AVATAR_MEDIA)} ORDER BY ${posts_rels.order}) FILTER (WHERE ${authors.id} IS NOT NULL), '[]')`.mapWith(
         (val) => (typeof val === 'string' ? JSON.parse(val) : val)
       ),
     })
@@ -36,5 +36,5 @@ export default async function getFeaturedPosts(): Promise<Post[]> {
     }))
   );
 
-  return featuredPosts.filter((post) => post.path);
+  return featuredPosts.filter((post) => post.path) as Post[];
 }

@@ -1,3 +1,5 @@
+@use '../../../styles/breakpoints' as *;
+
 .page {
   padding-top: clamp(2rem, 5vw, 4rem);
   padding-bottom: 4rem;

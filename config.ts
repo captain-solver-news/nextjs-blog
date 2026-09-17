@@ -1,4 +1,5 @@
-import type { static_contents } from '@/lib/payload/generated-schema';
+import type { StaticContent } from '@/lib/actions/types/static-content';
+import { paragraphState } from '@/lib/utils/rich-text';
 
 export const BLOG_PREFIX = 'blog';
 export const AUTHOR_PREFIX = 'author';
@@ -36,8 +37,8 @@ export const HAMBURGER_LINKS = [
   { href: '/contact', label: 'Contact' },
 ] as const;
 
-export const defaultContent = (id: string): Pick<typeof static_contents.$inferSelect, 'id' | 'title' | 'body'> => ({
+export const defaultContent = (id: string): StaticContent => ({
   id,
   title: `${id} title`,
-  body: `The ${id} content is not added in database yet`,
+  body: paragraphState(`The ${id} content is not added in database yet`),
 });
