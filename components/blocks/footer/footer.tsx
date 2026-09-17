@@ -3,6 +3,7 @@ import styles from './footer.module.scss';
 import getDbConfigs from '@/lib/actions/get-db-configs';
 import { FOOTER_LINKS_1, FOOTER_LINKS_2 } from '@/config';
 import { Container } from '@/components/primitives/container/container';
+import { Logo } from '@/components/blocks/logo/logo';
 import GitHub from '@/components/icons/github';
 import LinkedIn from '@/components/icons/linkedin';
 import X from '@/components/icons/x';
@@ -23,9 +24,7 @@ export async function Footer() {
       <Container size="shell" className={styles.inner}>
         <div className={styles.wrapper}>
           <div className={styles.brand}>
-            <Link href="/" className={styles.logo}>
-              DEV
-            </Link>
+            <Logo />
             <p className={styles.copyright}>&copy; 2026</p>
           </div>
 
