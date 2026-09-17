@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ThemeToggle } from '@/components/blocks/header/theme-toggle/theme-toggle';
 import { HamburgerMenu } from './hamburger/hamburger-menu';
+import { Logo } from '@/components/blocks/logo/logo';
 import { HEADER_LINKS } from '@/config';
 import { Container } from '@/components/primitives/container/container';
 import styles from './header.module.scss';
@@ -15,9 +16,7 @@ export function Header() {
     <header className={styles.header}>
       <Container size="shell" className={styles.inner}>
         <div className={styles.brand}>
-          <Link href="/" className={styles.logo}>
-            DEV
-          </Link>
+          <Logo />
         </div>
 
         <nav className={styles.nav} aria-label="Main">
