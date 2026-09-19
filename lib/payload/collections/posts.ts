@@ -66,6 +66,26 @@ export const Posts: CollectionConfig = {
       ],
     },
     {
+      name: 'publishedAt',
+      type: 'date',
+      label: 'Published at',
+      index: true,
+      admin: {
+        date: { pickerAppearance: 'dayAndTime' },
+        description: 'Public publish date. Set automatically the first time the post is published.',
+      },
+      hooks: {
+        beforeChange: [
+          ({ siblingData, value }) => {
+            if (value) return value;
+            if (siblingData?.status === Status.Published) return new Date().toISOString();
+
+            return value;
+          },
+        ],
+      },
+    },
+    {
       name: 'isFeatured',
       type: 'checkbox',
       defaultValue: false,
@@ -82,7 +102,15 @@ export const Posts: CollectionConfig = {
           type: 'upload',
           relationTo: 'media',
         },
-        { name: 'isSitemap', type: 'checkbox', defaultValue: true, label: 'Include in sitemap' },
+        {
+          name: 'noIndex',
+          type: 'checkbox',
+          defaultValue: false,
+          label: 'Hide from search engines (noindex)',
+          admin: {
+            description: 'Adds a noindex robots tag and drops the URL from sitemap.xml.',
+          },
+        },
       ],
     },
   ],

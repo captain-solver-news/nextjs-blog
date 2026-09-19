@@ -40,7 +40,7 @@ export default async function getSitemapPosts(): Promise<SitemapPostRow[]> {
     FROM ${posts}
     JOIN category_tree ct ON ${posts.category} = ct.id
     WHERE ${posts.status} = ${Status.Published}
-      AND ${posts.isSitemap} IS TRUE;
+      AND ${posts.noIndex} IS NOT TRUE;
   `);
 
   return rows.map((row) => ({
