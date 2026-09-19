@@ -17,7 +17,7 @@ export default async function getSitemapCategories(): Promise<SitemapCategoryRow
       SELECT
         ${categories.id} AS id,
         ${categories.type} AS type,
-        ${categories.isSitemap} AS is_sitemap,
+        ${categories.noIndex} AS no_index,
         ${categories.slug}::text AS full_path,
         NULL::timestamp AS updated_at
       FROM ${categories}
@@ -28,7 +28,7 @@ export default async function getSitemapCategories(): Promise<SitemapCategoryRow
       SELECT
         ${categories.id},
         ${categories.type},
-        ${categories.isSitemap},
+        ${categories.noIndex},
         (ct.full_path || '/' || ${categories.slug})::text AS full_path,
         NULL::timestamp AS updated_at
       FROM ${categories}
@@ -38,7 +38,7 @@ export default async function getSitemapCategories(): Promise<SitemapCategoryRow
       ct.full_path AS "fullPath",
       ct.updated_at AS "updatedAt"
     FROM category_tree ct
-    WHERE ct.is_sitemap IS TRUE
+    WHERE ct.no_index IS NOT TRUE
       AND ct.type <> ${Type.Hidden};
   `);
 

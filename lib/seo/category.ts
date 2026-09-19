@@ -1,13 +1,31 @@
 import { type Metadata } from 'next';
 import { BLOG_PREFIX } from '@/config';
 import type { Category } from '@/lib/actions/types/category';
-import { WithContext, Thing } from 'schema-dts';
+import { type CategoryBreadcrumb } from '@/lib/actions/get-category-breadcrumbs';
+import { CollectionPage, Graph } from 'schema-dts';
+import { generateBreadcrumbSchema } from './breadcrumbs';
+import { toAbsoluteUrl } from './url';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function generateCategorySchema(category: Category, slugs: string[]): WithContext<Thing> {
+export function generateCategorySchema(
+  category: Category,
+  slugs: string[],
+  breadcrumbs: CategoryBreadcrumb[] = []
+): Graph {
+  const canonicalUrl = toAbsoluteUrl(`/${BLOG_PREFIX}/${slugs.join('/')}`);
+  const imageUrl = category.ogImage ? toAbsoluteUrl(category.ogImage) : undefined;
+
+  const collectionPage: CollectionPage = {
+    '@type': 'CollectionPage',
+    name: category.title,
+    url: canonicalUrl,
+    dateModified: category.updatedAt,
+    ...(category.seoDescription ? { description: category.seoDescription } : {}),
+    ...(imageUrl ? { image: imageUrl } : {}),
+  };
+
   return {
-    '@type': 'Thing',
     '@context': 'https://schema.org',
+    '@graph': [collectionPage, generateBreadcrumbSchema(breadcrumbs)],
   };
 }
 
@@ -23,6 +41,7 @@ export function generateCategoryMetadata(category: Category, slugs: string[]): M
     alternates: {
       canonical: canonicalPath,
     },
+    ...(category.noIndex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
       title,
       description,

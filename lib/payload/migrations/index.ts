@@ -4,6 +4,8 @@ import * as migration_20260910_183306_add_vercel_blob_media from './20260910_183
 import * as migration_20260910_184951_add_media_prefix from './20260910_184951_add_media_prefix';
 import * as migration_20260912_204243_drop_media_url_mirrors from './20260912_204243_drop_media_url_mirrors';
 import * as migration_20260914_120000_richtext_bodies from './20260914_120000_richtext_bodies';
+import * as migration_20260919_212056_add_published_at_and_noindex from './20260919_212056_add_published_at_and_noindex';
+import * as migration_20260919_212748_drop_is_sitemap from './20260919_212748_drop_is_sitemap';
 
 export const migrations = [
   {
@@ -35,5 +37,15 @@ export const migrations = [
     up: migration_20260914_120000_richtext_bodies.up,
     down: migration_20260914_120000_richtext_bodies.down,
     name: '20260914_120000_richtext_bodies',
+  },
+  {
+    up: migration_20260919_212056_add_published_at_and_noindex.up,
+    down: migration_20260919_212056_add_published_at_and_noindex.down,
+    name: '20260919_212056_add_published_at_and_noindex',
+  },
+  {
+    up: migration_20260919_212748_drop_is_sitemap.up,
+    down: migration_20260919_212748_drop_is_sitemap.down,
+    name: '20260919_212748_drop_is_sitemap',
   },
 ];
