@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/primitives/container/container';
 import { AUTHOR_PREFIX } from '@/config';
+import { richTextConverters } from '@/lib/utils/rich-text-converters';
 
 type PropsType = {
   post: Post;
@@ -65,7 +66,7 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
         </figure>
       )}
 
-      <RichText className="prose" data={post.body} />
+      <RichText className="prose" data={post.body} converters={richTextConverters} />
 
       <div className={styles.footer}>
         {post.authors.map((author) => (
