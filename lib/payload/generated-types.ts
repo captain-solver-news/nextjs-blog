@@ -594,6 +594,48 @@ export interface CollectionsWidget {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CodeBlock".
+ */
+export interface CodeBlock {
+  /**
+   * Shown on the left of the header, e.g. rust_example.rs
+   */
+  filename?: string | null;
+  /**
+   * Shown on the right of the header, e.g. WASI Preview 2
+   */
+  note?: string | null;
+  syntax:
+    | 'typescript'
+    | 'tsx'
+    | 'javascript'
+    | 'jsx'
+    | 'html'
+    | 'css'
+    | 'scss'
+    | 'json'
+    | 'yaml'
+    | 'toml'
+    | 'markdown'
+    | 'bash'
+    | 'docker'
+    | 'sql'
+    | 'graphql'
+    | 'rust'
+    | 'go'
+    | 'python'
+    | 'java'
+    | 'ruby'
+    | 'php'
+    | 'diff'
+    | 'text';
+  code: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'codeBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "auth".
  */
 export interface Auth {

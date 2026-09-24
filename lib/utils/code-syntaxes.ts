@@ -1,0 +1,27 @@
+export const CODE_SYNTAXES = [
+  { label: 'TypeScript', value: 'typescript' },
+  { label: 'TSX', value: 'tsx' },
+  { label: 'JavaScript', value: 'javascript' },
+  { label: 'JSX', value: 'jsx' },
+  { label: 'HTML', value: 'html' },
+  { label: 'CSS', value: 'css' },
+  { label: 'SCSS', value: 'scss' },
+  { label: 'JSON', value: 'json' },
+  { label: 'YAML', value: 'yaml' },
+  { label: 'TOML', value: 'toml' },
+  { label: 'Markdown', value: 'markdown' },
+  { label: 'Shell', value: 'bash' },
+  { label: 'Dockerfile', value: 'docker' },
+  { label: 'SQL', value: 'sql' },
+  { label: 'GraphQL', value: 'graphql' },
+  { label: 'Rust', value: 'rust' },
+  { label: 'Go', value: 'go' },
+  { label: 'Python', value: 'python' },
+  { label: 'Java', value: 'java' },
+  { label: 'Ruby', value: 'ruby' },
+  { label: 'PHP', value: 'php' },
+  { label: 'Diff', value: 'diff' },
+  { label: 'Plain text', value: 'text' },
+] as const;
+
+export const DEFAULT_CODE_SYNTAX = 'typescript';

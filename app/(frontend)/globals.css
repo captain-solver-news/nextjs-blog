@@ -22,6 +22,12 @@
   --warning: #e3b341;
   --info: #58a6ff;
 
+  --code-canvas: #0d1117;
+  --code-header: #272d38;
+  --code-border: #30363d;
+  --code-fg: #e6e9ef;
+  --code-subtle: #8b949e;
+
   --measure: 46.25rem;
   --shell-narrow: 60rem;
   --shell: 75rem;
@@ -65,6 +71,12 @@
   --danger: #cf222e;
   --warning: #9a6700;
   --info: #0969da;
+
+  --code-canvas: #ffffff;
+  --code-header: #f0f3f6;
+  --code-border: #d0d7de;
+  --code-fg: #1f2328;
+  --code-subtle: #6e7781;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -93,6 +105,12 @@
   --color-danger: var(--danger);
   --color-warning: var(--warning);
   --color-info: var(--info);
+
+  --color-code-canvas: var(--code-canvas);
+  --color-code-header: var(--code-header);
+  --color-code-border: var(--code-border);
+  --color-code-fg: var(--code-fg);
+  --color-code-subtle: var(--code-subtle);
 
   --font-display: var(--ff-display);
   --font-ui: var(--ff-ui);
