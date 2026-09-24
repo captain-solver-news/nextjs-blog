@@ -106,7 +106,15 @@ export const Categories: CollectionConfig = {
           type: 'upload',
           relationTo: 'media',
         },
-        { name: 'isSitemap', type: 'checkbox', defaultValue: true, label: 'Include in sitemap' },
+        {
+          name: 'noIndex',
+          type: 'checkbox',
+          defaultValue: false,
+          label: 'Hide from search engines (noindex)',
+          admin: {
+            description: 'Adds a noindex robots tag and drops the URL from sitemap.xml.',
+          },
+        },
       ],
     },
   ],

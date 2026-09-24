@@ -149,7 +149,10 @@ export interface Category {
   weight: number;
   seoDescription?: string | null;
   ogImageMedia?: (string | null) | Media;
-  isSitemap?: boolean | null;
+  /**
+   * Adds a noindex robots tag and drops the URL from sitemap.xml.
+   */
+  noIndex?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -203,10 +206,17 @@ export interface Post {
     [k: string]: unknown;
   };
   status: 'published' | 'draft';
+  /**
+   * Public publish date. Set automatically the first time the post is published.
+   */
+  publishedAt?: string | null;
   isFeatured?: boolean | null;
   seoDescription?: string | null;
   ogImageMedia?: (string | null) | Media;
-  isSitemap?: boolean | null;
+  /**
+   * Adds a noindex robots tag and drops the URL from sitemap.xml.
+   */
+  noIndex?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -425,7 +435,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   weight?: T;
   seoDescription?: T;
   ogImageMedia?: T;
-  isSitemap?: T;
+  noIndex?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -441,10 +451,11 @@ export interface PostsSelect<T extends boolean = true> {
   teaser?: T;
   body?: T;
   status?: T;
+  publishedAt?: T;
   isFeatured?: T;
   seoDescription?: T;
   ogImageMedia?: T;
-  isSitemap?: T;
+  noIndex?: T;
   updatedAt?: T;
   createdAt?: T;
 }

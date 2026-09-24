@@ -1,8 +1,8 @@
 import Script from 'next/script';
-import { WithContext, Thing } from 'schema-dts';
+import { WithContext, Thing, Graph } from 'schema-dts';
 
 type PropsType = {
-  schema: WithContext<Thing>;
+  schema: WithContext<Thing> | Graph;
 };
 
 export function JsonLdHead(props: PropsType) {
