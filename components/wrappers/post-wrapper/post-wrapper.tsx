@@ -12,7 +12,17 @@ type PropsType = {
   categorySlugs: string[];
 };
 
+function formatDate(timestamp: string): string {
+  return new Date(timestamp).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
+
 export default async function PostWrapper({ post, categorySlugs }: PropsType) {
+  const publishedAt = post.publishedAt ?? post.createdAt;
+
   return (
     <Container as="article" className={styles.page}>
       <nav className={styles.breadcrumb} aria-label="Breadcrumb">
@@ -56,6 +66,10 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
 
       <h1 className={styles.title}>{post.title}</h1>
 
+      <time className={styles.date} dateTime={new Date(publishedAt).toISOString()}>
+        {formatDate(publishedAt)}
+      </time>
+
       {post.ogImage && (
         <figure className={styles.featuredImage}>
           <div className={styles.imageWrapper}>
@@ -72,13 +86,7 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
         {post.authors.map((author) => (
           <Link key={author.id} href={`/${AUTHOR_PREFIX}/${author.slug}`} className={styles.footerAuthor}>
             {author.miniAvatarMedia?.url && (
-              <Image
-                src={author.miniAvatarMedia.url}
-                alt=""
-                width={48}
-                height={48}
-                className={styles.footerAvatar}
-              />
+              <Image src={author.miniAvatarMedia.url} alt="" width={48} height={48} className={styles.footerAvatar} />
             )}
             <div>
               <p className={styles.footerAuthorName}>{author.name}</p>

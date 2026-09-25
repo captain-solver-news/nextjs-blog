@@ -48,7 +48,17 @@
 
 .title {
   composes: t-display from global;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.date {
+  composes: t-label from global;
+  display: block;
+  line-height: 1;
+  color: var(--fg-muted);
+  font-variant: all-small-caps;
+  letter-spacing: 0.05em;
+  margin-bottom: 2rem;
 }
 
 .authorBar {
@@ -157,12 +167,6 @@
   line-height: 1;
   color: var(--fg-muted);
   margin: 0.25rem 0 0;
-}
-
-@include up(md) {
-  .date {
-    display: block;
-  }
 }
 
 @include between(md, lg) {
