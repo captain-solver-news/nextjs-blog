@@ -38,19 +38,19 @@ export default async function AboutPage() {
                     <img
                       className={`${styles.avatar} ${styles.avatarDarkHover}`}
                       src={author.avatarDarkHoveredMedia?.url || '/authors/fallback.jpg'}
-                      alt=""
+                      alt={author.name}
                       aria-hidden
                     />
                     <img
                       className={`${styles.avatar} ${styles.avatarLight}`}
                       src={author.avatarLightMedia?.url || '/authors/fallback.jpg'}
-                      alt=""
+                      alt={author.name}
                       aria-hidden
                     />
                     <img
                       className={`${styles.avatar} ${styles.avatarLightHover}`}
                       src={author.avatarLightHoveredMedia?.url || '/authors/fallback.jpg'}
-                      alt=""
+                      alt={author.name}
                       aria-hidden
                     />
                   </picture>
