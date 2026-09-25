@@ -147,6 +147,7 @@ export interface Category {
    * Sort order, ascending.
    */
   weight: number;
+  seoTitle?: string | null;
   seoDescription?: string | null;
   ogImageMedia?: (string | null) | Media;
   /**
@@ -211,6 +212,7 @@ export interface Post {
    */
   publishedAt?: string | null;
   isFeatured?: boolean | null;
+  seoTitle?: string | null;
   seoDescription?: string | null;
   ogImageMedia?: (string | null) | Media;
   /**
@@ -433,6 +435,7 @@ export interface CategoriesSelect<T extends boolean = true> {
   parent?: T;
   type?: T;
   weight?: T;
+  seoTitle?: T;
   seoDescription?: T;
   ogImageMedia?: T;
   noIndex?: T;
@@ -453,6 +456,7 @@ export interface PostsSelect<T extends boolean = true> {
   status?: T;
   publishedAt?: T;
   isFeatured?: T;
+  seoTitle?: T;
   seoDescription?: T;
   ogImageMedia?: T;
   noIndex?: T;

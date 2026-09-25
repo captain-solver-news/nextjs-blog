@@ -43,6 +43,7 @@ export const categories = pgTable(
     }),
     type: enum_categories_type('type').notNull().default('hidden'),
     weight: numeric('weight', { mode: 'number' }).notNull().default(0),
+    seoTitle: varchar('seo_title'),
     seoDescription: varchar('seo_description'),
     ogImageMedia: uuid('og_image_media_id').references(() => media.id, {
       onDelete: 'set null',
@@ -76,6 +77,7 @@ export const posts = pgTable(
     status: enum_posts_status('status').notNull().default('published'),
     publishedAt: timestamp('published_at', { mode: 'string', withTimezone: true, precision: 3 }),
     isFeatured: boolean('is_featured').default(false),
+    seoTitle: varchar('seo_title'),
     seoDescription: varchar('seo_description'),
     ogImageMedia: uuid('og_image_media_id').references(() => media.id, {
       onDelete: 'set null',
