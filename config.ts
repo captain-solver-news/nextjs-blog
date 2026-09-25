@@ -15,6 +15,7 @@ export const SUBCATEGORIES_PER_PAGE = 12;
 export const POSTS_PER_PAGE = 10;
 export const THEME_COOKIE_NAME = 'theme';
 export const THEME_COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
+export const POST_CONTENT_IMAGE_SIZES = '(max-width: 46.25rem) calc(100vw - 2.5rem), 700px';
 
 export const HEADER_LINKS = [
   { href: '/', label: 'Home' },

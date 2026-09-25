@@ -4,7 +4,7 @@ import styles from './post-wrapper.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Container } from '@/components/primitives/container/container';
-import { AUTHOR_PREFIX } from '@/config';
+import { AUTHOR_PREFIX, POST_CONTENT_IMAGE_SIZES } from '@/config';
 import { richTextConverters } from '@/lib/utils/rich-text-converters';
 
 type PropsType = {
@@ -73,9 +73,14 @@ export default async function PostWrapper({ post, categorySlugs }: PropsType) {
       {post.ogImage && (
         <figure className={styles.featuredImage}>
           <div className={styles.imageWrapper}>
-            <picture>
-              <img className={styles.image} src={post.ogImage} alt={post.title} />
-            </picture>
+            <Image
+              className={styles.image}
+              src={post.ogImage}
+              alt={post.title}
+              fill
+              sizes={POST_CONTENT_IMAGE_SIZES}
+              priority
+            />
           </div>
         </figure>
       )}
