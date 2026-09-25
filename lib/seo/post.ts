@@ -64,7 +64,7 @@ export function generatePostSchema(post: Post, slugs: string[], breadcrumbs: Cat
 }
 
 export function generatePostMetadata(post: Post, slugs: string[]): Metadata {
-  const title = post.title;
+  const title = post.seoTitle || post.title;
   const description = post.seoDescription ?? post.teaser;
   const canonicalPath = `/${BLOG_PREFIX}/${slugs.join('/')}`;
 

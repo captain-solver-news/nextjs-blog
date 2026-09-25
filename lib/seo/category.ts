@@ -30,7 +30,7 @@ export function generateCategorySchema(
 }
 
 export function generateCategoryMetadata(category: Category, slugs: string[]): Metadata {
-  const title = category.title;
+  const title = category.seoTitle || category.title;
   const description = category.seoDescription ?? category.title;
   const canonicalPath = `/${BLOG_PREFIX}/${slugs.join('/')}`;
 

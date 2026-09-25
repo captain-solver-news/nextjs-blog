@@ -99,6 +99,7 @@ export const Categories: CollectionConfig = {
       type: 'collapsible',
       label: 'SEO',
       fields: [
+        { name: 'seoTitle', type: 'text' },
         { name: 'seoDescription', type: 'textarea' },
         {
           name: 'ogImageMedia',
