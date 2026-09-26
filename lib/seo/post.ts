@@ -1,10 +1,11 @@
 import { type Metadata } from 'next';
-import { BLOG_PREFIX, PUBLISHER_LOGO, SITE_NAME } from '@/config';
+import { AUTHOR_PREFIX, BLOG_PREFIX, PUBLISHER_LOGO, SITE_NAME } from '@/config';
 import { type Post } from '@/lib/actions/types/post';
 import { type CategoryBreadcrumb } from '@/lib/actions/get-category-breadcrumbs';
 import { BlogPosting, Graph, Organization, Person } from 'schema-dts';
 import { generateBreadcrumbSchema } from './breadcrumbs';
 import { toAbsoluteUrl } from './url';
+import { OPEN_GRAPH_DEFAULTS, TWITTER_DEFAULTS } from './social';
 
 const HEADLINE_LIMIT = 110;
 
@@ -34,7 +35,7 @@ export function generatePostSchema(post: Post, slugs: string[], breadcrumbs: Cat
   const authors: Person[] = post.authors.map((author) => ({
     '@type': 'Person',
     name: author.name,
-    url: toAbsoluteUrl(`/author/${author.slug}`),
+    url: toAbsoluteUrl(`/${AUTHOR_PREFIX}/${author.slug}`),
   }));
 
   const blogPosting: BlogPosting = {
@@ -77,11 +78,20 @@ export function generatePostMetadata(post: Post, slugs: string[]): Metadata {
     },
     ...(post.noIndex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
+      ...OPEN_GRAPH_DEFAULTS,
+      type: 'article',
       title,
       description,
+      url: canonicalPath,
+      publishedTime: new Date(post.publishedAt ?? post.createdAt).toISOString(),
+      modifiedTime: new Date(post.contentUpdatedAt ?? post.updatedAt).toISOString(),
+      ...(post.authors.length
+        ? { authors: post.authors.map((author) => toAbsoluteUrl(`/${AUTHOR_PREFIX}/${author.slug}`)) }
+        : {}),
       ...(ogImage ? { images: [{ url: ogImage }] } : {}),
     },
     twitter: {
+      ...TWITTER_DEFAULTS,
       card: ogImage ? 'summary_large_image' : 'summary',
       title,
       description,

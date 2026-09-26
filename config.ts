@@ -2,6 +2,7 @@ import type { StaticContent } from '@/lib/actions/types/static-content';
 import { paragraphState } from '@/lib/utils/rich-text';
 
 export const SITE_NAME = 'Prod Stories';
+export const TWITTER_HANDLE = '@prodstories';
 
 export const PUBLISHER_LOGO = {
   path: '/brand/logo-dark.png',
