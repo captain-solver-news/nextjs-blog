@@ -3,7 +3,10 @@ import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richte
 import { Status } from '@/lib/payload/taxonomy';
 import { CodeBlock } from '@/lib/payload/blocks/code-block';
 import { setContentUpdatedAt } from '@/lib/payload/hooks/content-updated-at';
-import { revalidateSitemapAfterChange, revalidateSitemapAfterDelete } from '@/lib/payload/hooks/revalidate-sitemap';
+import {
+  revalidateCrawlerFilesAfterChange,
+  revalidateCrawlerFilesAfterDelete,
+} from '@/lib/payload/hooks/revalidate-crawler-files';
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -16,8 +19,8 @@ export const Posts: CollectionConfig = {
     read: () => true,
   },
   hooks: {
-    afterChange: [revalidateSitemapAfterChange],
-    afterDelete: [revalidateSitemapAfterDelete],
+    afterChange: [revalidateCrawlerFilesAfterChange],
+    afterDelete: [revalidateCrawlerFilesAfterDelete],
   },
   fields: [
     {

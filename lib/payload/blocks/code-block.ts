@@ -8,6 +8,17 @@ export const CodeBlock: Block = {
     singular: 'Code',
     plural: 'Code blocks',
   },
+  jsx: {
+    export: ({ fields }) => {
+      const code = String(fields.code ?? '');
+      const longestRun = Math.max(2, ...(code.match(/`+/g) ?? []).map((run) => run.length));
+      const fence = '`'.repeat(longestRun + 1);
+      const caption = [fields.filename, fields.note].filter(Boolean).join(' — ');
+
+      return `${caption ? `${caption}\n\n` : ''}${fence}${fields.syntax ?? ''}\n${code}\n${fence}`;
+    },
+    import: () => false,
+  },
   fields: [
     {
       type: 'row',

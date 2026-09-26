@@ -1,7 +1,10 @@
 import type { CollectionConfig, RelationshipFieldSingleValidation } from 'payload';
 import type { Category } from '@/lib/payload/generated-types';
 import { Type } from '@/lib/payload/taxonomy';
-import { revalidateSitemapAfterChange, revalidateSitemapAfterDelete } from '@/lib/payload/hooks/revalidate-sitemap';
+import {
+  revalidateCrawlerFilesAfterChange,
+  revalidateCrawlerFilesAfterDelete,
+} from '@/lib/payload/hooks/revalidate-crawler-files';
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -14,8 +17,8 @@ export const Categories: CollectionConfig = {
     read: () => true,
   },
   hooks: {
-    afterChange: [revalidateSitemapAfterChange],
-    afterDelete: [revalidateSitemapAfterDelete],
+    afterChange: [revalidateCrawlerFilesAfterChange],
+    afterDelete: [revalidateCrawlerFilesAfterDelete],
   },
   fields: [
     {

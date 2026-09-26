@@ -7,7 +7,10 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical';
-import { revalidateSitemapAfterChange, revalidateSitemapAfterDelete } from '@/lib/payload/hooks/revalidate-sitemap';
+import {
+  revalidateCrawlerFilesAfterChange,
+  revalidateCrawlerFilesAfterDelete,
+} from '@/lib/payload/hooks/revalidate-crawler-files';
 
 export const Authors: CollectionConfig = {
   slug: 'authors',
@@ -20,8 +23,8 @@ export const Authors: CollectionConfig = {
     read: () => true,
   },
   hooks: {
-    afterChange: [revalidateSitemapAfterChange],
-    afterDelete: [revalidateSitemapAfterDelete],
+    afterChange: [revalidateCrawlerFilesAfterChange],
+    afterDelete: [revalidateCrawlerFilesAfterDelete],
   },
   fields: [
     {
