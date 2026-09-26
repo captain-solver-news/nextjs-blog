@@ -31,5 +31,10 @@ export function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api/|_next/static|_next/image|favicon.ico|.*\\.[a-zA-Z0-9]+$).*)'],
+  matcher: [
+    '/((?!api/|_next/static|_next/image|favicon.ico|.*\\.[a-zA-Z0-9]+$).*)',
+    '/llms.txt',
+    '/llms-full.txt',
+    '/sitemap.xml',
+  ],
 };
