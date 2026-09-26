@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import type { WebPage, WithContext } from 'schema-dts';
+import { OPEN_GRAPH_DEFAULTS, TWITTER_DEFAULTS } from './social';
 
 function createStaticPageSchema(name: string, description: string, path: string): WithContext<WebPage> {
   const siteUrl = process.env.PUBLIC_SITE_URL ?? 'http://localhost:3000';
@@ -20,11 +21,13 @@ export const homeMetadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: 'Home',
     description: 'Explore the latest articles, categories, and guides.',
     url: '/',
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: 'summary',
     title: 'Home',
     description: 'Explore the latest articles, categories, and guides.',
@@ -40,11 +43,13 @@ export const aboutMetadata: Metadata = {
     canonical: '/about',
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: 'About',
     description: 'Learn more about our blog, mission, and editorial approach.',
     url: '/about',
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: 'summary',
     title: 'About',
     description: 'Learn more about our blog, mission, and editorial approach.',
@@ -64,11 +69,13 @@ export const blogMetadata: Metadata = {
     canonical: '/blog',
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: 'Blog',
     description: 'Browse all blog categories and discover published content.',
     url: '/blog',
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: 'summary',
     title: 'Blog',
     description: 'Browse all blog categories and discover published content.',
@@ -88,11 +95,13 @@ export const contactMetadata: Metadata = {
     canonical: '/contact',
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: 'Contact',
     description: 'Get in touch with our team for feedback, questions, or partnerships.',
     url: '/contact',
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: 'summary',
     title: 'Contact',
     description: 'Get in touch with our team for feedback, questions, or partnerships.',
@@ -112,11 +121,13 @@ export const privacyPolicyMetadata: Metadata = {
     canonical: '/privacy-policy',
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: 'Privacy Policy',
     description: 'Read how we collect, use, and protect your personal data.',
     url: '/privacy-policy',
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: 'summary',
     title: 'Privacy Policy',
     description: 'Read how we collect, use, and protect your personal data.',
@@ -136,11 +147,13 @@ export const termsAndConditionsMetadata: Metadata = {
     canonical: '/terms-and-conditions',
   },
   openGraph: {
+    ...OPEN_GRAPH_DEFAULTS,
     title: 'Terms and Conditions',
     description: 'Review the terms and conditions for using our website and content.',
     url: '/terms-and-conditions',
   },
   twitter: {
+    ...TWITTER_DEFAULTS,
     card: 'summary',
     title: 'Terms and Conditions',
     description: 'Review the terms and conditions for using our website and content.',

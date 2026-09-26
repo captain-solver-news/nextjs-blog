@@ -5,6 +5,7 @@ import { type CategoryBreadcrumb } from '@/lib/actions/get-category-breadcrumbs'
 import { CollectionPage, Graph } from 'schema-dts';
 import { generateBreadcrumbSchema } from './breadcrumbs';
 import { toAbsoluteUrl } from './url';
+import { OPEN_GRAPH_DEFAULTS, TWITTER_DEFAULTS } from './social';
 
 export function generateCategorySchema(
   category: Category,
@@ -43,11 +44,14 @@ export function generateCategoryMetadata(category: Category, slugs: string[]): M
     },
     ...(category.noIndex ? { robots: { index: false, follow: true } } : {}),
     openGraph: {
+      ...OPEN_GRAPH_DEFAULTS,
       title,
       description,
+      url: canonicalPath,
       ...(ogImage ? { images: [{ url: ogImage }] } : {}),
     },
     twitter: {
+      ...TWITTER_DEFAULTS,
       card: ogImage ? 'summary_large_image' : 'summary',
       title,
       description,

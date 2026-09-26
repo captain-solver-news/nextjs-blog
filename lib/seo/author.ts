@@ -3,6 +3,7 @@ import { AUTHOR_PREFIX } from '@/config';
 import type { Author } from '@/lib/actions/types/author';
 import { convertLexicalToPlaintext } from '@payloadcms/richtext-lexical/plaintext';
 import { WithContext, Person } from 'schema-dts';
+import { OPEN_GRAPH_DEFAULTS, TWITTER_DEFAULTS } from './social';
 
 const DESCRIPTION_LIMIT = 160;
 
@@ -52,6 +53,7 @@ export function generateAuthorMetadata(author: Author): Metadata {
       canonical: canonicalPath,
     },
     openGraph: {
+      ...OPEN_GRAPH_DEFAULTS,
       type: 'profile',
       title,
       description,
@@ -59,6 +61,7 @@ export function generateAuthorMetadata(author: Author): Metadata {
       ...(ogImage ? { images: [{ url: ogImage }] } : {}),
     },
     twitter: {
+      ...TWITTER_DEFAULTS,
       card: ogImage ? 'summary_large_image' : 'summary',
       title,
       description,
