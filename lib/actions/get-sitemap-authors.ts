@@ -16,7 +16,7 @@ export default async function getSitemapAuthors(): Promise<SitemapAuthorRow[]> {
   const rows = await db
     .select({
       slug: authors.slug,
-      updatedAt: sql<string | null>`max(${posts.updatedAt})`,
+      updatedAt: sql<string | null>`greatest(${authors.updatedAt}, max(${posts.contentUpdatedAt}))`,
     })
     .from(authors)
     .innerJoin(posts_rels, and(eq(posts_rels.authorsID, authors.id), eq(posts_rels.path, 'authors')))

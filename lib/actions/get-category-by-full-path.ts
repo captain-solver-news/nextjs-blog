@@ -1,4 +1,5 @@
-import { categories } from '@/lib/payload/generated-schema';
+import { categories, posts } from '@/lib/payload/generated-schema';
+import { Status } from '@/lib/payload/taxonomy';
 import rowJson from '../utils/row-json';
 import { CATEGORY_OG_IMAGE_URL } from '../utils/media-url';
 import type { Category } from './types/category';
@@ -29,12 +30,30 @@ export default async function getCategoryByFullPath(slugs: string[]): Promise<Ca
               (ct.full_path || '/' || ${categories.slug})::text
           FROM ${categories}
           JOIN category_tree ct ON ${categories.parent} = ct.id
+        ),
+        target AS (
+          SELECT id FROM category_tree WHERE full_path = ${fullPath} LIMIT 1
+        ),
+        subtree AS (
+          SELECT id FROM target
+
+          UNION ALL
+
+          SELECT ${categories.id}
+          FROM ${categories}
+          JOIN subtree st ON ${categories.parent} = st.id
         )
-        SELECT ${rowJson(categories, CATEGORY_OG_IMAGE_URL)} AS category
+        SELECT ${rowJson(categories, {
+          ...CATEGORY_OG_IMAGE_URL,
+          lastModified: sql`greatest(${categories.updatedAt}, (
+            SELECT max(${posts.contentUpdatedAt})
+            FROM ${posts}
+            JOIN subtree st ON ${posts.category} = st.id
+            WHERE ${posts.status} = ${Status.Published}
+          ))`,
+        })} AS category
         FROM ${categories}
-        JOIN category_tree ct ON ct.id = ${categories.id}
-        WHERE ct.full_path = ${fullPath}
-        LIMIT 1;
+        JOIN target t ON t.id = ${categories.id};
       `);
 
     if (!rows || rows.length === 0) {
