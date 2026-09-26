@@ -10,6 +10,15 @@ export const PUBLISHER_LOGO = {
   height: 383,
 } as const;
 
+export const LLMS_SUMMARY =
+  'Engineering stories from four developers building in public: what we built, what broke, and what we fixed, written from first-hand work in real repositories.';
+
+export const LLMS_DETAILS = [
+  'Every post is written by a named author about a tool we actually ran or code we actually shipped. Posts explain the reasoning behind a decision, the options we rejected, and what went wrong, with numbers, diffs, and costs where we have them.',
+  'The stack we write about: TypeScript, Next.js, NestJS, Python, PostgreSQL, MongoDB, and Firebase. The Game Dev category is a learning-in-public series: we had no prior game development experience and say so in each post.',
+  'All content is in English. Posts are not sponsored.',
+].join('\n\n');
+
 export const BLOG_PREFIX = 'blog';
 export const AUTHOR_PREFIX = 'author';
 export const SUBCATEGORIES_PER_PAGE = 12;
