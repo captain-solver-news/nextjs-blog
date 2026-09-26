@@ -1,14 +1,16 @@
-# Web Site
+# Prod Stories
 
 A Next.js blog with PostgreSQL, Payload CMS, and TypeScript.
 
 Payload owns the content model: it generates the database schema and is the only source of
-DDL. The public site reads through a thin Drizzle layer in `lib/db` for queries Payload's
-Local API cannot express (recursive category paths).
+DDL. The public site reads data through the functions in `lib/actions`, which run SQL via
+Payload's Drizzle instance (`payload.db.drizzle`) against the tables in
+`lib/payload/generated-schema.ts`. This covers queries Payload's Local API cannot express, such
+as recursive category paths.
 
 ## Prerequisites
 
-- [Node.js](https://nodejs.org/) (v18 or higher)
+- [Node.js](https://nodejs.org/) (v20.9 or higher)
 - [pnpm](https://pnpm.io/) (v10 or higher)
 - [Docker](https://www.docker.com/) and Docker Compose
 
@@ -17,8 +19,8 @@ Local API cannot express (recursive category paths).
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-cd web_site
+git clone git@github.com:captain-solver-news/prodstories-blog.git
+cd prodstories-blog
 ```
 
 ### 2. Install dependencies
@@ -41,6 +43,9 @@ This runs PostgreSQL 16 on port 5432 with:
 - **Password:** admin
 - **Database:** db
 
+It also starts [Adminer](https://www.adminer.org/) at [http://localhost:5431](http://localhost:5431)
+for browsing the database (server: `postgres`).
+
 ### 4. Configure environment variables
 
 Copy `.env.example` to `.env`:
@@ -48,6 +53,13 @@ Copy `.env.example` to `.env`:
 ```bash
 cp .env.example .env
 ```
+
+| Variable                | Description                                                            |
+| ----------------------- | ---------------------------------------------------------------------- |
+| `PUBLIC_SITE_URL`       | Public base URL, used for canonical URLs, sitemap, robots and llms.txt |
+| `DATABASE_URL`          | PostgreSQL connection string                                           |
+| `PAYLOAD_SECRET`        | Secret for Payload auth — replace with a long random string            |
+| `BLOB_READ_WRITE_TOKEN` | Optional Vercel Blob token for uploads                                 |
 
 > **Note:** If you changed the database credentials in `docker-compose.yml`, update `DATABASE_URL` in `.env` accordingly.
 
@@ -69,13 +81,13 @@ pnpm payload:migrate
 pnpm db:seed
 ```
 
-> **Warning:** the seed truncates `posts`, `categories`, `authors`, `static_contents` and
-> `configs` before inserting. Only run it against an empty or throwaway database.
+> **Warning:** the seed truncates `posts`, `categories`, `authors`, `static_contents`, `configs`
+> and `media` before inserting. Only run it against an empty or throwaway database.
 
 ### 7. Create an admin user
 
-Start the app and open [http://localhost:3000/admin](http://localhost:3000/admin) — Payload
-prompts for the first user on a fresh install.
+Start the app with `pnpm dev` and open [http://localhost:3000/admin](http://localhost:3000/admin) —
+Payload prompts for the first user on a fresh install.
 
 ## Available Scripts
 
@@ -98,19 +110,29 @@ prompts for the first user on a fresh install.
 ```
 .
 ├── app/
-│   ├── (frontend)/             # Public site routes
-│   └── (payload)/              # Payload admin + REST/GraphQL routes
+│   ├── (frontend)/             # Public site routes, sitemap, llms.txt, llms-full.txt
+│   ├── (payload)/              # Payload admin + REST/GraphQL routes
+│   └── robots.ts               # robots.txt
+├── components/                 # React components (blocks, lists, wrappers, primitives, seo)
 ├── lib/
+│   ├── actions/                # Data fetching for the public site
 │   ├── payload/
 │   │   ├── config.ts           # Payload config (aliased as @payload-config)
 │   │   ├── collections/        # Collection definitions — the content model
+│   │   ├── blocks/             # Rich text blocks
+│   │   ├── hooks/              # Collection hooks
 │   │   ├── migrations/         # The only source of DDL for this database
 │   │   ├── taxonomy.ts         # Status/Type values shared with the read layer
 │   │   ├── seed.ts             # Sample content script
 │   │   ├── generated-schema.ts # `payload generate:db-schema` — do not edit
 │   │   └── generated-types.ts  # `payload generate:types` — do not edit
-│   └── actions/                # Server actions for app/(payload) needs
-├── docker-compose.yml          # PostgreSQL container
+│   ├── seo/                    # Metadata, JSON-LD and llms.txt builders
+│   └── utils/                  # Shared helpers
+├── public/                     # Static assets
+├── styles/                     # Global SCSS
+├── patches/                    # pnpm patches for dependencies
+├── config.ts                   # Site constants (name, prefixes, pagination, links)
+├── docker-compose.yml          # PostgreSQL + Adminer containers
 ├── tsconfig.json               # TypeScript configuration
 ├── .env.example                # Environment variables template
 └── .env                        # Copy from .env.example (see step 4)
