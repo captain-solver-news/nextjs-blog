@@ -2,6 +2,8 @@ import type { CollectionConfig } from 'payload';
 import { BlocksFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical';
 import { Status } from '@/lib/payload/taxonomy';
 import { CodeBlock } from '@/lib/payload/blocks/code-block';
+import { setContentUpdatedAt } from '@/lib/payload/hooks/content-updated-at';
+import { revalidateSitemapAfterChange, revalidateSitemapAfterDelete } from '@/lib/payload/hooks/revalidate-sitemap';
 
 export const Posts: CollectionConfig = {
   slug: 'posts',
@@ -12,6 +14,10 @@ export const Posts: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [revalidateSitemapAfterChange],
+    afterDelete: [revalidateSitemapAfterDelete],
   },
   fields: [
     {
@@ -85,6 +91,21 @@ export const Posts: CollectionConfig = {
             return value;
           },
         ],
+      },
+    },
+    {
+      name: 'contentUpdatedAt',
+      type: 'date',
+      index: true,
+      admin: {
+        hidden: true,
+      },
+      access: {
+        create: () => false,
+        update: () => false,
+      },
+      hooks: {
+        beforeChange: [setContentUpdatedAt],
       },
     },
     {

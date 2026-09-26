@@ -211,6 +211,7 @@ export interface Post {
    * Public publish date. Set automatically the first time the post is published.
    */
   publishedAt?: string | null;
+  contentUpdatedAt?: string | null;
   isFeatured?: boolean | null;
   seoTitle?: string | null;
   seoDescription?: string | null;
@@ -455,6 +456,7 @@ export interface PostsSelect<T extends boolean = true> {
   body?: T;
   status?: T;
   publishedAt?: T;
+  contentUpdatedAt?: T;
   isFeatured?: T;
   seoTitle?: T;
   seoDescription?: T;

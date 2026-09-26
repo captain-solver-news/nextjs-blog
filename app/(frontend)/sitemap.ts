@@ -6,41 +6,34 @@ import getSitemapPosts from '@/lib/actions/get-sitemap-posts';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.PUBLIC_SITE_URL ?? 'http://localhost:3000';
-  const lastModified = new Date();
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: `${siteUrl}/`,
-      lastModified,
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
       url: `${siteUrl}/about`,
-      lastModified,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${siteUrl}/blog`,
-      lastModified,
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
       url: `${siteUrl}/contact`,
-      lastModified,
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/privacy-policy`,
-      lastModified,
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${siteUrl}/terms-and-conditions`,
-      lastModified,
       changeFrequency: 'yearly',
       priority: 0.3,
     },
@@ -54,21 +47,21 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const categoryPages: MetadataRoute.Sitemap = categoryRows.map((row) => ({
     url: `${siteUrl}/${BLOG_PREFIX}/${row.fullPath}`,
-    lastModified: row.updatedAt ?? lastModified,
+    lastModified: row.updatedAt ?? undefined,
     changeFrequency: 'weekly',
     priority: 0.7,
   }));
 
   const postPages: MetadataRoute.Sitemap = postRows.map((row) => ({
     url: `${siteUrl}/${BLOG_PREFIX}/${row.fullPath}`,
-    lastModified: row.updatedAt ?? lastModified,
+    lastModified: row.updatedAt ?? undefined,
     changeFrequency: 'weekly',
     priority: 0.6,
   }));
 
   const authorPages: MetadataRoute.Sitemap = authorRows.map((row) => ({
     url: `${siteUrl}/${AUTHOR_PREFIX}/${row.slug}`,
-    lastModified: row.updatedAt ?? lastModified,
+    lastModified: row.updatedAt ?? undefined,
     changeFrequency: 'monthly',
     priority: 0.5,
   }));

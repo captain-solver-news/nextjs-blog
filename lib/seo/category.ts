@@ -18,7 +18,7 @@ export function generateCategorySchema(
     '@type': 'CollectionPage',
     name: category.title,
     url: canonicalUrl,
-    dateModified: category.updatedAt,
+    dateModified: category.lastModified,
     ...(category.seoDescription ? { description: category.seoDescription } : {}),
     ...(imageUrl ? { image: imageUrl } : {}),
   };

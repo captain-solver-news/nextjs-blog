@@ -36,7 +36,7 @@ export default async function getSitemapPosts(): Promise<SitemapPostRow[]> {
     )
     SELECT
       (ct.full_path || '/' || ${posts.slug})::text AS "fullPath",
-      ${posts.updatedAt} AS "updatedAt"
+      ${posts.contentUpdatedAt} AS "updatedAt"
     FROM ${posts}
     JOIN category_tree ct ON ${posts.category} = ct.id
     WHERE ${posts.status} = ${Status.Published}

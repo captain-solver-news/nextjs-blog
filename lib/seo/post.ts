@@ -44,7 +44,7 @@ export function generatePostSchema(post: Post, slugs: string[], breadcrumbs: Cat
     description,
     url: canonicalUrl,
     datePublished: post.publishedAt ?? post.createdAt,
-    dateModified: post.updatedAt,
+    dateModified: post.contentUpdatedAt ?? post.updatedAt,
     publisher,
     mainEntityOfPage: {
       '@type': 'WebPage',
